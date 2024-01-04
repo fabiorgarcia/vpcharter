@@ -26,7 +26,7 @@ function HomeRodoviario() {
         <Sidebar />
             <div className='content'>
 
-                <div className='breadCrumb'><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' /> <Link to="/home" relative="path">Home</Link>&nbsp; / Onibus</div>
+                <div className='breadCrumb'><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' /> <Link to="/home" relative="path">Home</Link>&nbsp; / Ônibus</div>
                 <div className='contentHome'>
 
 
