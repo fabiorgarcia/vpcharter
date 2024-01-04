@@ -60,7 +60,7 @@ function Sidebar() {
           {/*<Link to="/home" relative="path"><div className={Globals.userStatus == '9' ? 'itemMenu' : 'hide'}><BiSearchAlt className='iconMenu' title='Busca' /> <PiCaretRight className='mob' /> <span className='mob'>Busca</span></div></Link>*/}
         </div>
 
-        <Link to="/onibus" relative="path"><div className={host == 'onibus' ? 'itemMenu masterMenu':'itemMenu masterMenu50'}><BsBusFrontFill className='iconMenu' title='Ônibus Fretamento' /> <PiCaretRight className='mob opacity-25' /> <span className='mob'>Ônibus Fretamento</span></div></Link>
+        <div className={host == 'onibus' ? 'itemMenu masterMenu':'itemMenu masterMenu50'}><BsBusFrontFill className='iconMenu' title='Ônibus Fretamento' /> <PiCaretRight className='mob opacity-25' /> <span className='mob'>Ônibus Fretamento</span></div>
 
         <div className={host == 'aereoregular' ? 'itemMenu masterMenu':'itemMenu masterMenu50'}><PiAirplaneInFlight className='iconMenu' title='Aéreo Regular' /> <PiCaretRight className='mob opacity-25' /> <span className='mob'>Aéreo Regular</span></div>
         <div className={host == 'pacote' ? 'itemMenu masterMenu':'itemMenu masterMenu50'}><FaSuitcaseRolling  className='iconMenu' title='Pacote Fixo' /> <PiCaretRight className='mob opacity-25' /> <span className='mob'>Pacote Fixo</span></div>
