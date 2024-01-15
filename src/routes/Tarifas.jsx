@@ -40,7 +40,6 @@ function Tarifas() {
   const [stepsQuery, setStepsQuery] = useState (1);
   const [orderby, setOrderby] = useState ('name');
   const [orderDirection, setOrderDirection] = useState ('ASC');
-  const [openModal, setOpenModal] = useState (false);
   
   const [buscaFiltro, setBuscaFiltro] = useState ('');
   const [listData, seListData] = useState ([]); 
@@ -82,29 +81,16 @@ function Tarifas() {
 
   function carregaPagina() {
     setLoading(true);
-    var query = "SELECT * FROM `vpcharter_tarifas`";
-    var fData = new FormData();
-    fData.append('query', query);
-    axios.post(endpoint+'query.php', fData)
-    .then(response=> {
-      if (response.data.length > 0) {
-        setDataBase(response.data)
-      }
-    })
-    .catch(error=> alert(error))
+
 
     //var query = "SELECT vpcharter_fabricante.aeronave, vpcharter_frota.id as id_aeronave, vpcharter_rotas.id as id_rota, vpcharter_frota.fabricante, vpcharter_frota.nomeAeronave, vpcharter_companhia.nome, vpcharter_companhia.logo, vpcharter_rotas.origem, vpcharter_rotas.destino, vpcharter_tarifas.primeiraclasse, vpcharter_tarifas.premium, vpcharter_tarifas.executiva, vpcharter_tarifas.economica, vpcharter_rotas.voo, vpcharter_rotas.duracao, vpcharter_rotas.chegada, vpcharter_rotas.saida, vpcharter_tarifas.primeiraclasse_chd, vpcharter_tarifas.premium_chd, vpcharter_tarifas.executiva_chd, vpcharter_tarifas.economica_chd FROM `vpcharter_frota` INNER JOIN vpcharter_companhia ON vpcharter_frota.companhia = vpcharter_companhia.id INNER JOIN `vpcharter_fabricante` ON vpcharter_frota.`fabricante` = vpcharter_fabricante.id INNER JOIN `vpcharter_rotas` ON vpcharter_frota.id = vpcharter_rotas.aeronave LEFT JOIN `vpcharter_tarifas` ON vpcharter_rotas.id = vpcharter_tarifas.rota";
     var query = "SELECT `vpcharter_rotas`.`id` as id_rota, `vpcharter_companhia`.`nome`, `vpcharter_companhia`.`logo`, vpcharter_fabricante.aeronave, `vpcharter_rotas`.`origem`, `vpcharter_rotas`.`destino`, `vpcharter_rotas`.`saida`, `vpcharter_rotas`.`chegada`, `vpcharter_rotas`.`voo` FROM `vpcharter_rotas` INNER JOIN `vpcharter_frota` ON vpcharter_frota.id = vpcharter_rotas.aeronave INNER JOIN `vpcharter_companhia` ON vpcharter_companhia.id = vpcharter_frota.companhia INNER JOIN `vpcharter_fabricante` ON vpcharter_fabricante.id = vpcharter_frota.fabricante";
-    
-
-
     var fData = new FormData();
     fData.append('query', query);
     axios.post(endpoint+'query.php', fData)
     .then(response=> {
       if (response.data.length > 0) {
         setDataBaseRotas(response.data)
-
         seListData(response.data)
         setListTotal(response.data.length)
       }
@@ -118,26 +104,11 @@ function Tarifas() {
     .then(response=> {
       if (response.data.length > 0) {
         setDataBaseAeroportos(response.data)
+        setLoading(false);
       }
     })
     .catch(error=> alert(error))
-
-
-
-    var query = "SELECT * FROM `vpcharter_tarifas` WHERE `classe` = 'PC' AND `tipo` = 'CO' AND `categoria` = 'DEF' ORDER BY `date` DESC ";
-    var fData = new FormData();
-    fData.append('query', query);
-    axios.post(endpoint+'query.php', fData)
-    .then(response=> {
-      if (response.data.length > 0) {
-        setCusto_PrimeiraClasse(response.data)
-      } 
-    })
-    .catch(error=> alert(error))
-
-
-
-    setLoading(false);
+    
   }
 
   function listaTotal() {
@@ -187,10 +158,6 @@ function Tarifas() {
     navigate('/editaaeronave/'+x);
   }
 
-  function modalRotas() {
-    if (openModal) { setOpenModal(false) }
-    else { setOpenModal(true) }
-  }
 
   function selectAeroporto (x) {
     for (var i = 0, len = dataBaseAeroportos.length; i < len; ++i) {
@@ -224,7 +191,7 @@ function Tarifas() {
     setLoading(true);
     setTypeAlert('')
     //var query = "SELECT vpcharter_fabricante.aeronave, vpcharter_frota.id, vpcharter_frota.fabricante, vpcharter_frota.nomeAeronave, vpcharter_companhia.nome, vpcharter_companhia.logo, vpcharter_frota.fabricacao, vpcharter_frota.ultimaRevisao, vpcharter_frota.angarPrincipal, vpcharter_frota.registro, vpcharter_rotas.origem, vpcharter_rotas.destino FROM `vpcharter_frota` INNER JOIN vpcharter_companhia ON vpcharter_frota.companhia = vpcharter_companhia.id INNER JOIN `vpcharter_fabricante` ON vpcharter_frota.`fabricante` = vpcharter_fabricante.id LEFT JOIN `vpcharter_rotas` ON vpcharter_frota.id = vpcharter_rotas.aeronave WHERE vpcharter_companhia.nome LIKE '%"+buscaFiltro+"%' OR vpcharter_frota.nomeAeronave LIKE '%"+buscaFiltro+"%' OR vpcharter_frota.fabricante LIKE '%"+buscaFiltro+"%' OR vpcharter_fabricante.aeronave LIKE '%"+buscaFiltro+"%' GROUP BY vpcharter_frota.id";
-    var query = "SELECT `vpcharter_rotas`.`id` as id_rota, `vpcharter_companhia`.`nome`, `vpcharter_companhia`.`logo`, vpcharter_fabricante.aeronave, `vpcharter_rotas`.`origem`, `vpcharter_rotas`.`destino`, `vpcharter_rotas`.`saida`, `vpcharter_rotas`.`chegada`, `vpcharter_rotas`.`voo` FROM `vpcharter_rotas` INNER JOIN `vpcharter_frota` ON vpcharter_frota.id = vpcharter_rotas.aeronave INNER JOIN `vpcharter_companhia` ON vpcharter_companhia.id = vpcharter_frota.companhia INNER JOIN `vpcharter_fabricante` ON vpcharter_fabricante.id = vpcharter_frota.fabricante WHERE vpcharter_companhia.nome LIKE '%"+buscaFiltro+"%' OR vpcharter_frota.nomeAeronave LIKE '%"+buscaFiltro+"%' OR vpcharter_frota.fabricante LIKE '%"+buscaFiltro+"%' OR vpcharter_fabricante.aeronave LIKE '%"+buscaFiltro+"%' OR vpcharter_rotas.origem LIKE '%"+buscaFiltro+"%' OR vpcharter_rotas.destino LIKE '%"+buscaFiltro+"%' ";
+    var query = "SELECT `vpcharter_rotas`.`id` as id_rota, `vpcharter_companhia`.`nome`, `vpcharter_companhia`.`logo`, vpcharter_fabricante.aeronave, `vpcharter_rotas`.`origem`, `vpcharter_rotas`.`destino`, `vpcharter_rotas`.`saida`, `vpcharter_rotas`.`chegada`, `vpcharter_rotas`.`voo` FROM `vpcharter_rotas` INNER JOIN `vpcharter_frota` ON vpcharter_frota.id = vpcharter_rotas.aeronave INNER JOIN `vpcharter_companhia` ON vpcharter_companhia.id = vpcharter_frota.companhia INNER JOIN `vpcharter_fabricante` ON vpcharter_fabricante.id = vpcharter_frota.fabricante WHERE vpcharter_companhia.nome LIKE '%"+buscaFiltro+"%' OR vpcharter_frota.nomeAeronave LIKE '%"+buscaFiltro+"%' OR vpcharter_frota.fabricante LIKE '%"+buscaFiltro+"%' OR vpcharter_fabricante.aeronave LIKE '%"+buscaFiltro+"%' OR vpcharter_rotas.origem LIKE '%"+buscaFiltro+"%' OR vpcharter_rotas.destino LIKE '%"+buscaFiltro+"%' OR vpcharter_rotas.voo LIKE '%"+buscaFiltro+"%' ";
 
     var fData = new FormData();
     fData.append('query', query);
@@ -258,61 +225,11 @@ function Tarifas() {
   }
 
 
-  function selectCusto_PrimeiraClasse() {
-
-    
-  }
-  
-
-
-
-
-
 
 
 
   return (
     <>
-
-    <div className={openModal ? 'bg_loading' : 'hide'} >
-      <div className='globalModal'>
-        <GrClose className='closeModal' onClick={()=>setOpenModal(false)} />
-        <h5>Selecionar Rota</h5>
-        
-        <div className='listModal listModalRotas table_list'> 
-          <table className='table table-hover tblDefault'>
-            <thead>
-              <tr>
-                <td>Rota</td>
-                <td>Aeronave</td>
-                <td>Companhia</td>
-                <td>Modelo</td>
-                <td>&nbsp; </td>
-                <td>Origem</td>
-                <td>&nbsp; </td>
-                <td>Destino</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              {dataBaseRotas.map((data, index) => (
-                <tr key={index} onClick={() => novaTarifa(data.id_rota)}>
-                  <td>{data.id_rota}</td>
-                  <td>{data.id_aeronave}. {data.nomeAeronave}</td>
-                  <td><img className={data.logo ? 'imgCia' : 'hide'} src={data.logo} /> {data.logo ? '' : data.nome}</td>
-                  <td>{data.aeronave}</td>
-                  <td></td>
-                  <td>{selectAeroporto(data.origem)}</td>
-                  <td></td>
-                  <td>{selectAeroporto(data.destino)}</td>
-                  <td><BiSolidChevronRight /></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
 
 
     {loading && <LoadingAnimation />}

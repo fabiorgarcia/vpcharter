@@ -78,6 +78,7 @@ function CadastroTarifa() {
   const [changeTipo, setChangeTipo] = useState ('');
   const [changeCateg, setChangeCateg] = useState ('');
   const [changeValor, setChangeValor] = useState (0);
+  const [alertValor, setAlertValor] = useState (false);
 
 
 
@@ -298,12 +299,6 @@ function CadastroTarifa() {
 
 
 
-
-
-
-
-
-
     var query = "SELECT `vpcharter_tarifas`.`date`, `vpcharter_tarifas`.`valor`, `vpcharter_users`.`firstName`, `vpcharter_users`.`familyName`, `vpcharter_users`.`email` FROM `vpcharter_tarifas` LEFT JOIN `vpcharter_users` ON `vpcharter_users`.`id` = `vpcharter_tarifas`.`user` WHERE rota = '"+id+"' AND `classe` = 'PC' AND `tipo` = 'VV' AND `categoria` = 'ADT'  ORDER BY `date` DESC ";
     var fData = new FormData();
     fData.append('query', query);
@@ -455,10 +450,62 @@ function CadastroTarifa() {
     var mes = Number(hoje.getMonth()) + Number(1)
     var formatDateTime = hoje.getFullYear() +'-'+ mes +'-'+ hoje.getDate() +' '+ hoje.getHours() +':'+ hoje.getMinutes() +':'+ hoje.getSeconds();
 
+    //gravaTarifa()
+
+    
+
+    if (tipo == 'VV') {
+      var query = "SELECT * FROM `vpcharter_tarifas` WHERE `rota` = '"+rota+"' AND `classe` = '"+classe+"' AND `tipo` = 'CO' AND `categoria` = '"+changeCateg+"' ORDER BY `date` DESC LIMIT 1 ";
+      var fData = new FormData();
+        fData.append('query', query);
+        axios.post(Globals.endPoint+'query.php', fData)
+        .then(response=> {
+          
+          if (response.data.length > 0) {
+            
+            if (vl1 >= response.data[0].valor) {
+
+              gravaTarifa()
+
+            } else {
+              setLoading(false);
+
+              var resp = confirm('Confirma Valor inferior ao Custo Operacional?');
+              if (resp) {
+                gravaTarifa()
+              } 
+
+            }
+
+          }
+        })
+        .catch(error=> alert(error))
+        
+    } else {
+
+      gravaTarifa()
+
+    }
+    
+
+  }
+
+
+  function gravaTarifa() {
+
+    if (changeTipo=='Custo Operacional') { var tipo = 'CO'; } else { var tipo = 'VV'; }
+    if (changeClasse=='Primeira Classe') { var classe = 'PC'; }
+    if (changeClasse=='Premium') { var classe = 'PR'; }
+    if (changeClasse=='Executiva') { var classe = 'EX'; }
+    if (changeClasse=='Econômica') { var classe = 'EC'; }
+    var vl1 = document.getElementById("changeValor").value.replace("R$", "").replace(".", "").replace(",", ".").replace(" ", ".").trim();
+    if (Number(changeValor)=== Number(vl1)) { var newValor = false } else { var newValor = true }
+    var hoje = new Date();
+    var mes = Number(hoje.getMonth()) + Number(1)
+    var formatDateTime = hoje.getFullYear() +'-'+ mes +'-'+ hoje.getDate() +' '+ hoje.getHours() +':'+ hoje.getMinutes() +':'+ hoje.getSeconds();
+
     if (newValor) {
-      var query = "INSERT INTO `vpcharter_tarifas` (`id`, `rota`, `classe`, `tipo`, `categoria`, `valor`, `user`, `date` ) VALUES (NULL, '"+rota+"', '"+classe+"', '"+tipo+"', '"+changeCateg+"', '"+vl1+"', '"+Globals.userId+"', '"+formatDateTime+"');";
-      console.log(query)
-      
+      var query = "INSERT INTO `vpcharter_tarifas` (`id`, `rota`, `classe`, `tipo`, `categoria`, `valor`, `user`, `date` ) VALUES (NULL, '"+rota+"', '"+classe+"', '"+tipo+"', '"+changeCateg+"', '"+vl1+"', '"+Globals.userId+"', '"+formatDateTime+"');";        
       var fData = new FormData();
       fData.append('query', query);
       axios.post(Globals.endPoint+'query.php', fData)
@@ -486,7 +533,6 @@ function CadastroTarifa() {
       setLoading(false);
       setOpenModal(false)
     }
-
   }
 
   function selectAeroporto (x) {
@@ -512,6 +558,7 @@ function CadastroTarifa() {
   }
 
   function alteraValor(classe, tipo, categ, valor) {
+    setAlertValor(false)
     setOpenModal(true)
     setChangeClasse(classe)
     setChangeTipo(tipo)
@@ -555,11 +602,17 @@ function CadastroTarifa() {
         <GrClose className='closeModal' onClick={()=>setOpenModal(false)} />
         <h5><b>Alterar {changeTipo}</b></h5> 
         <h5>{changeClasse} / {changeCateg}</h5>
-        <form onSubmit={(e)=> validaForm(e)} >
+        <form onSubmit={(e)=> validaForm(e)} className='formPeq'>
 
           <div className='row mt-5 mb-3'>
+
             <div className='col-12'>
-              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={changeValor} />
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={changeValor} onChange={(e)=>setChangeValor(e.target.value)} />
+            </div>
+
+            <div className={alertValor?'mt-3 mb-3':'hide'}>
+              <p>Valor autorizado por:</p>
+              <input type='tex' required={alertValor?true:false}></input>
             </div>
             <div className='col-12 mt-2'>
               <button type='submit' ><span><VscEdit /> Alterar</span></button>
@@ -659,7 +712,7 @@ function CadastroTarifa() {
                   {custo_primeiraClasse.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index} >
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList' >{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList' >{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -675,7 +728,7 @@ function CadastroTarifa() {
                   {custo_primeiraclasse_chd.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -691,7 +744,7 @@ function CadastroTarifa() {
                   {custo_primeiraclasse_inf.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -712,7 +765,7 @@ function CadastroTarifa() {
                   {custo_premium.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -728,7 +781,7 @@ function CadastroTarifa() {
                   {custo_premium_chd.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -744,7 +797,7 @@ function CadastroTarifa() {
                   {custo_premium_inf.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -765,7 +818,7 @@ function CadastroTarifa() {
                   {custo_executiva.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -781,7 +834,7 @@ function CadastroTarifa() {
                   {custo_executiva_chd.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -797,7 +850,7 @@ function CadastroTarifa() {
                   {custo_executiva_inf.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -818,7 +871,7 @@ function CadastroTarifa() {
                   {custo_economica.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -834,7 +887,7 @@ function CadastroTarifa() {
                   {custo_economica_chd.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -850,7 +903,7 @@ function CadastroTarifa() {
                   {custo_economica_inf.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -883,7 +936,7 @@ function CadastroTarifa() {
                   {primeiraClasse.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -899,7 +952,7 @@ function CadastroTarifa() {
                   {primeiraclasse_chd.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -915,7 +968,7 @@ function CadastroTarifa() {
                   {primeiraclasse_inf.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -936,7 +989,7 @@ function CadastroTarifa() {
                   {premium.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -952,7 +1005,7 @@ function CadastroTarifa() {
                   {premium_chd.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -968,7 +1021,7 @@ function CadastroTarifa() {
                   {premium_inf.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -989,7 +1042,7 @@ function CadastroTarifa() {
                   {executiva.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -1005,7 +1058,7 @@ function CadastroTarifa() {
                   {executiva_chd.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -1021,7 +1074,7 @@ function CadastroTarifa() {
                   {executiva_inf.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -1042,7 +1095,7 @@ function CadastroTarifa() {
                   {economica.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -1058,7 +1111,7 @@ function CadastroTarifa() {
                   {economica_chd.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}
@@ -1074,7 +1127,7 @@ function CadastroTarifa() {
                   {economica_inf.map((data, index) => (
                     <div className='lineTarifa lineTarifaIten' key={index}>
                       <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/60)}}></div>{formatCurrency(data.valor)}
+                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
                       </div>
                     </div>
                   ))}

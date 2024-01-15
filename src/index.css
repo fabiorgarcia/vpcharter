@@ -22,6 +22,13 @@
   -webkit-transition: all .2s ease-in-out;
 }
 
+.disableColor {
+  color: rgb(179, 179, 179);
+}
+.cursorPointer {
+  cursor: pointer;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -2247,6 +2254,10 @@ small {
   min-width: 101px;
 }
 
+.formPeq {
+  max-width: 318px;
+}
+
 
 
 
@@ -2269,6 +2280,9 @@ small {
   }
   .tdComplete {
     width: 10%;
+  }
+  .graficTarifa {
+    display: none;
   }
 }
 
@@ -2407,6 +2421,10 @@ small {
 }
 
 @media screen and (max-width: 768px) {
+
+  .graficTarifa {
+    display: block;
+  }
 
   .tdSelectCustom {
     width: auto;

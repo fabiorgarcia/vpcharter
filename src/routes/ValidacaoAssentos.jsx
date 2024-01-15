@@ -21,6 +21,7 @@ import ReactInputMask from 'react-input-mask';
 import { MdOutlineHome } from "react-icons/md";
 import { IoAirplaneOutline } from "react-icons/io5";
 import { HiOutlineArrowLongDown } from "react-icons/hi2";
+import { LiaToggleOffSolid, LiaToggleOnSolid } from "react-icons/lia";
 
 
 
@@ -112,6 +113,7 @@ function ValidacaoAssentos() {
   const [saidaEmergPremium, setSaidaEmergPremium] = useState ([]); 
   const [saidaEmergExecutiva, setSaidaEmergExecutiva] = useState ([]); 
   const [saidaEmergEconomica, setSaidaEmergEconomica] = useState ([]); 
+  const [toggle, setToggle] = useState (false);
   
 
   useEffect(() => {
@@ -470,6 +472,7 @@ function ValidacaoAssentos() {
 
     setLoading(true)
     setUpdateTipoAssento('padrao')
+    setToggle(false)
     var assento = col+fil;
     var query = "SELECT * FROM `vpcharter_reserva` WHERE `frete` = '"+freteId+"' AND `assento` = '"+assento+"' AND `classe` = '"+classe+"'  ";
     var fData = new FormData();
@@ -1328,9 +1331,19 @@ function ValidacaoAssentos() {
               <option value="ADT">ADT</option>
             </select>
           </div>
-          <div className='col-4'>
+
+          <div className='col-2 text-start'>
+            <label>Status</label>
+            <span className={!toggle?'cursorPointer':'hide'} onClick={()=> setToggle(true)}><LiaToggleOffSolid className='h2 mt-2 disableColor' /> Reservado</span>
+            <span className={toggle?'cursorPointer':'hide'} onClick={()=> setToggle(false)}><LiaToggleOnSolid className='h2 mt-2 pink-salmon' /> Pago</span>
+          </div>
+          <div className='col-6'>
             <label>Responsável</label>
-            <input type='text' id="f_responsavel" value={responsavel} onChange={(e)=>setResponsavel(e.target.value)} disabled={tipo == 'ADT' ? true:false}  />
+            <input type='text' id="f_responsavel" value={responsavel} onChange={(e)=>setResponsavel(e.target.value)} disabled={tipo == 'ADT' || reservaId ? true:false}  />
+          </div>
+          <div className='col-6'>
+            <label>CPF do Responsável</label>
+            <ReactInputMask mask="999.999.999-99" id="f_cpf" className='defaultField' required  disabled={reservaId ? true : false}  />
           </div>
           <div className='col-4'>
             <label>Telefone</label>
