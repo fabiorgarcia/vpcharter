@@ -36,6 +36,7 @@ import Classe from './routes/Classe.jsx';
 import Fabricante from './routes/Fabricante.jsx';
 import ServicoBordo from './routes/ServicoBordo.jsx';
 import Companhias from './routes/Companhias.jsx';
+import HomeAereoAgencia from './routes/HomeAereoAgencia.jsx';
 
 
 const router = createBrowserRouter([
@@ -167,6 +168,10 @@ const router = createBrowserRouter([
       {
         path: '/admin/companhias',
         element: <Companhias />,
+      },
+      {
+        path: '/aeroagencia',
+        element: <HomeAereoAgencia />,
       }
     ]
   }

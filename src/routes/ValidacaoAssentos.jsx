@@ -104,6 +104,7 @@ function ValidacaoAssentos() {
   const [listSocialMedia, setListSocialMedia] = useState ([]); 
   const [listSocialMediaNew, setListSocialMedialNew] = useState ([]); 
   const [localizador, setLocalizador] = useState ('');
+  const [obs, setObs] = useState (''); 
   const [dataReserva, setDataReserva] = useState ([]); 
   const [corredoresPrimC, setCorredoresPrimC] = useState ([]); 
   const [corredoresPremium, setCorredoresPremium] = useState ([]); 
@@ -118,6 +119,13 @@ function ValidacaoAssentos() {
 
   useEffect(() => {
 
+    loadPage()
+  
+
+  }, [])
+
+
+  function loadPage() {
     setLoading(true);
     var query = "SELECT vpcharter_fretamento.id as id_fretamento, vpcharter_frota.id as id_aeronave, vpcharter_rotas.id as id_rota, vpcharter_fretamento.multa, vpcharter_fretamento.data_frete, vpcharter_fretamento.cancelamento, vpcharter_fretamento.custo, vpcharter_rotas.id as id_rota, vpcharter_rotas.origem, vpcharter_rotas.destino, vpcharter_rotas.duracao, vpcharter_rotas.saida, vpcharter_rotas.voo, vpcharter_contratante.razaosocial, vpcharter_frota.nomeAeronave, vpcharter_fabricante.aeronave, vpcharter_companhia.nome, vpcharter_companhia.logo FROM `vpcharter_fretamento` INNER JOIN `vpcharter_rotas` ON vpcharter_fretamento.rota_ida = vpcharter_rotas.id INNER JOIN `vpcharter_contratante` ON vpcharter_fretamento.contratante = vpcharter_contratante.id INNER JOIN `vpcharter_frota` ON vpcharter_rotas.aeronave = vpcharter_frota.id INNER JOIN `vpcharter_fabricante` ON vpcharter_frota.fabricante = vpcharter_fabricante.id INNER JOIN `vpcharter_companhia` ON vpcharter_frota.companhia = vpcharter_companhia.id WHERE vpcharter_fretamento.id = '"+id+"' ";
     var fData = new FormData();
@@ -145,7 +153,7 @@ function ValidacaoAssentos() {
     .catch(error=> alert(error))
 
 
-    var query = "SELECT vpcharter_fretamento.data_frete, c1.nome as r1cia, c1.logo as r1logo, r1.voo as r1voo, r1.origem as r1origem, r1.saida as r1saida, r1.destino as r1destino, r1.chegada as r1chegada, vpcharter_fretamento.rota_ida, vpcharter_fretamento.rota_volta, vpcharter_fretamento.date_volta, c2.nome as r2cia, c2.logo as r2logo, r2.voo as r2voo, r2.origem as r2origem, r2.saida as r2saida, r2.destino as r2destino, r2.chegada as r2chegada, vpcharter_contratante.razaosocial FROM `vpcharter_fretamento` INNER JOIN `vpcharter_contratante` ON vpcharter_fretamento.contratante = vpcharter_contratante.id INNER JOIN `vpcharter_rotas` r1 ON r1.id = vpcharter_fretamento.rota_ida INNER JOIN `vpcharter_frota` f1 ON f1.id = r1.aeronave INNER JOIN `vpcharter_companhia` c1 ON c1.id = f1.companhia INNER JOIN `vpcharter_rotas` r2 ON r2.id = vpcharter_fretamento.rota_volta INNER JOIN `vpcharter_frota` f2 ON f2.id = r2.aeronave INNER JOIN `vpcharter_companhia` c2 ON c2.id = f2.companhia WHERE vpcharter_fretamento.id = '"+id+"' LIMIT 1 ";
+    var query = "SELECT vpcharter_fretamento.data_frete, vpcharter_fretamento.obs, c1.nome as r1cia, c1.logo as r1logo, r1.voo as r1voo, r1.origem as r1origem, r1.saida as r1saida, r1.destino as r1destino, r1.chegada as r1chegada, vpcharter_fretamento.rota_ida, vpcharter_fretamento.rota_volta, vpcharter_fretamento.date_volta, c2.nome as r2cia, c2.logo as r2logo, r2.voo as r2voo, r2.origem as r2origem, r2.saida as r2saida, r2.destino as r2destino, r2.chegada as r2chegada, vpcharter_contratante.razaosocial FROM `vpcharter_fretamento` INNER JOIN `vpcharter_contratante` ON vpcharter_fretamento.contratante = vpcharter_contratante.id INNER JOIN `vpcharter_rotas` r1 ON r1.id = vpcharter_fretamento.rota_ida INNER JOIN `vpcharter_frota` f1 ON f1.id = r1.aeronave INNER JOIN `vpcharter_companhia` c1 ON c1.id = f1.companhia INNER JOIN `vpcharter_rotas` r2 ON r2.id = vpcharter_fretamento.rota_volta INNER JOIN `vpcharter_frota` f2 ON f2.id = r2.aeronave INNER JOIN `vpcharter_companhia` c2 ON c2.id = f2.companhia WHERE vpcharter_fretamento.id = '"+id+"' LIMIT 1 ";
     var fData = new FormData();
     fData.append('query', query);
     axios.post(endpoint+'query.php', fData)
@@ -156,11 +164,7 @@ function ValidacaoAssentos() {
       } 
     })
     .catch(error=> alert(error))
-  
-
-  }, [])
-
-
+  }
 
 
 
@@ -1084,6 +1088,25 @@ function ValidacaoAssentos() {
     
   }
 
+
+  function validaFormModal(e) {
+    setLoading(true)
+    e.preventDefault();
+    
+    var query = "UPDATE `vpcharter_fretamento` SET `obs` = '"+obs+"' WHERE `vpcharter_fretamento`.`id` = '"+id+"' ";
+    var fData = new FormData();
+    fData.append('query', query);
+    axios.post(endpoint+'query.php', fData)
+    .then(response=> {
+      if (response.data.length > 0) {  
+        setOpenModal2(false)
+        loadPage()
+      }
+    })
+    .catch(error=> alert(error))
+    
+  }
+
   function limpaForm() {
     setNome('')
     setSobrenome('')
@@ -1242,6 +1265,13 @@ function ValidacaoAssentos() {
     
   }
 
+  function changeObs (x) {
+    if(!x) { x = ''; }
+    setObs(x)
+    setOpenModal2(true)
+  }
+
+
 
 
   return (
@@ -1273,6 +1303,36 @@ function ValidacaoAssentos() {
             </div>
           </div>
         </div>
+
+
+      </div>
+    </div>
+
+    <div className={openModal2 ? 'bg_loading' : 'hide'}>
+
+      <div className='globalModal text-center'>
+        <span className='closeModal' onClick={()=>setOpenModal2(false)} >✕</span>
+
+        <form onSubmit={(e)=> validaFormModal(e)}>
+
+
+          <div className='infoModal'>
+
+            <div className='row'>
+              <div className='col-12'>
+                <h5>Observações:</h5>
+                <textarea className='textareaModal' value={obs} onChange={(e)=>setObs(e.target.value)}></textarea>
+              </div>
+
+              <div className='col-12 mt-2'>
+                <button type='submit' className='btnGde'><span><BsCheckLg /> Salvar</span></button>
+              </div>
+
+
+            </div>
+          </div>
+
+        </form>
 
 
       </div>
@@ -1508,6 +1568,11 @@ function ValidacaoAssentos() {
                             <div className='col-12 '>
                               <label className='small'>Contratante</label>
                               <span>{base.razaosocial}</span>
+                            </div>
+
+                            <div className='col-12 mt-4 obsDiv' onClick={()=>changeObs(base.obs)}>
+                              <label>Observações: <span className='pink-salmon penObs' title='Alterar Observações'>✎</span></label>
+                              <span>{base.obs}</span>
                             </div>
                           </div>
                         </div>

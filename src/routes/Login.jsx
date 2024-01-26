@@ -12,6 +12,7 @@ const Login = () => {
 
   const navigate = useNavigate()
   var endpoint = 'http://frgarcia.com.br/vpcharter/';
+  //var endpoint = '/backend/';
 
   const [isLoggedIn, setIsLoggedIn] = useState (false);
   const [name, setName] = useState ('');
@@ -67,7 +68,8 @@ const Login = () => {
         if (response.data.length > 0) {
 
           // Consultar Pass
-          var query = "SELECT * FROM `vpcharter_users` WHERE `email` = '"+email+"' AND `pass` = '"+password+"'  ";
+          //var query = "SELECT * FROM `vpcharter_users` WHERE `email` = '"+email+"' AND `pass` = '"+password+"'  ";
+          var query = "SELECT `vpcharter_users`.`id`, `vpcharter_users`.`firstName`, `vpcharter_users`.`familyName`, `vpcharter_users`.`email`, `vpcharter_users`.`userActive`, `vpcharter_users`.`status`, `vpcharter_users`.`agenciaCliente`, `vpcharter_contratante`.`razaosocial` FROM `vpcharter_users` INNER JOIN `vpcharter_contratante` ON `vpcharter_contratante`.`id` = `vpcharter_users`.`agenciaCliente` WHERE `vpcharter_users`.`email` = '"+email+"' AND `vpcharter_users`.`pass` = '"+password+"' ";
           var fData = new FormData();
           fData.append('query', query);
           axios.post(endpoint+'query.php', fData)
@@ -75,12 +77,14 @@ const Login = () => {
             if (response.data.length > 0) {
 
               if (response.data[0].userActive == 0) {
-                var cok = response.data[0].status + '|' + response.data[0].id + '|' + response.data[0].firstName;
+                var cok = response.data[0].status + '|' + response.data[0].id + '|' + response.data[0].firstName + '|' + response.data[0].agenciaCliente + '|' + response.data[0].razaosocial;
 
                 Globals.userId = response.data[0].id;
                 Globals.userName = response.data[0].firstName;
                 Globals.userEmail = response.data[0].email;
                 Globals.userStatus = response.data[0].status;
+                Globals.userIdAgencia = response.data[0].agenciaCliente;
+                Globals.userNameAgencia = response.data[0].razaosocial;
 
                 if (response.data[0].imageUrl) { 
                   Globals.userImage = response.data[0].imageUrl; 
@@ -230,7 +234,8 @@ const Login = () => {
               {txtError}
             </div>
 
-            <img className="logovplogin" src={hero} alt="Viagens Promo" />
+            {/*<img className="logovplogin" src={hero} alt="Viagens Promo" />*/}
+            <div className='book2bLogin' alt="Viagens Promo"> </div>
 
             <form className='inputFormLogin' >
               <label>Login</label>
@@ -256,10 +261,12 @@ const Login = () => {
 
               <div className='row lkLogin'>
                 <div className='col-6 lk1'><Link to="/recuperarsenha" relative="path">Esqueceu a senha?</Link></div>
-                <div className='col-6 lk2'><Link to="/novousuario" relative="path">Não tem cadastro?</Link></div>
+                
               </div>
 
               <button type='button' onClick={() => validaForm()}><span className={loading ? 'hide' : ''}>Entrar</span><span className={loading ? 'loader' : 'hide'}></span></button>
+              
+              {/*
               <div className='divOu'>
                 <hr></hr>
                 <div className='txtOu'>ou</div>
@@ -275,6 +282,9 @@ const Login = () => {
                 />
 
               </div>
+              */}
+
+            <div className='text-center mt-2'><Link to="/novousuario" relative="path"><small>Não tem cadastro?</small></Link></div>
 
             </form>
           </div>

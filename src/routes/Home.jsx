@@ -29,11 +29,11 @@ function Home() {
       <div className='allTab'>
         <Sidebar />
             <div className='content'>
-              <div className='breadCrumb'><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' /> Home</div>
+              {/*<div className='breadCrumb'><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' /> Home</div>*/}
 
               <div className='row contentHomeMaster'>
                 <div className='col-6'>
-                  <Link to="/aereo" relative="path"><div className='btnHomeMaster'><GiCommercialAirplane /><span>Aéreo</span><span className='h5'>Fretamento</span></div></Link>
+                  <Link to={Globals.userStatus=='3'?"/aeroagencia":"/aereo"} relative="path"><div className='btnHomeMaster'><GiCommercialAirplane /><span>Aéreo</span><span className='h5'>Fretamento</span></div></Link>
                 </div>
                 <div className='col-6'>
                   <div className='btnHomeMaster btnHomeMasterOff'><BsBusFrontFill /><span>Ônibus</span><span className='h5'>Fretamento</span></div>

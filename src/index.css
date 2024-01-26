@@ -5,11 +5,12 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --global-bg: #eeeeee;
-  --pink-salmon: #cf493a;
-  --bright-salmon: #e73c28;
+  --global-bg: #f5f5f5;
+  --pink-salmon: #eb0045;
+  --bright-salmon: #ec343a;
   --travel-blue: #1a1f4a;
-  --light-blue: #1c46a9;
+  --light-blue: #162260;
+  --light-green: #03A691;
   color: var(--travel-blue);
 }
 * {
@@ -22,11 +23,86 @@
   -webkit-transition: all .2s ease-in-out;
 }
 
+.travel-blue {
+  color: var(--travel-blue);
+}
+
+.book2b {
+  background: url(./assets/book2b.svg) no-repeat top left;
+  width: 100%;
+  max-width: 200px;
+  height: 30px;
+  cursor: pointer;
+}
+
+
+.book2bLogin {
+  background: url(./assets/book2b.svg) no-repeat top ;
+  width: 100%;
+  max-width: 420px;
+  height: 63px;
+  
+}
+
+
+
+.textDefault {
+  font-size: 1rem;
+}
 .disableColor {
   color: rgb(179, 179, 179);
 }
 .cursorPointer {
   cursor: pointer;
+}
+
+
+.selectMonth {
+  color: #ffffff!important;
+  border: 1px solid var(--pink-salmon)!important;
+  background-color: var(--pink-salmon)!important;
+}
+
+.styles-module_item-provider__YgMwz button {
+  background-color: #ffffff;
+  color: var(--travel-blue);
+  width: 145px;
+  border-radius: 30px;
+  border: 1px solid var(--travel-blue);
+  margin-top: 0px;
+  font-size: 1rem;
+  min-height: 15px;
+}
+.styles-module_item-provider__YgMwz button:hover {
+  color: #ffffff;
+  border: 1px solid var(--pink-salmon);
+}
+.styles-module_carousel-arrow__26sRw[data-direction=right] {
+  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg) 50% no-repeat;
+  border: none;
+  cursor: pointer;
+  outline: 0;
+  position: relative;
+  -webkit-transform: scale(.5);
+  transform: scale(.5);
+  width: 40px;
+  margin-top: 0px;
+  min-height: 15px;
+  height: 40px;
+}
+
+.styles-module_carousel-arrow__26sRw[data-direction=left] {
+  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg) 50% no-repeat;
+    border: none;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    left: -13px;
+    outline: 0;
+    -webkit-transform: rotate(180deg) scale(.5);
+    transform: rotate(180deg) scale(.5);
+    margin-top: 0px;
+    min-height: 15px;
 }
 
 a {
@@ -996,6 +1072,82 @@ stroke-linecap: round;
 
 
 
+.listDiv {
+  border: 1px solid #EDEDED;
+  margin-bottom: 20px;
+  padding: 20px 5px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0px 2px 6px 0px rgba(84,89,98,0.1);
+  -moz-box-shadow: 0px 2px 6px 0px rgba(84,89,98,0.1);
+  box-shadow: 0px 2px 6px 0px rgba(84,89,98,0.1);
+  display: flex;
+  align-items: center;
+}
+.listDiv:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0px 2px 6px 0px rgba(84,89,98,0.3);
+  -moz-box-shadow: 0px 2px 6px 0px rgba(84,89,98,0.3);
+  box-shadow: 0px 2px 6px 0px rgba(84,89,98,0.3);
+}
+.listDiv h5 {
+  font-weight: 600;
+}
+.listDiv hr {
+  color: #bbbbbb;
+  margin: 10px 0;
+}
+.listDiv .price {
+  font-size: 1.7rem;
+  font-weight: 600;
+  width: fit-content;
+  color: var(--light-green);
+}
+.listDiv .firstCol {
+  max-width: 450px;
+}
+.idaVolta {
+  background-color: #e8eafb;
+  border-radius: 5px;
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  width: fit-content;
+  font-weight: 500;
+}
+.idaVolta .airplaneIda {
+  font-size: 1rem;
+  -webkit-transform: rotate(90deg) ;
+  transform: rotate(90deg);
+}
+.idaVolta .airplaneVolta {
+  font-size: 1rem;
+  -webkit-transform: rotate(-90deg) ;
+  transform: rotate(-90deg);
+}
+.product {
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+  font-size: 1rem;
+  align-items: center;
+  line-height: 120%;
+}
+.product .imgCia {
+  height: 15px;
+}
+.rota {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.rota .arrow {
+  font-size: 1.4rem;
+  padding-top: 8px;
+}
+.hrPrice {
+  display: none;
+}
+
+
 
 h1 {
   font-weight: 600;
@@ -1186,7 +1338,27 @@ input[type=text], input[type=number], input[type=password], input[type=email], i
 }
 .textRight {
   text-align: right;
+}
 
+.textareaModal {
+  min-width: 250px;
+  min-height: 150px;
+}
+
+
+.obsDiv {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.obsDiv:hover {
+  cursor:pointer!important;
+  background-color: #f2f2f8;
+}
+.penObs {
+  opacity: 0;
+}
+.obsDiv:hover .penObs {
+  opacity: 1;
 }
 
 
@@ -1860,6 +2032,7 @@ small {
   font-weight: 600;
 }
 
+
 .voucherIcon {
   background: url(./assets/voucher.svg) no-repeat top;
   width: 100%;
@@ -2259,6 +2432,15 @@ small {
 }
 
 
+.carousel_1 {
+  display: block;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.carousel_2, .carousel_3, .carousel_4, .carousel_5 {
+  display: none;
+}
+
 
 
 
@@ -2268,6 +2450,12 @@ small {
   }
   .tdComplete {
     width: 15%;
+  }
+  .carousel_1, .carousel_3, .carousel_4, .carousel_5 {
+    display: none;
+  }
+  .carousel_2 {
+    display: block;
   }
 }
 
@@ -2284,6 +2472,7 @@ small {
   .graficTarifa {
     display: none;
   }
+  
 }
 
 @media screen and (max-width: 1400px) {
@@ -2308,6 +2497,12 @@ small {
   }
   #subLinksAereo, #subLinksAdmin {
     padding-left: 0px!important;
+  }
+  .carousel_1, .carousel_2 {
+    display: none;
+  }
+  .carousel_3 {
+    display: block;
   }
 
 }
@@ -2371,6 +2566,12 @@ small {
   .contentAll {
     padding: 20px 20px 40px 20px;
   }
+  .carousel_1, .carousel_2, .carousel_4, .carousel_5 {
+    display: none;
+  }
+  .carousel_3 {
+    display: block;
+  }
 }
 
 @media screen and (max-width: 912px) {
@@ -2418,9 +2619,23 @@ small {
     display: none ;
   }
 
+  .carousel_1, .carousel_2, .carousel_3, .carousel_5 {
+    display: none;
+  }
+  .carousel_4 {
+    display: block;
+  }
+
 }
 
 @media screen and (max-width: 768px) {
+
+  .idaVolta {
+    margin-top: 10px;
+  }
+  .hrPrice {
+    display: block;
+  }
 
   .graficTarifa {
     display: block;
@@ -2517,7 +2732,12 @@ small {
   .icoHome svg {
     margin-bottom: 0px; 
   }
+
+  
   .logovp {
+    max-width: 130px;
+  }
+  .book2b {
     max-width: 130px;
   }
   .lineButtons .btnNew {
@@ -2573,6 +2793,16 @@ small {
     white-space:inherit;
   }
 
+}
+
+@media screen and (max-width: 480px) {
+
+  .carousel_1, .carousel_2, .carousel_3, .carousel_4 {
+    display: none;
+  }
+  .carousel_5 {
+    display: block;
+  }
 }
 
 

@@ -101,9 +101,7 @@ function Usuarios() {
   function changeStatus(e, idUser) {
     setLoading(true)
     setStatus(e);
-    var newStatus = "0";
-    if (e == "0") { newStatus = "9" }
-    var query = "UPDATE `vpcharter_users` SET  `status` = '"+newStatus+"' WHERE `vpcharter_users`.`id` = '"+idUser+"'  ";
+    var query = "UPDATE `vpcharter_users` SET  `status` = '"+e+"' WHERE `vpcharter_users`.`id` = '"+idUser+"'  ";
     var fData = new FormData();
     fData.append('query', query);
     axios.post(endpoint+'query.php', fData)
@@ -192,7 +190,7 @@ function Usuarios() {
                         <td>ID</td>
                         <td>Nome</td>
                         <td>E-mail</td>
-                        <td className='text-center'>Adminstrador</td>
+                        <td>Status</td>
                         <td>Empresa</td>
                         <td className='text-center'>Ativo</td>
                       </tr>
@@ -203,8 +201,18 @@ function Usuarios() {
                         <td>{user.id}</td>
                         <td>{user.firstName} {user.familyName}</td>
                         <td>{user.email}</td>
-                        <td className='text-center'>
-                          <input type="checkbox" name="scales" value={user.status} checked={user.status == "9" ? true : false} onChange={(e)=>changeStatus(e.target.value, user.id)} />
+                        <td className='text-center'>                        
+                          <select value={user.status} onChange={(e)=>changeStatus(e.target.value, user.id)} required >
+                            <option value="">--</option>
+                            <option value="0">Operacional</option>
+                            <option value="1">Financeiro</option>
+                            <option value="2">Produtos internos</option>
+                            <option value="3">Comprador</option>
+                            <option value="9">Gestão</option>
+                            <option value="99">Administrador</option>
+                          </select>
+                        
+                        
                         </td>
                         <td>
 

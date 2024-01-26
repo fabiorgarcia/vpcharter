@@ -230,7 +230,7 @@ function MeusDados() {
                       </div>
                       <div className='col-6'>
                         <label>Senha</label>
-                        <input type='text' value={pass} onChange={(e) => setPass(e.target.value)} required />
+                        <input type='password' value={pass} onChange={(e) => setPass(e.target.value)} required />
                       </div>
                     </div>
 

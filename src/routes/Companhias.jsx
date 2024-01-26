@@ -258,6 +258,7 @@ function Companhias() {
                       <div className='col'>
                         <label>Tipo</label>
                         <select value={tipo} onChange={(e) => setTipo(e.target.value)} required >
+                          <option value=""></option>
                           <option value="AERO">Aéreo</option>
                           <option value="RODO">Rodoviário</option>
                         </select>
@@ -321,7 +322,6 @@ function Companhias() {
 
               <div className='row'>
                 <div className='table_list'> 
-                  
                   <table className='tblDefault'>
                     <thead>
                       <tr>
@@ -349,7 +349,6 @@ function Companhias() {
                     </tbody>
                   </table>
                 </div>
-
               </div>
 
             </div>

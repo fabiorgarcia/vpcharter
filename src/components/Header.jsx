@@ -44,10 +44,14 @@ const Header = () => {
         var ss = cookies.vpcharter.split('|')[0];
         var ii = cookies.vpcharter.split('|')[1];
         var nn = cookies.vpcharter.split('|')[2];
+        var aa = cookies.vpcharter.split('|')[3];
+        var rs = cookies.vpcharter.split('|')[4];
 
         Globals.userId = ii;
         Globals.userStatus = ss;
         Globals.userName = nn;
+        Globals.userIdAgencia = aa;
+        Globals.userNameAgencia = rs;
         setStatusUser(nn)
         setNameUser(ss)
 
@@ -93,12 +97,17 @@ const Header = () => {
     navigate('/meusdados');
   }
 
+  function gohome() {
+    navigate('/home');
+  }
+
 
 
   return (
     <header>
         <div className='header' >
-          <Link to="/home"><img src={logovp} className="logovp" alt="Viagens Promo" /></Link>
+          {/*<Link to="/home"><img src={logovp} className="logovp" alt="Viagens Promo" /></Link>*/}
+          <div className='book2b' alt="Viagens Promo" onClick={()=>gohome()} ></div>
           <div className='hederUser' onClick={() => setShowUserMenu(!showUserMenu)}>
             <span className='nameIconUser'>
               <span className='nameUser'>{nameUser}</span> <PiUserCircleFill className={ imageUser ? 'hide' : 'icoUser'} /></span>

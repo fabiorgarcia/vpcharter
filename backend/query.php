@@ -13,10 +13,11 @@ header("Set-Cookie: cross-site-cookie=whatever; SameSite=None; Secure");
 
 
 $query = $_POST['query'];
+//$query = "SELECT * FROM `book2b-prod`.vpcharter_users ";
 $rows   = array();
 
 
-$link   = mysqli_connect("mysql01.frgarcia.hospedagemdesites.ws", "frgarcia", "maestro31", "frgarcia");
+$link   = mysqli_connect('vp-cluster-database.cluster-ctckmuig6gwh.us-east-1.rds.amazonaws.com', 'admin-app', ';rv%PCPS5)r$T06q', 'book2b-prod');
 $result = mysqli_query($link, $query);
 
 while ($line = mysqli_fetch_array($result)){
