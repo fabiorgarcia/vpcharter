@@ -89,7 +89,8 @@ function HomeAereoAgencia() {
 
     var startMonth = currentYear+'-'+month+'-01';
     var finalMonth = currentYear+'-'+month+'-31';
-    var query = "SELECT vpcharter_fretamento.id as id_fretamento, vpcharter_fretamento.data_frete, c1.nome as r1cia, c1.logo as r1logo, r1.voo as r1voo, r1.origem as r1origem, r1.saida as r1saida, r1.destino as r1destino, r1.chegada as r1chegada, vpcharter_fretamento.rota_volta, vpcharter_fretamento.date_volta, c2.nome as r2cia, c2.logo as r2logo, r2.voo as r2voo, r2.origem as r2origem, r2.saida as r2saida, r2.destino as r2destino, r2.chegada as r2chegada, vpcharter_fretamento.cancelamento,  vpcharter_contratante.razaosocial FROM `vpcharter_fretamento` INNER JOIN `vpcharter_contratante` ON vpcharter_fretamento.contratante = vpcharter_contratante.id INNER JOIN `vpcharter_rotas` r1 ON r1.id = vpcharter_fretamento.rota_ida INNER JOIN `vpcharter_frota` f1 ON f1.id = r1.aeronave INNER JOIN `vpcharter_companhia` c1 ON c1.id = f1.companhia INNER JOIN `vpcharter_rotas` r2 ON r2.id = vpcharter_fretamento.rota_volta INNER JOIN `vpcharter_frota` f2 ON f2.id = r2.aeronave INNER JOIN `vpcharter_companhia` c2 ON c2.id = f2.companhia WHERE  vpcharter_fretamento.data_frete BETWEEN '"+startMonth+"' AND '"+finalMonth+"' ";
+    //var query = "SELECT vpcharter_fretamento.id as id_fretamento, vpcharter_fretamento.data_frete, c1.nome as r1cia, c1.logo as r1logo, r1.voo as r1voo, r1.origem as r1origem, r1.saida as r1saida, r1.destino as r1destino, r1.chegada as r1chegada, vpcharter_fretamento.rota_volta, vpcharter_fretamento.date_volta, c2.nome as r2cia, c2.logo as r2logo, r2.voo as r2voo, r2.origem as r2origem, r2.saida as r2saida, r2.destino as r2destino, r2.chegada as r2chegada, vpcharter_fretamento.cancelamento,  vpcharter_contratante.razaosocial FROM `vpcharter_fretamento` INNER JOIN `vpcharter_contratante` ON vpcharter_fretamento.contratante = vpcharter_contratante.id INNER JOIN `vpcharter_rotas` r1 ON r1.id = vpcharter_fretamento.rota_ida INNER JOIN `vpcharter_frota` f1 ON f1.id = r1.aeronave INNER JOIN `vpcharter_companhia` c1 ON c1.id = f1.companhia INNER JOIN `vpcharter_rotas` r2 ON r2.id = vpcharter_fretamento.rota_volta INNER JOIN `vpcharter_frota` f2 ON f2.id = r2.aeronave INNER JOIN `vpcharter_companhia` c2 ON c2.id = f2.companhia WHERE  vpcharter_fretamento.data_frete BETWEEN '"+startMonth+"' AND '"+finalMonth+"' ";
+    var query = "SELECT vpcharter_fretamento.id as id_fretamento, vpcharter_fretamento.data_frete, c1.nome as r1cia, c1.logo as r1logo, r1.voo as r1voo, r1.origem as r1origem, r1.saida as r1saida, r1.destino as r1destino, r1.chegada as r1chegada, vpcharter_fretamento.rota_volta, vpcharter_fretamento.date_volta, c2.nome as r2cia, c2.logo as r2logo, r2.voo as r2voo, r2.origem as r2origem, r2.saida as r2saida, r2.destino as r2destino, r2.chegada as r2chegada, vpcharter_fretamento.cancelamento,  vpcharter_contratante.razaosocial, (SELECT vpcharter_tarifas.valor FROM vpcharter_tarifas WHERE vpcharter_tarifas.rota = r1.id AND vpcharter_tarifas.tipo = 'VV' AND vpcharter_tarifas.categoria = 'ADT' ORDER BY `date` DESC LIMIT 1) as valor_minimo FROM `vpcharter_fretamento` INNER JOIN `vpcharter_contratante` ON vpcharter_fretamento.contratante = vpcharter_contratante.id INNER JOIN `vpcharter_rotas` r1 ON r1.id = vpcharter_fretamento.rota_ida INNER JOIN `vpcharter_frota` f1 ON f1.id = r1.aeronave INNER JOIN `vpcharter_companhia` c1 ON c1.id = f1.companhia INNER JOIN `vpcharter_rotas` r2 ON r2.id = vpcharter_fretamento.rota_volta INNER JOIN `vpcharter_frota` f2 ON f2.id = r2.aeronave INNER JOIN `vpcharter_companhia` c2 ON c2.id = f2.companhia WHERE  vpcharter_fretamento.data_frete BETWEEN '"+startMonth+"' AND '"+finalMonth+"'  ";
     var fData = new FormData();
     fData.append('query', query);
     axios.post(endpoint+'query.php', fData)
@@ -174,7 +175,35 @@ function HomeAereoAgencia() {
   function origemDestino (x) {
     for (var i = 0, len = dataBaseAeroportos.length; i < len; ++i) {
       if (dataBaseAeroportos[i]['iata'] == x) {
-        return dataBaseAeroportos[i]['cidade']
+        var uf = dataBaseAeroportos[i]['uf'];
+        if (uf == 'RO') { return 'Rondônia' }
+        if (uf == 'AC') { return 'Acre' }
+        if (uf == 'AM') { return 'Amazonas' }
+        if (uf == 'RR') { return 'Roraima' }
+        if (uf == 'PA') { return 'Pará' }
+        if (uf == 'AP') { return 'Amapá' }
+        if (uf == 'TO') { return 'Tocantins' }
+        if (uf == 'MA') { return 'Maranhão' }
+        if (uf == 'PI') { return 'Piauí' }
+        if (uf == 'CE') { return 'Ceará' }
+        if (uf == 'RN') { return 'Rio Grande do Norte' }
+        if (uf == 'PB') { return 'Paraíba' }
+        if (uf == 'PE') { return 'Pernambuco' }
+        if (uf == 'AL') { return 'Alagoas' }
+        if (uf == 'SE') { return 'Sergipe' }
+        if (uf == 'BA') { return 'Bahia' }
+        if (uf == 'MG') { return 'Minas Gerais' }
+        if (uf == 'ES') { return 'Espírito Santo' }
+        if (uf == 'RJ') { return 'Rio de Janeiro' }
+        if (uf == 'SP') { return 'São Paulo' }
+        if (uf == 'PR') { return 'Paraná' }
+        if (uf == 'SC') { return 'Santa Catarina' }
+        if (uf == 'RS') { return 'Rio Grande do Sul' }
+        if (uf == 'MS') { return 'Mato Grosso do Sul' }
+        if (uf == 'MT') { return 'Mato Grosso' }
+        if (uf == 'GO') { return 'Goiás' }
+        if (uf == 'DF') { return 'Distrito Federal' }
+        
         break
       }
     }
@@ -292,7 +321,15 @@ function HomeAereoAgencia() {
     navigate('/aereo/reserva/validacaoassentos/'+x);
   }
 
-
+  function formatCurrency (e) {
+    e = Number(e)*2;
+    if (!e || e == '0.00') {
+      var f = '━';
+    } else {
+      var f = Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(e);
+    }
+    return f;
+  }
 
 
   
@@ -304,9 +341,15 @@ function HomeAereoAgencia() {
         <Sidebar />
             <div className='content'>
 
-              <h4>{Globals.userNameAgencia}</h4>
-
               <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/ Aéreo</div>
+
+              <div className='row mt-2'>
+                <div className='col'><h4>{Globals.userNameAgencia}</h4></div>
+                <div className='col saldoAllotment btnTable'>
+                  <h5><b><small>Allotment</small> 15</b>/30</h5><small>Val. Jan/24</small>
+                </div>
+              </div>
+
               <div className='contentHome'>
                 <Link to="/aereo/frota" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><PiAirplaneTilt /><p>Frota</p></div></div></Link>
                 <Link to="/aereo/tarifas" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdAttachMoney /><p>Tarifas</p></div> </div></Link>
@@ -419,6 +462,12 @@ function HomeAereoAgencia() {
                         onKeyDown={handleKeyDown} />
                       <FaMagnifyingGlass onClick={()=>listSearch()} />
                     </div>
+
+                    <div className='rightBtn'>
+                      <div>{listData.length}</div>
+                      <div>de</div>
+                      <div className='listTotal'>{listTotal}</div>
+                    </div>
                   </div>
                 </div>
 
@@ -488,7 +537,7 @@ function HomeAereoAgencia() {
 
                         <div className='col-2'>
                           <hr className='hrPrice' />
-                          <div className='price'>R$ 999,99</div>
+                          <div className='price'>{formatCurrency(data.valor_minimo)}</div>
                           <small>Preço final por adulto</small>
                         </div>
 

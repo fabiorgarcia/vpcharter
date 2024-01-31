@@ -12,7 +12,7 @@ import LoadingAnimation from "../components/LoadingAnimation";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 
-function Frota() {
+function Aeronaves() {
 
   const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
   const navigate = useNavigate()
@@ -104,11 +104,11 @@ function Frota() {
   }
 
   function editaaeronave(x) {
-    navigate('/aereo/frota/editaaeronave/'+x);
+    navigate('/aereo/aeronaves/editaaeronave/'+x);
   }
 
   function newId() {
-    navigate('/aereo/frota/cadastroaeronave');
+    navigate('/aereo/aeronaves/cadastroaeronave');
   }
   function listSearch() {
     setLoading(true);
@@ -159,10 +159,10 @@ function Frota() {
           <h4 className={titleAlert ? '' : 'hide'}>{titleAlert}</h4>
           {txtAlert}
         </div>
-          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;Frota</div>
+          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;Aeronaves</div>
 
           <div className='row lineButtons mt-3 mb-2'>
-            <div className="col "><h1>Frota</h1></div>
+            <div className="col "><h1>Aeronaves</h1></div>
             <div className="col btnTable">
               <div className="buscaFiltro">
                 <input type='text' 
@@ -211,8 +211,8 @@ function Frota() {
                         <td onClick={() => editaaeronave(data.id)}>{formatDate(data.ultimaRevisao)}</td>
                         <td onClick={() => editaaeronave(data.id)}>{data.angarPrincipal}</td>
                         <td onClick={() => editaaeronave(data.id)}>{data.registro}</td>
-                        <td className='text-center'><Link to={"/aereo/frota/mapaassentos/"+data.id}><button>Assentos</button></Link></td>
-                        <td className='text-center'><Link to={"/aereo/frota/rotas/"+data.id}><button><span className={data.origem ? '' : 'hide'}>Rotas</span><span className={data.origem ? 'hide' : ''}>• • •</span></button></Link></td>
+                        <td className='text-center'><Link to={"/aereo/aeronaves/mapaassentos/"+data.id}><button>Assentos</button></Link></td>
+                        <td className='text-center'><Link to={"/aereo/aeronaves/rotas/"+data.id}><button><span className={data.origem ? '' : 'hide'}>Rotas</span><span className={data.origem ? 'hide' : ''}>• • •</span></button></Link></td>
                         <td onClick={() => editaaeronave(data.id)}><div className='btnAddValor' title='Alterar Valor'>✎</div></td>
                       </tr>
                     ))}
@@ -229,4 +229,4 @@ function Frota() {
   )
 }
   
-export default Frota
+export default Aeronaves

@@ -26,6 +26,9 @@
 .travel-blue {
   color: var(--travel-blue);
 }
+.light-blue {
+  color: var(--light-blue);
+}
 
 .book2b {
   background: url(./assets/book2b.svg) no-repeat top left;
@@ -41,7 +44,16 @@
   width: 100%;
   max-width: 420px;
   height: 63px;
-  
+}
+
+.saldoAllotment {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  line-height: 110%;
+}
+.saldoAllotment h5 {
+  margin-bottom: 0px;
 }
 
 
@@ -467,6 +479,10 @@ header {
 
 .tdtoal {
   margin: 0 10px;
+}
+
+.line110 {
+  line-height: 110%;
 }
 
 .lineButtons {
@@ -1402,7 +1418,7 @@ input[type=text], input[type=number], input[type=password], input[type=email], i
 
 
 .trSelect {
-  background-color: #f0f0f0;
+  background-color: #f9e6ec;
 }
 .trNormal {
   background-color: inherit;

@@ -49,20 +49,22 @@ function Sidebar() {
   return (
     <>
       <div className='sidebar' id="sidebar" >
-        <Link to="/aereo" relative="path"><div className={host == 'aereo' ? 'itemMenu masterMenu':'itemMenu masterMenu50'}><GiCommercialAirplane className='iconMenu' title='Aéreo Fretamento' /> <PiCaretRight className='mob opacity-25' /> <span className='mob'>Aéreo Fretamento</span></div></Link>
+        <Link to="/aereo" relative="path"><div className={host == 'aereo' ? 'itemMenu masterMenu':'itemMenu masterMenu50'}><GiCommercialAirplane className='iconMenu' title='Aéreo saidas' /> <PiCaretRight className='mob opacity-25' /> <span className='mob'>Aéreo saidas</span></div></Link>
 
         <div id="subLinksAereo" className={host == 'aereo' ? '':'hide'}>
-          <Link to="/aereo/frota" relative="path"><div className={Globals.userStatus == '9' ? page == 'frota'? 'itemMenu masterMenu': 'itemMenu' : 'hide'}><PiAirplaneTiltThin className='iconMenu' title='Frota' /> <PiCaretRight className='mob' /> <span className='mob'>Frota</span></div></Link>
+          <Link to="/aereo/aeronaves" relative="path"><div className={Globals.userStatus == '9' ? page == 'frota'? 'itemMenu masterMenu': 'itemMenu' : 'hide'}><PiAirplaneTiltThin className='iconMenu' title='Aeronaves' /> <PiCaretRight className='mob' /> <span className='mob'>Aeronaves</span></div></Link>
+          <Link to="/aereo/saidas" relative="path"><div className={Globals.userStatus == '9' ? page == 'saidas'? 'itemMenu masterMenu': 'itemMenu' : 'hide'}><MdOutlineLocalOffer className='iconMenu flip' title='Saídas' /> <PiCaretRight className='mob' /> <span className='mob'>Saídas</span></div></Link>
+
           <Link to="/aereo/tarifas" relative="path"><div className={Globals.userStatus == '9' ? page == 'tarifas'? 'itemMenu masterMenu': 'itemMenu' : 'hide'}><MdAttachMoney className='iconMenu' title='Tarifas' /> <PiCaretRight className='mob' /> <span className='mob'>Tarifas</span></div></Link>
-          <Link to="/aereo/fretamento" relative="path"><div className={Globals.userStatus == '9' ? page == 'fretamento'? 'itemMenu masterMenu': 'itemMenu' : 'hide'}><MdOutlineLocalOffer className='iconMenu flip' title='Fretamento' /> <PiCaretRight className='mob' /> <span className='mob'>Fretamento</span></div></Link>
           <Link to="/aereo/reserva" relative="path"><div className={Globals.userStatus == '9' ? page == 'reserva'? 'itemMenu masterMenu': 'itemMenu' : 'hide'}><PiCallBellLight className='iconMenu' title='Reserva' /> <PiCaretRight className='mob' /> <span className='mob'>Reserva</span></div></Link>
           <Link to="/aereo/checkin" relative="path"><div className={page == 'checkin'? 'itemMenu masterMenu': 'itemMenu'}><MdOutlineAirplaneTicket className='iconMenu' /> <PiCaretRight className='mob' title='Check In' /> <span className='mob'>Check In</span></div></Link>
           {/*<Link to="/home" relative="path"><div className={Globals.userStatus == '9' ? 'itemMenu' : 'hide'}><BiSearchAlt className='iconMenu' title='Busca' /> <PiCaretRight className='mob' /> <span className='mob'>Busca</span></div></Link>*/}
         </div>
 
-        <div className={host == 'onibus' ? 'itemMenu masterMenu':'itemMenu masterMenu50'}><BsBusFrontFill className='iconMenu' title='Ônibus Fretamento' /> <PiCaretRight className='mob opacity-25' /> <span className='mob'>Ônibus Fretamento</span></div>
 
         <div className={host == 'aereoregular' ? 'itemMenu masterMenu':'itemMenu masterMenu50'}><PiAirplaneInFlight className='iconMenu' title='Aéreo Regular' /> <PiCaretRight className='mob opacity-25' /> <span className='mob'>Aéreo Regular</span></div>
+        <div className={host == 'onibus' ? 'itemMenu masterMenu':'itemMenu masterMenu50'}><BsBusFrontFill className='iconMenu' title='Rodoviário saidas' /> <PiCaretRight className='mob opacity-25' /> <span className='mob'>Rodoviário </span></div>
+
         <div className={host == 'pacote' ? 'itemMenu masterMenu':'itemMenu masterMenu50'}><FaSuitcaseRolling  className='iconMenu' title='Pacote Fixo' /> <PiCaretRight className='mob opacity-25' /> <span className='mob'>Pacote Fixo</span></div>
 
 

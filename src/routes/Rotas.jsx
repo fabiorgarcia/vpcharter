@@ -108,6 +108,7 @@ function Rotas() {
   }
 
   function editaRota(rota, origem, destino, duracao, saida, voo, chegada) {
+    window.scrollTo(0,0);
     setLoading(true);
     setRota(rota)
     setAeroportoOrigem(origem)
@@ -120,6 +121,7 @@ function Rotas() {
   }
 
   function novaRota() {
+    window.scrollTo(0,0);
     setLoading(true);
     setRota('')
     setAeroportoOrigem('')
@@ -207,7 +209,7 @@ function Rotas() {
       <Sidebar />
       <div className='content'>
 
-          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/frota" relative="path">Frota</Link>&nbsp;/&nbsp;<Link to={"/aereo/frota/editaaeronave/"+id} relative="path">Aeronave</Link>&nbsp;/&nbsp;<Link to={"/aereo/frota/mapaassentos/"+id} relative="path">Mapa de Assentos</Link>&nbsp;/&nbsp;Rotas</div>
+          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/aeronaves" relative="path">Aeronaves</Link>&nbsp;/&nbsp;<Link to={"/aereo/aeronaves/editaaeronave/"+id} relative="path">Aeronave</Link>&nbsp;/&nbsp;<Link to={"/aereo/aeronaves/mapaassentos/"+id} relative="path">Mapa de Assentos</Link>&nbsp;/&nbsp;Rotas</div>
 
           <div className="lineButtons">
             <div className="">
@@ -250,6 +252,7 @@ function Rotas() {
                 <div className='col-8'>
                   <label>Origem</label>
                   <select name="select" value={aeroportoOrigem} onChange={(e) => setAeroportoOrigem(e.target.value)} >
+                    <option value=''></option>
                     {aeroportoData.map((data, index) => (
                       <option key={index} value={data.iata}>{data.iata} - {data.nome} - {data.cidade} / {data.uf}</option>
                     ))}
@@ -267,6 +270,7 @@ function Rotas() {
                 <div className='col-8'>
                   <label>Destino</label>
                   <select name="select" value={aeroportoDestino} onChange={(e) => setAeroportoDestino(e.target.value)} >
+                    <option value=''></option>
                     {aeroportoData.map((data, index) => (
                       <option key={index} value={data.iata}>{data.iata} - {data.nome} - {data.cidade} / {data.uf}</option>
                     ))}

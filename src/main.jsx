@@ -11,7 +11,7 @@ import RecuperarSenha from './routes/RecuperarSenha.jsx'
 import NovaSenha from './routes/NovaSenha.jsx'
 import NovoUsuario from './routes/NovoUsuario.jsx'
 import Usuarios from './routes/Usuarios.jsx'
-import Frota from './routes/Frota.jsx';
+import Aeronaves from './routes/Aeronaves.jsx';
 import ErrorPage  from  './routes/ErrorPage.jsx'
 import CadastroAeronave from './routes/CadastroAeronave.jsx';
 import EditaAeronave from './routes/EditaAeronave.jsx';
@@ -19,10 +19,10 @@ import MapaAssentos from './routes/MapaAssentos.jsx';
 import Rotas from './routes/Rotas.jsx';
 import Tarifas from './routes/Tarifas.jsx';
 import CadastroTarifa from './routes/CadastroTarifa.jsx';
-import Fretamento from './routes/Fretamento.jsx';
-import CadastroFretamento from './routes/CadastroFretamento.jsx';
+import Saidas from './routes/Saidas.jsx';
+import CadastroSaidas from './routes/CadastroSaidas.jsx';
 import AgenciaCliente from './routes/CadastroContratante.jsx';
-import EditaFretamento from './routes/EditaFretamento.jsx';
+import EditaSaidas from './routes/EditaSaidas.jsx';
 import Reserva from './routes/Reserva.jsx';
 import ValidacaoAssentos from './routes/ValidacaoAssentos.jsx';
 import Checkin from './routes/Checkin.jsx';
@@ -74,23 +74,23 @@ const router = createBrowserRouter([
         element: <Usuarios />,
       },
       {
-        path: '/aereo/frota',
-        element: <Frota />,
+        path: '/aereo/aeronaves',
+        element: <Aeronaves />,
       },
       {
-        path: '/aereo/frota/cadastroaeronave',
+        path: '/aereo/aeronaves/cadastroaeronave',
         element: <CadastroAeronave />,
       },
       {
-        path: '/aereo/frota/editaaeronave/:id',
+        path: '/aereo/aeronaves/editaaeronave/:id',
         element: <EditaAeronave />,
       },
       {
-        path: '/aereo/frota/mapaassentos/:id',
+        path: '/aereo/aeronaves/mapaassentos/:id',
         element: <MapaAssentos />,
       },
       {
-        path: '/aereo/frota/rotas/:id',
+        path: '/aereo/aeronaves/rotas/:id',
         element: <Rotas />,
       },
       {
@@ -102,20 +102,20 @@ const router = createBrowserRouter([
         element: <CadastroTarifa />,
       },
       {
-        path: '/aereo/fretamento',
-        element: <Fretamento />,
+        path: '/aereo/saidas',
+        element: <Saidas />,
       },
       {
-        path: '/aereo/fretamento/cadastrofretamento/',
-        element: <CadastroFretamento />,
+        path: '/aereo/saidas/cadastrosaidas/',
+        element: <CadastroSaidas />,
       },
       {
         path: '/admin/agenciacliente',
         element: <AgenciaCliente />,
       },
       {
-        path: '/aereo/fretamento/editafretamento/:id',
-        element: <EditaFretamento />,
+        path: '/aereo/saidas/editasaidas/:id',
+        element: <EditaSaidas />,
       },
       {
         path: '/aereo/reserva',

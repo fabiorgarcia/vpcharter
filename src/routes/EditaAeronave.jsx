@@ -185,7 +185,7 @@ function EditaAeronave() {
       .then(response=> {
         if (response.data.length > 0) {
           setLoadingBtn(false)
-          navigate('/aereo/frota/mapaassentos/'+id )
+          navigate('/aereo/aeronaves/mapaassentos/'+id )
         } else {
           setTypeAlert('alert-danger')
           settitleAlert('Erro na Gravação!')
@@ -331,7 +331,7 @@ function EditaAeronave() {
           <h4 className={titleAlert ? '' : 'hide'}>{titleAlert}</h4>
           {txtAlert}
         </div>
-          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/frota" relative="path">Frota</Link>&nbsp;/ Aeronave</div>
+          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/aeronaves" relative="path">Aeronaves</Link>&nbsp;/ Aeronave</div>
 
           <div className="lineButtons row ">
             <div className="col">

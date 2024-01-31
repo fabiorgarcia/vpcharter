@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FiEdit } from "react-icons/fi";
-import {  } from "react-icons/bi";
+import { BiTrash } from "react-icons/bi";
 import LoadingAnimation from "../components/LoadingAnimation";
 import IntlCurrencyInput from "react-intl-currency-input"
 import { MdOutlineHome } from "react-icons/md";
@@ -17,10 +17,11 @@ import { BsArrowRight } from "react-icons/bs";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { LuCalendarDays, LuCalendarCheck, LuCalendarX  } from "react-icons/lu";
 import ContentEditable from "react-contenteditable";
+import { AiOutlineClose } from "react-icons/ai";
 
 
 
-function CadastroFretamento() {
+function EditaSaidas() {
 
   const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
   const navigate = useNavigate()
@@ -64,6 +65,10 @@ function CadastroFretamento() {
   const [totalAssentos, setTotalAssentos] = useState (0);
   const [custoMedio, setCustoMedio] = useState ('');
   const [qtdeClasses, setQtdeClasses] = useState (0);
+  const [valorMulta, setValorMulta] = useState (0);
+  const [dataFretamento, setDataFretamento] = useState ('');
+
+
   var tt1 = 0;
   
   const [dataBaseRotas, setDataBaseRotas] = useState ([]); 
@@ -91,10 +96,10 @@ function CadastroFretamento() {
   const [horaSaidaVolta, setHoraSaidaVolta] = useState ('');
   const [horaChegadaVolta, setHoraChegadaVolta] = useState ('');
 
-  const [primeiraclasseNorma, setPrimeiraclasseNorma] = useState("<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut ante posuere, venenatis tellus consectetur, auctor mi.</p><p>Suspendisse faucibus accumsan tempor. Vestibulum id velit sem. Pellentesque accumsan nibh nunc, ac viverra massa sollicitudin in. Integer ut eros est.</p><p>Nulla in ornare metus. Cras blandit semper sollicitudin. Vestibulum mollis tellus quis nunc dignissim, eget euismod sapien eleifend.Maecenas ipsum ante, pulvinar aliquet magna ut, mollis vulputate felis.</p><p>In ut elit cursus dui dignissim efficitur. Sed tempus tortor sem, id pellentesque elit efficitur nec.Integer tristique vel quam eget posuere. Nam in velit nec ante porttitor congue nec id est. Mauris eros felis, lobortis vitae accumsan sed, volutpat in tortor.</p>");
-  const [premiumNorma, setPremiumNorma] = useState("<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut ante posuere, venenatis tellus consectetur, auctor mi.</p><p>Suspendisse faucibus accumsan tempor. Vestibulum id velit sem. Pellentesque accumsan nibh nunc, ac viverra massa sollicitudin in. Integer ut eros est.</p><p>Nulla in ornare metus. Cras blandit semper sollicitudin. Vestibulum mollis tellus quis nunc dignissim, eget euismod sapien eleifend.Maecenas ipsum ante, pulvinar aliquet magna ut, mollis vulputate felis.</p><p>In ut elit cursus dui dignissim efficitur. Sed tempus tortor sem, id pellentesque elit efficitur nec.Integer tristique vel quam eget posuere. Nam in velit nec ante porttitor congue nec id est. Mauris eros felis, lobortis vitae accumsan sed, volutpat in tortor.</p>");
-  const [executivaNorma, setExecutivaNorma] = useState("<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut ante posuere, venenatis tellus consectetur, auctor mi.</p><p>Suspendisse faucibus accumsan tempor. Vestibulum id velit sem. Pellentesque accumsan nibh nunc, ac viverra massa sollicitudin in. Integer ut eros est.</p><p>Nulla in ornare metus. Cras blandit semper sollicitudin. Vestibulum mollis tellus quis nunc dignissim, eget euismod sapien eleifend.Maecenas ipsum ante, pulvinar aliquet magna ut, mollis vulputate felis.</p><p>In ut elit cursus dui dignissim efficitur. Sed tempus tortor sem, id pellentesque elit efficitur nec.Integer tristique vel quam eget posuere. Nam in velit nec ante porttitor congue nec id est. Mauris eros felis, lobortis vitae accumsan sed, volutpat in tortor.</p>");
-  const [economicaNorma, setEconomicaNorma] = useState("<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut ante posuere, venenatis tellus consectetur, auctor mi.</p><p>Suspendisse faucibus accumsan tempor. Vestibulum id velit sem. Pellentesque accumsan nibh nunc, ac viverra massa sollicitudin in. Integer ut eros est.</p><p>Nulla in ornare metus. Cras blandit semper sollicitudin. Vestibulum mollis tellus quis nunc dignissim, eget euismod sapien eleifend.Maecenas ipsum ante, pulvinar aliquet magna ut, mollis vulputate felis.</p><p>In ut elit cursus dui dignissim efficitur. Sed tempus tortor sem, id pellentesque elit efficitur nec.Integer tristique vel quam eget posuere. Nam in velit nec ante porttitor congue nec id est. Mauris eros felis, lobortis vitae accumsan sed, volutpat in tortor.</p>");
+  const [primeiraclasseNorma, setPrimeiraclasseNorma] = useState("");
+  const [premiumNorma, setPremiumNorma] = useState("");
+  const [executivaNorma, setExecutivaNorma] = useState("");
+  const [economicaNorma, setEconomicaNorma] = useState("");
 
   
 
@@ -118,6 +123,65 @@ function CadastroFretamento() {
 
     //carregaPagina()
     //setRota(id)
+
+
+
+    var query = "SELECT vpcharter_fretamento.primeiraclasse_frete, vpcharter_fretamento.premium_frete, vpcharter_fretamento.executiva_frete, vpcharter_fretamento.economica_frete, vpcharter_fretamento.id as id_fretamento, vpcharter_fretamento.data_frete, c1.nome as r1cia, c1.logo as r1logo, r1.voo as r1voo, r1.origem as r1origem, r1.saida as r1saida, r1.destino as r1destino, r1.chegada as r1chegada, vpcharter_fretamento.rota_ida, vpcharter_fretamento.rota_volta, vpcharter_fretamento.date_volta, c2.nome as r2cia, c2.logo as r2logo, r2.voo as r2voo, r2.origem as r2origem, r2.saida as r2saida, r2.destino as r2destino, r2.chegada as r2chegada, vpcharter_fretamento.contratante, vpcharter_fretamento.cancelamento,  vpcharter_contratante.razaosocial FROM `vpcharter_fretamento` INNER JOIN `vpcharter_contratante` ON vpcharter_fretamento.contratante = vpcharter_contratante.id INNER JOIN `vpcharter_rotas` r1 ON r1.id = vpcharter_fretamento.rota_ida INNER JOIN `vpcharter_frota` f1 ON f1.id = r1.aeronave INNER JOIN `vpcharter_companhia` c1 ON c1.id = f1.companhia INNER JOIN `vpcharter_rotas` r2 ON r2.id = vpcharter_fretamento.rota_volta INNER JOIN `vpcharter_frota` f2 ON f2.id = r2.aeronave INNER JOIN `vpcharter_companhia` c2 ON c2.id = f2.companhia WHERE vpcharter_fretamento.id = '"+id+"' LIMIT 1 ";
+    var fData = new FormData();
+    fData.append('query', query);
+    axios.post(endpoint+'query.php', fData)
+    .then(response=> {
+      if (response.data.length > 0) {
+        setDataIda(response.data[0]['data_frete'])
+        setDataVolta(response.data[0]['date_volta'])
+        setCancelamento(response.data[0]['cancelamento'])
+        setPrimeiraclasseNorma(response.data[0]['primeiraclasse_frete'])
+        setPremiumNorma(response.data[0]['premium_frete'])
+        setExecutivaNorma(response.data[0]['executiva_frete'])
+        setEconomicaNorma(response.data[0]['economica_frete'])
+        setDataIda(response.data[0]['data_frete'])
+
+        setIda(response.data[0]['rota_ida'])
+        setIdRotaIda(response.data[0]['rota_ida']);
+        setVooIda(response.data[0]['r1voo']);
+        setLogoIda(response.data[0]['r1logo']);
+        setNomeCiaIda(response.data[0]['r1cia']);
+        setIataIda(response.data[0]['r1origem']);
+        setHoraSaidaIda(response.data[0]['r1saida'])
+        setIataDestinoIda(response.data[0]['r1destino']);
+        setHoraChegadaIda(response.data[0]['r1chegada']);
+
+
+        setVolta(response.data[0]['rota_volta'])
+        setIdRotaVolta(response.data[0]['rota_volta']);
+        setVooVolta(response.data[0]['r2voo']);
+        setLogoVolta(response.data[0]['r2logo']);
+        setNomeCiaVolta(response.data[0]['r2cia']);
+        setIataVolta(response.data[0]['r2origem']);
+        setHoraSaidaVolta(response.data[0]['r2saida'])
+        setIataDestinoVolta(response.data[0]['r2destino']);
+        setHoraChegadaVolta(response.data[0]['r2chegada']);
+        setContratante(response.data[0]['contratante'])
+
+        /*
+        setDataFretamento(response.data[0]['data_frete'])
+        
+        
+        setValorMulta(parseFloat(response.data[0]['multa']))
+        
+        setDataIda(response.data[0]['data_frete'])
+        setDataVolta(response.data[0]['date_volta'])
+        setIdRotaIda(response.data[0]['rota_ida'])
+        setIdRotaVolta(response.data[0]['rota_volta'])
+        */
+
+      } 
+    })
+    .catch(error=> console.log(error))
+
+
+
+
     var query = "SELECT * FROM `vpcharter_aeroportos` order by `uf` ";
     var fData = new FormData();
     fData.append('query', query);
@@ -165,7 +229,6 @@ function CadastroFretamento() {
     .then(response=> {
       if (response.data.length > 0) {
         setContratanteData(response.data)
-        setContratante(response.data[0]['id'])
         setLoading(false);
 
       } 
@@ -373,9 +436,10 @@ function CadastroFretamento() {
   }
 
   function validaForm(e) {
-    e.preventDefault();
 
-    var query = "INSERT INTO `vpcharter_fretamento` (`id`, `rota_ida`, `rota_volta`, `data_frete`, `date_volta`, `contratante`, `cancelamento`, `custo`, `primeiraclasse_frete`, `premium_frete`, `executiva_frete`, `economica_frete`, `multa`) VALUES (NULL, '"+idRotaIda+"', '"+idRotaVolta+"', '"+dataIda+"', '"+dataVolta+"', '"+contratante+"', '"+cancelamento+"', NULL, '"+primeiraclasseNorma+"', '"+premiumNorma+"', '"+executivaNorma+"', '"+economicaNorma+"', NULL);";      
+    setLoading(true);
+    e.preventDefault();
+    var query = "UPDATE `vpcharter_fretamento` SET `contratante` = '"+contratante+"', `data_frete` = '"+dataIda+"', `date_volta` = '"+dataVolta+"', `cancelamento` = '"+cancelamento+"', `custo` = '0', `primeiraclasse_frete` = '"+primeiraclasseNorma+"', `premium_frete` = '"+premiumNorma+"', `executiva_frete` = '"+executivaNorma+"', `economica_frete` = '"+economicaNorma+"' WHERE `vpcharter_fretamento`.`id` = '"+id+"'; ";
     var fData = new FormData();
     fData.append('query', query);
     axios.post(Globals.endPoint+'query.php', fData)
@@ -383,10 +447,11 @@ function CadastroFretamento() {
       if (response.data.length > 0) {
         setAlert(true)
         setTypeAlert('alert-success')
-        settitleAlert('Cadastrado com sucesso!')
-        setTxtAlert('Fretamento cadastrado!')
+        settitleAlert('Alterado com sucesso!')
+        setTxtAlert(' ')
+        setLoading(false);
         setTimeout(()=> setAlert(false),5000);
-        setTimeout(()=> navigate('/aereo/fretamento/'),5500);
+        setTimeout(()=> navigate('/aereo/saidas/'),5500);
       } 
     })
     .catch(error=> console.log(error))
@@ -676,6 +741,33 @@ function CadastroFretamento() {
     navigate('/aereo/frota/');
   }
 
+  function validaFormModal() {
+    var multa = document.getElementById("r_multa").value.replace("R$", "").replace(".", "").replace(",", ".").replace(" ", ".");
+    multa = multa.trim();
+    var query = "UPDATE `vpcharter_fretamento` SET `multa` = '"+multa+"' WHERE `vpcharter_fretamento`.`id` = "+id+" ";
+    var fData = new FormData();
+    fData.append('query', query);
+    axios.post(Globals.endPoint+'query.php', fData)
+    .then(response=> {
+      if (response.data.length > 0) {
+        setAlert(true)
+        setTypeAlert('alert-success')
+        settitleAlert('Alterado com sucesso!')
+        setTxtAlert('saidas alterado!')
+        //carregaPagina()
+        setTimeout(()=> setAlert(false),5000);
+        setTimeout(()=> navigate('/saidas'),5000);
+      } else {
+        setAlert(true)
+        setTypeAlert('alert-danger')
+        settitleAlert('Erro na Gravação!')
+        setTxtAlert('')
+        setTimeout(()=> setAlert(false),5000);
+      }
+    })
+    .catch(error=> alert(error))
+
+  }
 
 
   return (
@@ -690,17 +782,45 @@ function CadastroFretamento() {
       {txtAlert}
     </div>
 
+
+    <div className={openModal ? 'bg_loading' : 'hide'} >
+      <div className='globalModal modalTrash'>
+        <AiOutlineClose className='closeModalTrash' onClick={()=>setOpenModal(false)} />
+        <div className='d-flex'>
+          <BiTrash className='display-1' />
+          <h2><b>Confirmar<br />Cancelamento</b></h2>
+        </div>
+        
+        <div className='row'>
+          <div className='col-12'>
+            <label>Valor da Multa</label>
+            <IntlCurrencyInput  id="r_multa" currency="BRL" config={currencyConfig} className="currency" value={valorMulta} />
+          </div>
+        </div>
+        <div className='row mt-3'>
+          <div className='col-12'>
+            <button type='button' className='btnTrash btnTrashModal' onClick={()=>validaFormModal()}>
+              <span ><BsCheckLg /> Salvar</span>
+            </button>
+          </div>
+        </div>
+
+        
+
+      </div>
+    </div>
+
     <Header />
     <div className='allTab'>
       <Sidebar />
       <div className='content'>
 
         
-        <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/fretamento" relative="path">Fretamento</Link>&nbsp; / Cadastro de Fretamento</div>
+        <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/saidas" relative="path">Saídas</Link>&nbsp; / Edita Saídas</div>
 
           <div className="row">
             <div className="col-12">
-              <h1>Cadastro de Fretamento</h1>
+              <h1>Edita Saídas</h1>
             </div>
           </div>
 
@@ -979,10 +1099,15 @@ function CadastroFretamento() {
               <div className='row'>
 
                 <div className='col'></div>
+                <div className='col-3' onClick={()=>setOpenModal(true)}>
+                  <button type='button' className='btnTrash'>
+                    <span ><BiTrash /> Cancelamento</span>
+                  </button>
+                </div>
+
                 <div className='col-3'>
                   <button type='submit'>
-                    <span className={!idTarifa ? '' : 'hide'}><BsCheckLg /> Salvar</span>
-                    <span className={idTarifa ? '' : 'hide'}><FiEdit /> Alterar</span>
+                    <span>✎ Alterar</span>
                   </button>
                 </div>
               </div>
@@ -998,4 +1123,4 @@ function CadastroFretamento() {
   )
 }
   
-export default CadastroFretamento
+export default EditaSaidas

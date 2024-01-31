@@ -16,12 +16,13 @@ import { TfiLayoutWidthDefault } from "react-icons/tfi";
 import { RxSpaceBetweenVertically } from "react-icons/rx";
 import { FiStar } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai"
-import { PiMapPin, PiAirplaneTakeoff, PiMapPinLine } from "react-icons/pi"
+import { PiMapPin, PiAirplaneTakeoff, PiSuitcaseRolling  } from "react-icons/pi"
 import ReactInputMask from 'react-input-mask';
 import { MdOutlineHome } from "react-icons/md";
 import { IoAirplaneOutline } from "react-icons/io5";
 import { HiOutlineArrowLongDown } from "react-icons/hi2";
 import { LiaToggleOffSolid, LiaToggleOnSolid } from "react-icons/lia";
+import { RiSuitcase2Line } from "react-icons/ri";
 
 
 
@@ -115,14 +116,15 @@ function ValidacaoAssentos() {
   const [saidaEmergExecutiva, setSaidaEmergExecutiva] = useState ([]); 
   const [saidaEmergEconomica, setSaidaEmergEconomica] = useState ([]); 
   const [toggle, setToggle] = useState (false);
+
+  const [totalAllotment, setTotalAllotment] = useState (30); 
   
 
   useEffect(() => {
-
     loadPage()
-  
-
   }, [])
+
+
 
 
   function loadPage() {
@@ -165,7 +167,6 @@ function ValidacaoAssentos() {
     })
     .catch(error=> alert(error))
   }
-
 
 
 
@@ -593,171 +594,6 @@ function ValidacaoAssentos() {
       }
     }
   }
-
-  function updateColun(e, x) {
-    setOpenModal(false)
-    setLoading(true)
-    setTimeout(function() {   
-      
-      if (x == 'assento') {
-        var query = "UPDATE `vpcharter_categoria_assentos` SET `tipo` = NULL WHERE `vpcharter_categoria_assentos`.`id` = '"+e+"' ";
-      } else {
-        var query = "UPDATE `vpcharter_categoria_assentos` SET `tipo` = '"+x+"' WHERE `vpcharter_categoria_assentos`.`id` = '"+e+"' ";
-      }
-      var fData = new FormData();
-      fData.append('query', query);
-      axios.post(endpoint+'query.php', fData)
-      .then(response=> {
-        if (response.data.length > 0) {
-          carregaPagina()
-        } else {
-          setTypeAlert('alert-danger')
-          settitleAlert('Erro na Gravação!')
-          setTimeout(()=> setTypeAlert(''),5000);
-        }
-      })
-      .catch(error=> alert(error))
-      setLoading(false)
-    }, 1000)
-
-  }
-
-  function updateLine(e, x) {
-    setOpenModal2(false)
-    setLoading(true)
-    setTimeout(function() {  
-      if (x == 'fileira') {
-        var query = "UPDATE `vpcharter_categoria_assentos` SET `tipo` = NULL WHERE `vpcharter_categoria_assentos`.`id` = '"+e+"' ";
-      } else {
-        var query = "UPDATE `vpcharter_categoria_assentos` SET `tipo` = '"+x+"' WHERE `vpcharter_categoria_assentos`.`id` = '"+e+"' ";
-      }
-      var fData = new FormData();
-      fData.append('query', query);
-      axios.post(endpoint+'query.php', fData)
-      .then(response=> {
-        if (response.data.length > 0) {
-          carregaPagina()
-        } else {
-          setTypeAlert('alert-danger')
-          settitleAlert('Erro na Gravação!')
-          setTimeout(()=> setTypeAlert(''),5000);
-        }
-      })
-      .catch(error=> alert(error))
-      setLoading(false)
-    }, 1000)
-
-  }
-
-  function delColuna () {
-    setLoading(true)
-    var query = "SELECT * FROM `vpcharter_categoria_assentos` WHERE `aeronave` = '"+id+"' AND `categoria` = '"+selectClass+"' AND `coluna` != '' ORDER BY `id` DESC LIMIT 1";
-    var fData = new FormData();
-    fData.append('query', query);
-    axios.post(endpoint+'query.php', fData)
-    .then(response=> {
-      if (response.data.length > 0) {
-        var idDel = response.data[0]['id'];
-        var query = "DELETE FROM `vpcharter_categoria_assentos` WHERE `vpcharter_categoria_assentos`.`id` = '"+idDel+"' ";
-        var fData = new FormData();
-        fData.append('query', query);
-        axios.post(endpoint+'query.php', fData)
-        .then(response=> {
-          if (response.data.length > 0) {
-            carregaPagina()
-            setTimeout(()=> setLoading(false),5000);
-          } 
-        })
-        .catch(error=> alert(error))
-      } 
-    })
-    .catch(error=> alert(error))
-  }
-
-  function insertColuna () {
-    setLoading(true)
-    var query = "SELECT * FROM `vpcharter_categoria_assentos` WHERE `aeronave` = '"+id+"' AND `categoria` = '"+selectClass+"' AND `coluna` != '' ORDER BY `id` DESC LIMIT 1";
-    var fData = new FormData();
-    fData.append('query', query);
-    axios.post(endpoint+'query.php', fData)
-    .then(response=> {
-      if (response.data.length > 0) {
-        var lastCol= response.data[0]['coluna'];
-        var nextCol = String.fromCharCode(lastCol.charCodeAt(0) + 1);
-      } else {
-        var nextCol = "A";
-      }
-      
-      var query = "INSERT INTO `vpcharter_categoria_assentos` (`id`, `aeronave`, `categoria`, `coluna`, `fileira`, `tipo`) VALUES (NULL, '"+id+"',  '"+selectClass+"', '"+nextCol+"', NULL, NULL);";
-      var fData = new FormData();
-      fData.append('query', query);
-      axios.post(endpoint+'query.php', fData)
-      .then(response=> {
-        if (response.data.length > 0) {
-          carregaPagina()
-          setTimeout(()=> setLoading(false),5000);
-        } 
-      })
-      .catch(error=> alert(error))
-      
-    })
-    .catch(error=> alert(error))
-  }
-
-  function delFileira () {
-    setLoading(true)
-    var query = "SELECT * FROM `vpcharter_categoria_assentos` WHERE `aeronave` = '"+id+"' AND `categoria` = '"+selectClass+"' AND `fileira` >= '0' ORDER BY `id` DESC LIMIT 1";
-    var fData = new FormData();
-    fData.append('query', query);
-    axios.post(endpoint+'query.php', fData)
-    .then(response=> {
-      if (response.data.length > 0) {
-        var idDel = response.data[0]['id'];
-        var query = "DELETE FROM `vpcharter_categoria_assentos` WHERE `vpcharter_categoria_assentos`.`id` = '"+idDel+"' ";
-        var fData = new FormData();
-        fData.append('query', query);
-        axios.post(endpoint+'query.php', fData)
-        .then(response=> {
-          if (response.data.length > 0) {
-            carregaPagina()
-            setTimeout(()=> setLoading(false),5000);
-          } 
-        })
-        .catch(error=> alert(error))
-      } 
-    })
-    .catch(error=> alert(error))
-  }
-
-  function insertFileira () {
-    setLoading(true);
-    var query = "SELECT * FROM `vpcharter_categoria_assentos` WHERE `aeronave` = '"+id+"' AND `categoria` = '"+selectClass+"' AND `fileira` >= '' ORDER BY `id` DESC LIMIT 1";
-    var fData = new FormData();
-    fData.append('query', query);
-    axios.post(endpoint+'query.php', fData)
-    .then(response=> {
-      if (response.data.length > 0) {
-        var idAdd = parseInt(response.data[0]['fileira'])+1;
-      } else {
-        var idAdd = 0;
-      }
-
-      var query = "INSERT INTO `vpcharter_categoria_assentos` (`id`, `aeronave`, `categoria`, `coluna`, `fileira`, `tipo`) VALUES (NULL, '"+id+"',  '"+selectClass+"', NULL, '"+idAdd+"', NULL);";
-      var fData = new FormData();
-      fData.append('query', query);
-      axios.post(endpoint+'query.php', fData)
-      .then(response=> {
-        if (response.data.length > 0) {
-          carregaPagina()
-          setTimeout(()=> setLoading(false),5000);
-        } 
-      })
-      .catch(error=> alert(error))
-
-    })
-    .catch(error=> alert(error))
-  }
-
 
   function changeSelectClass(e) {
     setSelectClass(e)
@@ -1271,6 +1107,10 @@ function ValidacaoAssentos() {
     setOpenModal2(true)
   }
 
+  function gerarFaturamento() {
+
+  }
+
 
 
 
@@ -1308,37 +1148,55 @@ function ValidacaoAssentos() {
       </div>
     </div>
 
-    <div className={openModal2 ? 'bg_loading' : 'hide'}>
 
+
+    <div className={openModal2 ? 'bg_loading' : 'hide'} >
       <div className='globalModal text-center'>
-        <span className='closeModal' onClick={()=>setOpenModal2(false)} >✕</span>
+      <span className='closeModal' onClick={()=>setOpenModal2(false)} >✕</span>
 
-        <form onSubmit={(e)=> validaFormModal(e)}>
+      <div className='row interModal'>
+        <div className='col-12'>
+          <h2>Faturamento Gerado com Sucesso</h2>
+          <h5>Passageiros</h5>
+        </div>
+      </div>
 
+      <form >
+        <div className='row interModal'>
 
-          <div className='infoModal'>
+        <table className="tblPassageiros text-start">
+          <thead>
+            <tr>
+              <td></td>
+              <td>Assento</td>
+              <td>Passageiro</td>
+              <td className='text-end'>Valor</td>
+            </tr>
+          </thead>
+          <tbody>
+            {dataReserva.map((base, mp) => (
+              <tr key={mp} className={mp+1 >= 11? '':'hide'}>
+                <td>{mp+1}</td>
+                <td>{base.assento}/{formataClasse(base.classe)}</td>
+                <td>{base.nome} {base.sobrenome}</td>
+                <td className='text-end'>R$ 999,99</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-            <div className='row'>
-              <div className='col-12'>
-                <h5>Observações:</h5>
-                <textarea className='textareaModal' value={obs} onChange={(e)=>setObs(e.target.value)}></textarea>
+        <div className='text-end mt-3'>
+                <h4>R$ 99.999,99</h4>
               </div>
 
-              <div className='col-12 mt-2'>
-                <button type='submit' className='btnGde'><span><BsCheckLg /> Salvar</span></button>
-              </div>
-
-
-            </div>
-          </div>
-
-        </form>
-
+        </div>
+ 
+      </form>
 
       </div>
     </div>
 
-
+    
 
     <div className={openModal3 ? 'bg_loading' : 'hide'} >
       <div className='globalModal text-center'>
@@ -1392,10 +1250,10 @@ function ValidacaoAssentos() {
             </select>
           </div>
 
-          <div className='col-2 text-start'>
-            <label>Status</label>
-            <span className={!toggle?'cursorPointer':'hide'} onClick={()=> setToggle(true)}><LiaToggleOffSolid className='h2 mt-2 disableColor' /> Reservado</span>
-            <span className={toggle?'cursorPointer':'hide'} onClick={()=> setToggle(false)}><LiaToggleOnSolid className='h2 mt-2 pink-salmon' /> Pago</span>
+          <div className='col text-start'>
+            <label>&nbsp;</label>
+            <span className={!toggle?'cursorPointer':'hide'} onClick={()=> setToggle(true)}><RiSuitcase2Line className='h4 text-secondary' /> <LiaToggleOffSolid className='h2 mt-2 disableColor' /> Bagagem de mão</span>
+            <span className={toggle?'cursorPointer':'hide'} onClick={()=> setToggle(false)}><PiSuitcaseRolling className='h3 text-secondary' /> <LiaToggleOnSolid className='h2 mt-2 pink-salmon' /> Bagagem despachada</span>
           </div>
           <div className='col-6'>
             <label>Responsável</label>
@@ -1405,6 +1263,12 @@ function ValidacaoAssentos() {
             <label>CPF do Responsável</label>
             <ReactInputMask mask="999.999.999-99" id="f_cpf" className='defaultField' required  disabled={reservaId ? true : false}  />
           </div>
+
+          <div className='col-12'>
+          <label>Obsevações:</label>
+          <textarea></textarea>
+          </div>
+
           <div className='col-4'>
             <label>Telefone</label>
             <div className='d-flex'>
@@ -1469,11 +1333,19 @@ function ValidacaoAssentos() {
           <h4 className={titleAlert ? '' : 'hide'}>{titleAlert}</h4>
           {txtAlert}
         </div>
-          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/reserva" relative="path">Reserva</Link>&nbsp;/&nbsp;Validação de Assentos</div>
+          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aeroagencia" relative="path">Aéreo</Link>&nbsp;/&nbsp;Reserva de Assentos</div>
 
-          <div className="lineButtons row ">
+          <div className='row mt-2'>
+            <div className='col'><h4>{Globals.userNameAgencia}</h4></div>
+            <div className='col saldoAllotment btnTable'>
+              <h5><b><small>Allotment</small> {dataReserva.length}</b>/30</h5><small>Val. Jan/24</small>
+            </div>
+          </div>
+
+
+          <div className="row mt-4">
             <div className="col">
-              <h1>Reserva</h1>
+              <h2><b>Escolha os Assentos da Aeronave</b></h2>
             </div>
           </div>
           
@@ -1565,58 +1437,65 @@ function ValidacaoAssentos() {
 
 
                           <div className='row mt-3'>
-                            <div className='col-12 '>
-                              <label className='small'>Contratante</label>
-                              <span>{base.razaosocial}</span>
+
+                            <div className='col-6'>
+                              <label>Total de Assentos</label>
+                              <h4>126</h4>
+                            </div>
+                            <div className='col-6'>
+                              <label>Allotment</label>
+                              <h5 className='mb-0'><b>{dataReserva.length}</b>/30 Assentos</h5> <small>Validade: Janeiro/24</small>
                             </div>
 
+                            {/*
                             <div className='col-12 mt-4 obsDiv' onClick={()=>changeObs(base.obs)}>
                               <label>Observações: <span className='pink-salmon penObs' title='Alterar Observações'>✎</span></label>
                               <span>{base.obs}</span>
                             </div>
+                            */}
+
                           </div>
                         </div>
                       ))}
                   </div>
 
-                  <div className='row interCol mt-3 pt-3 pb-3'>
+                  <div className=' interCol mt-3 p-3'>
 
-                    <div className='row'>
-
-                      <h3>Passageiros</h3>
-
-                      <div >
-                        <div className='row'>
-                          <div className='col-12 '>
-                            <table className="tblPassageiros">
-                              <thead>
-                                <tr>
-                                  <td>Assento</td>
-                                  <td>Tipo</td>
-                                  <td>Passageiro</td>
-                                  <td>Localizador</td>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {dataReserva.map((base, mp) => (
-                                  <tr key={mp} onClick={()=>changeAssento(base.assento.substring(0, 1), base.assento.substring(1), base.classe)}>
-                                    <td>{base.assento}/{formataClasse(base.classe)}</td>
-                                    <td>{base.tipo}</td>
-                                    <td>{base.nome} {base.sobrenome}</td>
-                                    <td>{base.localizador}</td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
+                      <div className='text-center mb-3 mt-2'>
+                        <h4>Passageiros</h4>
                       </div>
+
+                      <table className="tblPassageiros">
+                        <thead>
+                          <tr>
+                            <td></td>
+                            <td>Assento</td>
+                            <td>Passageiro</td>
+                            <td>Valor</td>
+                            <td>Status</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dataReserva.map((base, mp) => (
+                            <tr key={mp} onClick={()=>changeAssento(base.assento.substring(0, 1), base.assento.substring(1), base.classe)}>
+                              <td>{mp+1}</td>
+                              <td>{base.assento}/{formataClasse(base.classe)}</td>
+                              <td>{base.nome} {base.sobrenome}</td>
+                              <td>R$ 999,99</td>
+                              <td>
+                                {mp+1 < 5? <b className="text-success">Pago</b>:''}
+                                {mp+1 >= 5 && mp+1 <= 10 ? <b className="light-blue">Faturado</b>:''}
+                                {mp+1 >= 11? <b className="pink-salmon">Reservado</b>:''}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
 
 
                       <div className='col-12'>
-                        <button type='button' onClick={()=>gerarFaturamento()} ><span ><BsCheckLg /> Gerar Faturamento</span></button>
+                        <button type='button' onClick={()=>setOpenModal2(true)} ><span ><BsCheckLg /> Gerar Faturamento</span></button>
                       </div>
-                    </div>
 
                   </div>
                 </div>

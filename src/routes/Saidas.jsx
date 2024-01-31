@@ -18,7 +18,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 
 
 
-function EditaFretamento() {
+function Saidas() {
 
   const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
   const navigate = useNavigate()
@@ -116,13 +116,13 @@ function EditaFretamento() {
         .catch(error=> alert(error))
   }
 
-  function editaFretamento(x) {
-    navigate('/aereo/fretamento/editafretamento/'+x);
+  function editasaidas(x) {
+    navigate('/aereo/saidas/editasaidas/'+x);
   }
 
 
   function cadastro(x) {
-    navigate('/aereo/fretamento/cadastrofretamento/'+x);
+    navigate('/aereo/saidas/cadastrosaidas/'+x);
   }
 
   function formatDate(x) {
@@ -228,7 +228,7 @@ function EditaFretamento() {
   }
 
   function newId() {
-    navigate('/aereo/fretamento/cadastrofretamento/');
+    navigate('/aereo/saidas/cadastrosaidas/');
   }
 
 
@@ -247,10 +247,10 @@ function EditaFretamento() {
           <h4 className={titleAlert ? '' : 'hide'}>{titleAlert}</h4>
           {txtAlert}
         </div>
-          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;Fretamento</div>
+          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;Saídas</div>
 
           <div className='row lineButtons mt-3 mb-2'>
-            <div className="col "><h1>Fretamento</h1></div>
+            <div className="col "><h1>Saídas</h1></div>
             <div className="col btnTable">
               <div className="buscaFiltro">
                 <input type='text' 
@@ -277,7 +277,7 @@ function EditaFretamento() {
                   <table className='tblDefault'>
                     <thead>
                       <tr>
-                        <th scope="col">Frete</th>
+                        <th scope="col"></th>
                         <th scope="col" colSpan="3">Rota de Ida</th>
                         <th scope="col" colSpan="3">Rota de Volta</th>
                         <th scope="col">Contratante</th>
@@ -287,7 +287,7 @@ function EditaFretamento() {
                     </thead>
                     <tbody>
                     {dataBase.map((data, index) => (
-                      <tr key={index} onClick={() => editaFretamento(data.id_fretamento)} className={data.multa > 0 ? 'fretamentoCancelado' : ''}>
+                      <tr key={index} onClick={() => editasaidas(data.id_fretamento)} className={data.multa > 0 ? 'fretamentoCancelado' : ''}>
                         <td>{data.id_fretamento}</td>
 
                         <td>{formatDate(data.data_frete)}</td>
@@ -338,4 +338,4 @@ function EditaFretamento() {
   )
 }
   
-export default EditaFretamento
+export default Saidas

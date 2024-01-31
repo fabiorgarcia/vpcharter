@@ -31,12 +31,14 @@ function Home() {
             <div className='content'>
               {/*<div className='breadCrumb'><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' /> Home</div>*/}
 
+              {/*<h4 className={Globals.userNameAgencia?'':'hide'}>{Globals.userNameAgencia}</h4>*/}
+
               <div className='row contentHomeMaster'>
                 <div className='col-6'>
                   <Link to={Globals.userStatus=='3'?"/aeroagencia":"/aereo"} relative="path"><div className='btnHomeMaster'><GiCommercialAirplane /><span>Aéreo</span><span className='h5'>Fretamento</span></div></Link>
                 </div>
                 <div className='col-6'>
-                  <div className='btnHomeMaster btnHomeMasterOff'><BsBusFrontFill /><span>Ônibus</span><span className='h5'>Fretamento</span></div>
+                  <div className='btnHomeMaster btnHomeMasterOff'><BsBusFrontFill /><span>Rodoviário</span><span className='h5'>Fretamento</span></div>
                 </div>
                 <div className='col-6'>
                   <div className='btnHomeMaster btnHomeMasterOff'><PiAirplaneInFlight /><span>Aéreo</span><span className='h5'>Regular</span></div>
