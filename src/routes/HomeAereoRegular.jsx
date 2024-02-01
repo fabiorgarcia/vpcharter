@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai"
 
 
-function HomeRodoviario() {
+function HomeAereoRegular() {
 
   const [statusUser, setStatusUser] = useState ();
   const [openModal, setOpenModal] = useState (false);
@@ -38,7 +38,7 @@ function HomeRodoviario() {
       <div className='allTab'>
         <Sidebar />
         <div className='content'>
-            <div className='breadCrumb'><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' /> <Link to="/home" relative="path">Home</Link>&nbsp; / Rodoviário</div>
+            <div className='breadCrumb'><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' /> <Link to="/home" relative="path">Home</Link>&nbsp; / Aéreo Regular</div>
             <div className='contentAll msnAguarde'>
               <span>Este produto ainda não está disponível. Aguarde, em breve teremos novidades!</span>
               <button onClick={()=>setOpenModal(true)}>Avisar quando tiver disponível</button>
@@ -50,4 +50,4 @@ function HomeRodoviario() {
     )
   }
   
-  export default HomeRodoviario
+  export default HomeAereoRegular

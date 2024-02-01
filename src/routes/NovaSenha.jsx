@@ -9,7 +9,7 @@ const NovaSenha = () => {
 
   const navigate = useNavigate()
 
-  const [endpoint, setEndpoint] = useState ("http://frgarcia.com.br/vpcharter/");
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const [idUser, setIdUser] = useState ('');
   const [email, setEmail] = useState ('');
   const [emailError, setEmailError] = useState (false);

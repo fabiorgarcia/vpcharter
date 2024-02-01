@@ -27,7 +27,7 @@ import { RiSuitcase2Line } from "react-icons/ri";
 
 
 function ValidacaoAssentos() {
-  const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const navigate = useNavigate()
   const [typeAlert, setTypeAlert] = useState ('');
   const [titleAlert, settitleAlert] = useState ('');

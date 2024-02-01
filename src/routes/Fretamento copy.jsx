@@ -20,7 +20,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 
 function Reserva() {
 
-  const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const navigate = useNavigate()
   const [openModal, setOpenModal] = useState (false);
   const [typeAlert, setTypeAlert] = useState ('');

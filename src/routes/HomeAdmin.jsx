@@ -27,7 +27,7 @@ function HomeAdmin() {
         <Sidebar />
             <div className='content'>
 
-                <div className='breadCrumb'><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />&nbsp;/ Admin</div>
+                <div className='breadCrumb'><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />Admin</div>
 
                 <div className='contentHome'>
                   <Link to="/admin/usuarios" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><PiUsers /><p>Usuários</p></div></div></Link>

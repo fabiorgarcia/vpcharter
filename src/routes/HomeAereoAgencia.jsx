@@ -21,7 +21,7 @@ function HomeAereoAgencia() {
 
   const [loading, setLoading] = useState (false);
   const navigate = useNavigate()
-  const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const [dataBase, setDataBase] = useState ([]); 
   const [dataBaseRotas, setDataBaseRotas] = useState ([]); 
   const [dataBaseAeroportos, setDataBaseAeroportos] = useState ([]); 
@@ -34,6 +34,8 @@ function HomeAereoAgencia() {
   const [newData, setNewData] = useState (true);;
   const [listData, seListData] = useState ([]); 
   const [listTotal, setListTotal] = useState ([]); 
+  const [correntYear, setCorrentYear] = useState (''); 
+  const [orderMonth, setOrderMonth] = useState ([]); 
   
   
 
@@ -62,16 +64,21 @@ function HomeAereoAgencia() {
     .catch(error=> alert(error))
 
 
+    var Xmas95 = new Date();
+    var currentMonth = Xmas95.getMonth() + 1;
+
     for (let i = 1; i < 13; i++) {
       var idSelect = 'btnMonth'+[i];
       document.getElementById(idSelect).className = '';
     }
 
-    var Xmas95 = new Date();
-    var currentMonth = Xmas95.getMonth() + 1;
-
+    setCorrentYear(Xmas95.getFullYear())
     var idSelect = 'btnMonth' + currentMonth;
     document.getElementById(idSelect).className = 'selectMonth';
+    document.getElementById(idSelect+'b').className = 'selectMonth';
+    document.getElementById(idSelect+'c').className = 'selectMonth';
+    document.getElementById(idSelect+'d').className = 'selectMonth';
+    document.getElementById(idSelect+'e').className = 'selectMonth';
 
     setSelectMonth(currentMonth)
     carregaPagina(currentMonth)
@@ -86,6 +93,20 @@ function HomeAereoAgencia() {
 
     var Xmas95 = new Date();
     var currentYear = Xmas95.getFullYear();
+    var currentMonth = Xmas95.getMonth() + 1;
+    if (month < currentMonth) { currentYear = currentYear + 1; }
+
+    var sub_array = [];
+    for (let i = 1; i < 13; i++) {
+      if (i >= currentMonth) { sub_array.push(i); }
+    }
+
+    for (let i = 1; i < currentMonth; i++) {
+      if (i <= currentMonth) { sub_array.push(i); }
+    }
+
+    setOrderMonth(sub_array)
+    setCorrentYear(currentYear)
 
     var startMonth = currentYear+'-'+month+'-01';
     var finalMonth = currentYear+'-'+month+'-31';
@@ -279,22 +300,97 @@ function HomeAereoAgencia() {
   function changeMonth(x) {
 
     for (let i = 1; i < 13; i++) {
-      var idSelect = 'btnMonth'+[i];
-      document.getElementById(idSelect).className = '';
+      document.getElementById('btnMonth'+[i]).className = '';
+      document.getElementById('btnMonth'+[i]+'b').className = '';
+      document.getElementById('btnMonth'+[i]+'c').className = '';
+      document.getElementById('btnMonth'+[i]+'d').className = '';
+      document.getElementById('btnMonth'+[i]+'e').className = '';
     }
 
-    if(x=='1') { document.getElementById('btnMonth1').className = 'selectMonth'; }
-    if(x=='2') { document.getElementById('btnMonth2').className = 'selectMonth'; }
-    if(x=='3') { document.getElementById('btnMonth3').className = 'selectMonth'; }
-    if(x=='4') { document.getElementById('btnMonth4').className = 'selectMonth'; }
-    if(x=='5') { document.getElementById('btnMonth5').className = 'selectMonth'; }
-    if(x=='6') { document.getElementById('btnMonth6').className = 'selectMonth'; }
-    if(x=='7') { document.getElementById('btnMonth7').className = 'selectMonth'; }
-    if(x=='8') { document.getElementById('btnMonth8').className = 'selectMonth'; }
-    if(x=='9') { document.getElementById('btnMonth9').className = 'selectMonth'; }
-    if(x=='10') { document.getElementById('btnMonth10').className = 'selectMonth'; }
-    if(x=='11') { document.getElementById('btnMonth11').className = 'selectMonth'; }
-    if(x=='12') { document.getElementById('btnMonth12').className = 'selectMonth'; }
+    if(x=='1') { 
+      document.getElementById('btnMonth1').className = 'selectMonth'; 
+      document.getElementById('btnMonth1b').className = 'selectMonth'; 
+      document.getElementById('btnMonth1c').className = 'selectMonth'; 
+      document.getElementById('btnMonth1d').className = 'selectMonth'; 
+      document.getElementById('btnMonth1e').className = 'selectMonth'; 
+    }
+    if(x=='2') { 
+      document.getElementById('btnMonth2').className = 'selectMonth'; 
+      document.getElementById('btnMonth2b').className = 'selectMonth'; 
+      document.getElementById('btnMonth2c').className = 'selectMonth'; 
+      document.getElementById('btnMonth2d').className = 'selectMonth'; 
+      document.getElementById('btnMonth2e').className = 'selectMonth'; 
+    }
+    if(x=='3') { 
+      document.getElementById('btnMonth3').className = 'selectMonth'; 
+      document.getElementById('btnMonth3b').className = 'selectMonth'; 
+      document.getElementById('btnMonth3c').className = 'selectMonth'; 
+      document.getElementById('btnMonth3d').className = 'selectMonth'; 
+      document.getElementById('btnMonth3e').className = 'selectMonth'; 
+    }
+    if(x=='4') { 
+      document.getElementById('btnMonth4').className = 'selectMonth'; 
+      document.getElementById('btnMonth4b').className = 'selectMonth'; 
+      document.getElementById('btnMonth4c').className = 'selectMonth'; 
+      document.getElementById('btnMonth4d').className = 'selectMonth'; 
+      document.getElementById('btnMonth4e').className = 'selectMonth'; 
+    }
+    if(x=='5') { 
+      document.getElementById('btnMonth5').className = 'selectMonth'; 
+      document.getElementById('btnMonth5b').className = 'selectMonth'; 
+      document.getElementById('btnMonth5c').className = 'selectMonth'; 
+      document.getElementById('btnMonth5d').className = 'selectMonth'; 
+      document.getElementById('btnMonth5e').className = 'selectMonth'; 
+    }
+    if(x=='6') { 
+      document.getElementById('btnMonth6').className = 'selectMonth'; 
+      document.getElementById('btnMonth6b').className = 'selectMonth'; 
+      document.getElementById('btnMonth6c').className = 'selectMonth'; 
+      document.getElementById('btnMonth6d').className = 'selectMonth'; 
+      document.getElementById('btnMonth6e').className = 'selectMonth'; 
+    }
+    if(x=='7') { 
+      document.getElementById('btnMonth7').className = 'selectMonth'; 
+      document.getElementById('btnMonth7b').className = 'selectMonth'; 
+      document.getElementById('btnMonth7c').className = 'selectMonth'; 
+      document.getElementById('btnMonth7d').className = 'selectMonth'; 
+      document.getElementById('btnMonth7e').className = 'selectMonth'; 
+    }
+    if(x=='8') { 
+      document.getElementById('btnMonth8').className = 'selectMonth'; 
+      document.getElementById('btnMonth8b').className = 'selectMonth'; 
+      document.getElementById('btnMonth8c').className = 'selectMonth'; 
+      document.getElementById('btnMonth8d').className = 'selectMonth'; 
+      document.getElementById('btnMonth8e').className = 'selectMonth'; 
+    }
+    if(x=='9') { 
+      document.getElementById('btnMonth9').className = 'selectMonth'; 
+      document.getElementById('btnMonth9b').className = 'selectMonth'; 
+      document.getElementById('btnMonth9c').className = 'selectMonth'; 
+      document.getElementById('btnMonth9d').className = 'selectMonth'; 
+      document.getElementById('btnMonth9e').className = 'selectMonth'; 
+    }
+    if(x=='10') { 
+      document.getElementById('btnMonth10').className = 'selectMonth'; 
+      document.getElementById('btnMonth10b').className = 'selectMonth'; 
+      document.getElementById('btnMonth10c').className = 'selectMonth'; 
+      document.getElementById('btnMonth10d').className = 'selectMonth'; 
+      document.getElementById('btnMonth10e').className = 'selectMonth'; 
+    }
+    if(x=='11') { 
+      document.getElementById('btnMonth11').className = 'selectMonth'; 
+      document.getElementById('btnMonth11b').className = 'selectMonth'; 
+      document.getElementById('btnMonth11c').className = 'selectMonth'; 
+      document.getElementById('btnMonth11d').className = 'selectMonth'; 
+      document.getElementById('btnMonth11e').className = 'selectMonth'; 
+    }
+    if(x=='12') { 
+      document.getElementById('btnMonth12').className = 'selectMonth'; 
+      document.getElementById('btnMonth12b').className = 'selectMonth'; 
+      document.getElementById('btnMonth12c').className = 'selectMonth'; 
+      document.getElementById('btnMonth12d').className = 'selectMonth'; 
+      document.getElementById('btnMonth12e').className = 'selectMonth'; 
+    }
 
     setSelectMonth(x)
     carregaPagina(x)
@@ -343,11 +439,8 @@ function HomeAereoAgencia() {
 
               <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/ Aéreo</div>
 
-              <div className='row mt-2'>
+              <div className='row mt-2 contentMaster'>
                 <div className='col'><h4>{Globals.userNameAgencia}</h4></div>
-                <div className='col saldoAllotment btnTable'>
-                  <h5><b><small>Allotment</small> 15</b>/30</h5><small>Val. Jan/24</small>
-                </div>
               </div>
 
               <div className='contentHome'>
@@ -360,98 +453,109 @@ function HomeAereoAgencia() {
 
               </div>
 
-              <h4>Escolha o mês da data de saída</h4>
+              <div className='contentMaster mb-4'>
 
-              <div className='carousel_1'>
-                <Carousel show={9.5} slide={2} infinite={false} swiping={true} responsive={true} >
-                  <button onClick={()=>changeMonth('1')} id='btnMonth1'>Janeiro</button>
-                  <button onClick={()=>changeMonth('2')} id='btnMonth2'>Fevereiro</button>
-                  <button onClick={()=>changeMonth('3')} id='btnMonth3'>Março</button>
-                  <button onClick={()=>changeMonth('4')} id='btnMonth4'>Abril</button>
-                  <button onClick={()=>changeMonth('5')} id='btnMonth5'>Maio</button>
-                  <button onClick={()=>changeMonth('6')} id='btnMonth6'>Junho</button>
-                  <button onClick={()=>changeMonth('7')} id='btnMonth7'>Julho</button>
-                  <button onClick={()=>changeMonth('8')} id='btnMonth8'>Agosto</button>
-                  <button onClick={()=>changeMonth('9')} id='btnMonth9'>Setembro</button>
-                  <button onClick={()=>changeMonth('10')} id='btnMonth10'>Outubro</button>
-                  <button onClick={()=>changeMonth('11')} id='btnMonth11'>Novembro</button>
-                  <button onClick={()=>changeMonth('12')} id='btnMonth12'>Dezembro</button>
-                </Carousel>
+                <h4>Escolha o mês da data de saída</h4>
+
+
+                <div className='carousel_1'>
+                  <Carousel show={8.5} slide={2} infinite={false} swiping={true} responsive={true} >
+                    <button onClick={()=>changeMonth('1')} id='btnMonth1'>Janeiro</button>
+                    <button onClick={()=>changeMonth('2')} id='btnMonth2'>Fevereiro</button>
+                    <button onClick={()=>changeMonth('3')} id='btnMonth3'>Março</button>
+                    <button onClick={()=>changeMonth('4')} id='btnMonth4'>Abril</button>
+                    <button onClick={()=>changeMonth('5')} id='btnMonth5'>Maio</button>
+                    <button onClick={()=>changeMonth('6')} id='btnMonth6'>Junho</button>
+                    <button onClick={()=>changeMonth('7')} id='btnMonth7'>Julho</button>
+                    <button onClick={()=>changeMonth('8')} id='btnMonth8'>Agosto</button>
+                    <button onClick={()=>changeMonth('9')} id='btnMonth9'>Setembro</button>
+                    <button onClick={()=>changeMonth('10')} id='btnMonth10'>Outubro</button>
+                    <button onClick={()=>changeMonth('11')} id='btnMonth11'>Novembro</button>
+                    <button onClick={()=>changeMonth('12')} id='btnMonth12'>Dezembro</button>
+                  </Carousel>
+                </div>
+
+                <div className='carousel_2'>
+                  <Carousel show={6.5} slide={2} infinite={false} swiping={true} responsive={true}>
+                    <button onClick={()=>changeMonth('1')} id='btnMonth1b'>Janeiro</button>
+                    <button onClick={()=>changeMonth('2')} id='btnMonth2b'>Fevereiro</button>
+                    <button onClick={()=>changeMonth('3')} id='btnMonth3b'>Março</button>
+                    <button onClick={()=>changeMonth('4')} id='btnMonth4b'>Abril</button>
+                    <button onClick={()=>changeMonth('5')} id='btnMonth5b'>Maio</button>
+                    <button onClick={()=>changeMonth('6')} id='btnMonth6b'>Junho</button>
+                    <button onClick={()=>changeMonth('7')} id='btnMonth7b'>Julho</button>
+                    <button onClick={()=>changeMonth('8')} id='btnMonth8b'>Agosto</button>
+                    <button onClick={()=>changeMonth('9')} id='btnMonth9b'>Setembro</button>
+                    <button onClick={()=>changeMonth('10')} id='btnMonth10b'>Outubro</button>
+                    <button onClick={()=>changeMonth('11')} id='btnMonth11b'>Novembro</button>
+                    <button onClick={()=>changeMonth('12')} id='btnMonth12b'>Dezembro</button>
+                  </Carousel>
+                </div>
+
+                <div className='carousel_3'>
+                  <Carousel show={5.5} infinite={false} swiping={true} responsive={true}>
+                    <button onClick={()=>changeMonth('1')} id='btnMonth1c'>Janeiro</button>
+                    <button onClick={()=>changeMonth('2')} id='btnMonth2c'>Fevereiro</button>
+                    <button onClick={()=>changeMonth('3')} id='btnMonth3c'>Março</button>
+                    <button onClick={()=>changeMonth('4')} id='btnMonth4c'>Abril</button>
+                    <button onClick={()=>changeMonth('5')} id='btnMonth5c'>Maio</button>
+                    <button onClick={()=>changeMonth('6')} id='btnMonth6c'>Junho</button>
+                    <button onClick={()=>changeMonth('7')} id='btnMonth7c'>Julho</button>
+                    <button onClick={()=>changeMonth('8')} id='btnMonth8c'>Agosto</button>
+                    <button onClick={()=>changeMonth('9')} id='btnMonth9c'>Setembro</button>
+                    <button onClick={()=>changeMonth('10')} id='btnMonth10c'>Outubro</button>
+                    <button onClick={()=>changeMonth('11')} id='btnMonth11c'>Novembro</button>
+                    <button onClick={()=>changeMonth('12')} id='btnMonth12c'>Dezembro</button>
+                  </Carousel>
+                </div>
+
+                <div className='carousel_4'>
+                  <Carousel show={4.5} infinite={false} swiping={true} responsive={true}>
+                    <button onClick={()=>changeMonth('1')} id='btnMonth1d'>Janeiro</button>
+                    <button onClick={()=>changeMonth('2')} id='btnMonth2d'>Fevereiro</button>
+                    <button onClick={()=>changeMonth('3')} id='btnMonth3d'>Março</button>
+                    <button onClick={()=>changeMonth('4')} id='btnMonth4d'>Abril</button>
+                    <button onClick={()=>changeMonth('5')} id='btnMonth5d'>Maio</button>
+                    <button onClick={()=>changeMonth('6')} id='btnMonth6d'>Junho</button>
+                    <button onClick={()=>changeMonth('7')} id='btnMonth7d'>Julho</button>
+                    <button onClick={()=>changeMonth('8')} id='btnMonth8d'>Agosto</button>
+                    <button onClick={()=>changeMonth('9')} id='btnMonth9d'>Setembro</button>
+                    <button onClick={()=>changeMonth('10')} id='btnMonth10d'>Outubro</button>
+                    <button onClick={()=>changeMonth('11')} id='btnMonth11d'>Novembro</button>
+                    <button onClick={()=>changeMonth('12')} id='btnMonth12d'>Dezembro</button>
+                  </Carousel>
+                </div>
+
+                <div className='carousel_5'>
+                  <Carousel show={2} infinite={false} swiping={true} responsive={true}>
+                  <button onClick={()=>changeMonth('1')} id='btnMonth1e'>Janeiro</button>
+                    <button onClick={()=>changeMonth('2')} id='btnMonth2e'>Fevereiro</button>
+                    <button onClick={()=>changeMonth('3')} id='btnMonth3e'>Março</button>
+                    <button onClick={()=>changeMonth('4')} id='btnMonth4e'>Abril</button>
+                    <button onClick={()=>changeMonth('5')} id='btnMonth5e'>Maio</button>
+                    <button onClick={()=>changeMonth('6')} id='btnMonth6e'>Junho</button>
+                    <button onClick={()=>changeMonth('7')} id='btnMonth7e'>Julho</button>
+                    <button onClick={()=>changeMonth('8')} id='btnMonth8e'>Agosto</button>
+                    <button onClick={()=>changeMonth('9')} id='btnMonth9e'>Setembro</button>
+                    <button onClick={()=>changeMonth('10')} id='btnMonth10e'>Outubro</button>
+                    <button onClick={()=>changeMonth('11')} id='btnMonth11e'>Novembro</button>
+                    <button onClick={()=>changeMonth('12')} id='btnMonth12e'>Dezembro</button>
+                  </Carousel>
+                </div>
+
               </div>
 
-              <div className='carousel_2'>
-                <Carousel show={7.5} slide={2} infinite={false} swiping={true} responsive={true}>
-                  <button onClick={()=>changeMonth('1')} id='btnMonth1'>Janeiro</button>
-                  <button onClick={()=>changeMonth('2')} id='btnMonth2'>Fevereiro</button>
-                  <button onClick={()=>changeMonth('3')} id='btnMonth3'>Março</button>
-                  <button onClick={()=>changeMonth('4')} id='btnMonth4'>Abril</button>
-                  <button onClick={()=>changeMonth('5')} id='btnMonth5'>Maio</button>
-                  <button onClick={()=>changeMonth('6')} id='btnMonth6'>Junho</button>
-                  <button onClick={()=>changeMonth('7')} id='btnMonth7'>Julho</button>
-                  <button onClick={()=>changeMonth('8')} id='btnMonth8'>Agosto</button>
-                  <button onClick={()=>changeMonth('9')} id='btnMonth9'>Setembro</button>
-                  <button onClick={()=>changeMonth('10')} id='btnMonth10'>Outubro</button>
-                  <button onClick={()=>changeMonth('11')} id='btnMonth11'>Novembro</button>
-                  <button onClick={()=>changeMonth('12')} id='btnMonth12'>Dezembro</button>
-                </Carousel>
-              </div>
-
-              <div className='carousel_3'>
-                <Carousel show={5.5} infinite={false} swiping={true} responsive={true}>
-                  <button onClick={()=>changeMonth('1')} id='btnMonth1'>Janeiro</button>
-                  <button onClick={()=>changeMonth('2')} id='btnMonth2'>Fevereiro</button>
-                  <button onClick={()=>changeMonth('3')} id='btnMonth3'>Março</button>
-                  <button onClick={()=>changeMonth('4')} id='btnMonth4'>Abril</button>
-                  <button onClick={()=>changeMonth('5')} id='btnMonth5'>Maio</button>
-                  <button onClick={()=>changeMonth('6')} id='btnMonth6'>Junho</button>
-                  <button onClick={()=>changeMonth('7')} id='btnMonth7'>Julho</button>
-                  <button onClick={()=>changeMonth('8')} id='btnMonth8'>Agosto</button>
-                  <button onClick={()=>changeMonth('9')} id='btnMonth9'>Setembro</button>
-                  <button onClick={()=>changeMonth('10')} id='btnMonth10'>Outubro</button>
-                  <button onClick={()=>changeMonth('11')} id='btnMonth11'>Novembro</button>
-                  <button onClick={()=>changeMonth('12')} id='btnMonth12'>Dezembro</button>
-                </Carousel>
-              </div>
-
-              <div className='carousel_4'>
-                <Carousel show={4.5} infinite={false} swiping={true} responsive={true}>
-                  <button onClick={()=>changeMonth('1')} id='btnMonth1'>Janeiro</button>
-                  <button onClick={()=>changeMonth('2')} id='btnMonth2'>Fevereiro</button>
-                  <button onClick={()=>changeMonth('3')} id='btnMonth3'>Março</button>
-                  <button onClick={()=>changeMonth('4')} id='btnMonth4'>Abril</button>
-                  <button onClick={()=>changeMonth('5')} id='btnMonth5'>Maio</button>
-                  <button onClick={()=>changeMonth('6')} id='btnMonth6'>Junho</button>
-                  <button onClick={()=>changeMonth('7')} id='btnMonth7'>Julho</button>
-                  <button onClick={()=>changeMonth('8')} id='btnMonth8'>Agosto</button>
-                  <button onClick={()=>changeMonth('9')} id='btnMonth9'>Setembro</button>
-                  <button onClick={()=>changeMonth('10')} id='btnMonth10'>Outubro</button>
-                  <button onClick={()=>changeMonth('11')} id='btnMonth11'>Novembro</button>
-                  <button onClick={()=>changeMonth('12')} id='btnMonth12'>Dezembro</button>
-                </Carousel>
-              </div>
-
-              <div className='carousel_5'>
-                <Carousel show={2} infinite={false} swiping={true} responsive={true}>
-                <button onClick={()=>changeMonth('1')} id='btnMonth1'>Janeiro</button>
-                  <button onClick={()=>changeMonth('2')} id='btnMonth2'>Fevereiro</button>
-                  <button onClick={()=>changeMonth('3')} id='btnMonth3'>Março</button>
-                  <button onClick={()=>changeMonth('4')} id='btnMonth4'>Abril</button>
-                  <button onClick={()=>changeMonth('5')} id='btnMonth5'>Maio</button>
-                  <button onClick={()=>changeMonth('6')} id='btnMonth6'>Junho</button>
-                  <button onClick={()=>changeMonth('7')} id='btnMonth7'>Julho</button>
-                  <button onClick={()=>changeMonth('8')} id='btnMonth8'>Agosto</button>
-                  <button onClick={()=>changeMonth('9')} id='btnMonth9'>Setembro</button>
-                  <button onClick={()=>changeMonth('10')} id='btnMonth10'>Outubro</button>
-                  <button onClick={()=>changeMonth('11')} id='btnMonth11'>Novembro</button>
-                  <button onClick={()=>changeMonth('12')} id='btnMonth12'>Dezembro</button>
-                </Carousel>
-              </div>
+              
 
 
 
               <div className='contentAll mt-3'>
 
-                <div className='row lineButtons mb-2'>
+                <div  className={dataBase.length==0?'hide':'row lineButtons mb-4 mt-0'}>
+                  <div className={dataBase.length>0?'textDefault600 col':'hide'}>
+                    {listTotal} resultados foram encontrados para <span className='pink-salmon'>{formatMonth(selectMonth)} de {correntYear}</span>
+                  </div>
+
                   <div className="col btnTable">
                     <div className="buscaFiltro">
                       <input type='text' 
@@ -463,11 +567,6 @@ function HomeAereoAgencia() {
                       <FaMagnifyingGlass onClick={()=>listSearch()} />
                     </div>
 
-                    <div className='rightBtn'>
-                      <div>{listData.length}</div>
-                      <div>de</div>
-                      <div className='listTotal'>{listTotal}</div>
-                    </div>
                   </div>
                 </div>
 
@@ -475,10 +574,9 @@ function HomeAereoAgencia() {
                   <div className='col-12 table_list mt-0'> 
 
                     <div className={dataBase.length>0?'hide':'textDefault'}>
-                      <span className='pink-salmon'><b>Não encontramos resultados para o mês de {formatMonth(selectMonth)}</b></span><br />
+                      <span className='pink-salmon'><b>Não encontramos resultados para {formatMonth(selectMonth)} de {correntYear}</b></span><br />
                       <span className='travel-blue'>Busque ofertas em outro mês ou entre em contato com a ViagensPromo.</span>
                     </div>
-
 
                     {dataBase.map((data, index) => (
 

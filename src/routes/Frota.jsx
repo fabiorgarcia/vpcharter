@@ -12,9 +12,9 @@ import LoadingAnimation from "../components/LoadingAnimation";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 
-function Aeronaves() {
+function Frota() {
 
-  const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const navigate = useNavigate()
   const [typeAlert, setTypeAlert] = useState ('');
   const [titleAlert, settitleAlert] = useState ('');
@@ -104,11 +104,11 @@ function Aeronaves() {
   }
 
   function editaaeronave(x) {
-    navigate('/aereo/aeronaves/editaaeronave/'+x);
+    navigate('/aereo/frota/editaaeronave/'+x);
   }
 
   function newId() {
-    navigate('/aereo/aeronaves/cadastroaeronave');
+    navigate('/aereo/frota/cadastroaeronave');
   }
   function listSearch() {
     setLoading(true);
@@ -159,10 +159,10 @@ function Aeronaves() {
           <h4 className={titleAlert ? '' : 'hide'}>{titleAlert}</h4>
           {txtAlert}
         </div>
-          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;Aeronaves</div>
+          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;Frota</div>
 
-          <div className='row lineButtons mt-3 mb-2'>
-            <div className="col "><h1>Aeronaves</h1></div>
+          <div className='row lineButtons'>
+            <div className="col "><h1>Frota</h1></div>
             <div className="col btnTable">
               <div className="buscaFiltro">
                 <input type='text' 
@@ -211,8 +211,8 @@ function Aeronaves() {
                         <td onClick={() => editaaeronave(data.id)}>{formatDate(data.ultimaRevisao)}</td>
                         <td onClick={() => editaaeronave(data.id)}>{data.angarPrincipal}</td>
                         <td onClick={() => editaaeronave(data.id)}>{data.registro}</td>
-                        <td className='text-center'><Link to={"/aereo/aeronaves/mapaassentos/"+data.id}><button>Assentos</button></Link></td>
-                        <td className='text-center'><Link to={"/aereo/aeronaves/rotas/"+data.id}><button><span className={data.origem ? '' : 'hide'}>Rotas</span><span className={data.origem ? 'hide' : ''}>• • •</span></button></Link></td>
+                        <td className='text-center'><Link to={"/aereo/frota/mapaassentos/"+data.id}><button>Assentos</button></Link></td>
+                        <td className='text-center'><Link to={"/aereo/frota/rotas/"+data.id}><button><span className={data.origem ? '' : 'hide'}>Rotas</span><span className={data.origem ? 'hide' : ''}>• • •</span></button></Link></td>
                         <td onClick={() => editaaeronave(data.id)}><div className='btnAddValor' title='Alterar Valor'>✎</div></td>
                       </tr>
                     ))}
@@ -229,4 +229,4 @@ function Aeronaves() {
   )
 }
   
-export default Aeronaves
+export default Frota

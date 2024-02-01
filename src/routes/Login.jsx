@@ -11,7 +11,7 @@ import { CookiesProvider, useCookies } from "react-cookie";
 const Login = () => {
 
   const navigate = useNavigate()
-  var endpoint = 'http://frgarcia.com.br/vpcharter/';
+  var endpoint = Globals.endPoint;
   //var endpoint = '/backend/';
 
   const [isLoggedIn, setIsLoggedIn] = useState (false);

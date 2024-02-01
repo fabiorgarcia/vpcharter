@@ -38,13 +38,13 @@ function Home() {
                   <Link to={Globals.userStatus=='3'?"/aeroagencia":"/aereo"} relative="path"><div className='btnHomeMaster'><GiCommercialAirplane /><span>Aéreo</span><span className='h5'>Fretamento</span></div></Link>
                 </div>
                 <div className='col-6'>
-                  <div className='btnHomeMaster btnHomeMasterOff'><BsBusFrontFill /><span>Rodoviário</span><span className='h5'>Fretamento</span></div>
+                  <Link to="/rodoviario" relative="path" ><div className='btnHomeMaster btnHomeMasterOff'><BsBusFrontFill /><span>Rodoviário</span><span className='h5'>Fretamento</span></div></Link>
                 </div>
                 <div className='col-6'>
-                  <div className='btnHomeMaster btnHomeMasterOff'><PiAirplaneInFlight /><span>Aéreo</span><span className='h5'>Regular</span></div>
+                  <Link to="/aereoregular" relative="path"><div className='btnHomeMaster btnHomeMasterOff'><PiAirplaneInFlight /><span>Aéreo</span><span className='h5'>Regular</span></div></Link>
                 </div>
                 <div className='col-6'>
-                < div className='btnHomeMaster btnHomeMasterOff'><FaSuitcaseRolling /><span>Pacote</span><span className='h5'>Fixo</span></div>
+                  <Link to="/pacotefixo" relative="path"><div className='btnHomeMaster btnHomeMasterOff'><FaSuitcaseRolling /><span>Pacote</span><span className='h5'>Fixo</span></div></Link>
                 </div>
 
                 <div className='col-6'>

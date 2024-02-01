@@ -16,7 +16,7 @@ import { PiPlusCircleFill } from "react-icons/pi";
 
 function Rotas() {
 
-  const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const navigate = useNavigate()
   const { id } = useParams();
   const [alert, setAlert] = useState (false);
@@ -209,7 +209,7 @@ function Rotas() {
       <Sidebar />
       <div className='content'>
 
-          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/aeronaves" relative="path">Aeronaves</Link>&nbsp;/&nbsp;<Link to={"/aereo/aeronaves/editaaeronave/"+id} relative="path">Aeronave</Link>&nbsp;/&nbsp;<Link to={"/aereo/aeronaves/mapaassentos/"+id} relative="path">Mapa de Assentos</Link>&nbsp;/&nbsp;Rotas</div>
+          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/frota" relative="path">Frota</Link>&nbsp;/&nbsp;<Link to={"/aereo/frota/editaaeronave/"+id} relative="path">Aeronave</Link>&nbsp;/&nbsp;<Link to={"/aereo/frota/mapaassentos/"+id} relative="path">Mapa de Assentos</Link>&nbsp;/&nbsp;Rotas</div>
 
           <div className="lineButtons">
             <div className="">

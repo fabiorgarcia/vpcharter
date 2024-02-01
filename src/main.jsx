@@ -11,7 +11,7 @@ import RecuperarSenha from './routes/RecuperarSenha.jsx'
 import NovaSenha from './routes/NovaSenha.jsx'
 import NovoUsuario from './routes/NovoUsuario.jsx'
 import Usuarios from './routes/Usuarios.jsx'
-import Aeronaves from './routes/Aeronaves.jsx';
+import Frota from './routes/Frota.jsx';
 import ErrorPage  from  './routes/ErrorPage.jsx'
 import CadastroAeronave from './routes/CadastroAeronave.jsx';
 import EditaAeronave from './routes/EditaAeronave.jsx';
@@ -37,6 +37,8 @@ import Fabricante from './routes/Fabricante.jsx';
 import ServicoBordo from './routes/ServicoBordo.jsx';
 import Companhias from './routes/Companhias.jsx';
 import HomeAereoAgencia from './routes/HomeAereoAgencia.jsx';
+import HomeAereoRegular from './routes/HomeAereoRegular.jsx';
+import HomePacoteFixo from './routes/HomePacoteFixo.jsx';
 
 
 const router = createBrowserRouter([
@@ -74,23 +76,23 @@ const router = createBrowserRouter([
         element: <Usuarios />,
       },
       {
-        path: '/aereo/aeronaves',
-        element: <Aeronaves />,
+        path: '/aereo/frota',
+        element: <Frota />,
       },
       {
-        path: '/aereo/aeronaves/cadastroaeronave',
+        path: '/aereo/frota/cadastroaeronave',
         element: <CadastroAeronave />,
       },
       {
-        path: '/aereo/aeronaves/editaaeronave/:id',
+        path: '/aereo/frota/editaaeronave/:id',
         element: <EditaAeronave />,
       },
       {
-        path: '/aereo/aeronaves/mapaassentos/:id',
+        path: '/aereo/frota/mapaassentos/:id',
         element: <MapaAssentos />,
       },
       {
-        path: '/aereo/aeronaves/rotas/:id',
+        path: '/aereo/frota/rotas/:id',
         element: <Rotas />,
       },
       {
@@ -138,7 +140,7 @@ const router = createBrowserRouter([
         element: <HomeAereo />,
       },
       {
-        path: '/onibus',
+        path: '/rodoviario',
         element: <HomeRodoviario />,
       },
       {
@@ -172,7 +174,16 @@ const router = createBrowserRouter([
       {
         path: '/aeroagencia',
         element: <HomeAereoAgencia />,
+      },
+      {
+        path: '/aereoregular',
+        element: <HomeAereoRegular />,
+      },
+      {
+        path: '/pacotefixo',
+        element: <HomePacoteFixo />,
       }
+
     ]
   }
 ])

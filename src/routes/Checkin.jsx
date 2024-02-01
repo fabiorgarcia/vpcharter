@@ -17,7 +17,7 @@ import { HiCheck } from "react-icons/hi";
 
 function Checkin() {
 
-  const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const navigate = useNavigate()
   const [openModal, setOpenModal] = useState (true);
   const [typeAlert, setTypeAlert] = useState ('');

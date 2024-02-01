@@ -11,7 +11,7 @@ import ReactInputMask from 'react-input-mask';
 const NovoUsuario = () => {
 
   const navigate = useNavigate()
-  var endpoint = 'http://frgarcia.com.br/vpcharter/';
+  var endpoint = Globals.endPoint;
   const [typeAlert, setTypeAlert] = useState ('');
   const [alert, setAlert] = useState (false);
   const [txtAlert, settxtAlert] = useState ('');

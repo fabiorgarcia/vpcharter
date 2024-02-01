@@ -23,7 +23,7 @@ import { AiOutlineClose } from "react-icons/ai";
 
 function EditaSaidas() {
 
-  const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const navigate = useNavigate()
   const { id } = useParams();
   const [alert, setAlert] = useState (false);
@@ -753,7 +753,7 @@ function EditaSaidas() {
         setAlert(true)
         setTypeAlert('alert-success')
         settitleAlert('Alterado com sucesso!')
-        setTxtAlert('saidas alterado!')
+        setTxtAlert('Saída alterada!')
         //carregaPagina()
         setTimeout(()=> setAlert(false),5000);
         setTimeout(()=> navigate('/saidas'),5000);
@@ -816,11 +816,11 @@ function EditaSaidas() {
       <div className='content'>
 
         
-        <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/saidas" relative="path">Saídas</Link>&nbsp; / Edita Saídas</div>
+        <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/saidas" relative="path">Saídas</Link>&nbsp; / Edita Saída</div>
 
           <div className="row">
             <div className="col-12">
-              <h1>Edita Saídas</h1>
+              <h1>Edita Saída</h1>
             </div>
           </div>
 

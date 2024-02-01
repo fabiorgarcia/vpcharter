@@ -22,7 +22,7 @@ import ContentEditable from "react-contenteditable";
 
 function CadastroSaidas() {
 
-  const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const navigate = useNavigate()
   const { id } = useParams();
   const [alert, setAlert] = useState (false);

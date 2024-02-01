@@ -25,7 +25,7 @@ import { SiSitepoint } from "react-icons/si"
 
 function MapaAssentos() {
 
-  const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const navigate = useNavigate()
   const [typeAlert, setTypeAlert] = useState ('');
   const [titleAlert, settitleAlert] = useState ('');
@@ -846,7 +846,7 @@ function MapaAssentos() {
   }
 
   function gerarRota() {
-    navigate('/aereo/aeronaves/rotas/'+id);
+    navigate('/aereo/frota/rotas/'+id);
   }
 
   function toggleCaracAssento(x, y) {
@@ -1188,7 +1188,7 @@ function MapaAssentos() {
           <h4 className={titleAlert ? '' : 'hide'}>{titleAlert}</h4>
           {txtAlert}
         </div>
-          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/aeronaves" relative="path">Aeronaves</Link>&nbsp;/&nbsp;<Link to={"/aereo/aeronaves/editaaeronave/"+id} relative="path">Aeronave</Link>&nbsp;/&nbsp;Mapa de Assentos</div>
+          <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/frota" relative="path">Frota</Link>&nbsp;/&nbsp;<Link to={"/aereo/frota/editaaeronave/"+id} relative="path">Aeronave</Link>&nbsp;/&nbsp;Mapa de Assentos</div>
 
           
           <div className="lineButtons row ">

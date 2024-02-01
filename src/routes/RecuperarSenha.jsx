@@ -10,7 +10,7 @@ import { CookiesProvider, useCookies } from "react-cookie";
 const RecuperarSenha = () => {
 
   const navigate = useNavigate()
-  var endpoint = 'http://frgarcia.com.br/vpcharter/';
+  var endpoint = Globals.endPoint;
 
   const [isLoggedIn, setIsLoggedIn] = useState (false);
   const [name, setName] = useState ('');

@@ -20,7 +20,7 @@ const Header = () => {
   const [statusUser, setStatusUser] = useState ();
   const navigate = useNavigate();
   const [showUserMenu, setShowUserMenu] = useState (false);
-  var endpoint = 'http://frgarcia.com.br/vpcharter/';
+  var endpoint = Globals.endPoint;
 
   useEffect(() => {
     if (Globals.userId) {

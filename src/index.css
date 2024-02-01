@@ -61,6 +61,10 @@
 .textDefault {
   font-size: 1rem;
 }
+.textDefault600 {
+  font-size: 1rem;
+  font-weight: 600;
+}
 .disableColor {
   color: rgb(179, 179, 179);
 }
@@ -338,6 +342,24 @@ header {
   align-items: center;
   font-weight: 600;
   width: 100%;
+  margin: 0 auto 0 auto;
+  max-width: 1600px;
+}
+
+.msnAguarde {
+  margin: 30px auto 0 auto!important;
+}
+.msnAguarde span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--light-blue);
+}
+.msnAguarde button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  width: fit-content;
+  min-height: fit-content;
+  margin-top: 15px;
 }
 
 .breadCrumb a {
@@ -361,7 +383,7 @@ header {
   width: 100%;
   margin: 0 auto 0 auto;
   max-width: 1600px;
-  padding: 40px 40px 60px 40px;
+  padding: 40px;
   border-radius: 5px;
   background-color: #ffffff;
   -webkit-box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.07);
@@ -487,10 +509,11 @@ header {
 
 .lineButtons {
   font-size: 0.8rem;
-  margin: 0;
-  width: 100%;
+  margin: 1rem 0 0.6rem 0;
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 1600px;
 }
 .lineButtons button, .lineButtons select {
   padding: 3px 6px;
@@ -616,10 +639,9 @@ header {
 
 .table_list {
   max-height: calc(75vh - 130px);
-    overflow-y: auto;
-    font-size: 0.85rem;
-    padding: 0 20px;
-    margin-top: 20px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  padding: 0 20px;
 }
 .table_list::-webkit-scrollbar {
   width: 10px;
@@ -801,14 +823,14 @@ header {
 }
 
 .localizadorModal {
-  background-color: #EE492D;
-  color: #ffffff;
+  background-color: var(--pink-salmon);
+  color: #ffffff!important;
   width: 100%;
   max-width: 600px;
 }
 .localizadorModal span {
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 .infoModal {
   width: min-content;
@@ -1412,10 +1434,6 @@ input[type=text], input[type=number], input[type=password], input[type=email], i
   border-bottom: 8px solid var(--travel-blue);
   z-index: 5;
 }
-
-
-
-
 
 .trSelect {
   background-color: #f9e6ec;
@@ -2447,6 +2465,11 @@ small {
   max-width: 318px;
 }
 
+.contentMaster {
+  width: 100%;
+  margin: 0 auto 0 auto;
+  max-width: 1600px;
+}
 
 .carousel_1 {
   display: block;

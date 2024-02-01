@@ -21,7 +21,7 @@ import { VscEdit } from "react-icons/vsc";
 
 function CadastroTarifa() {
 
-  const [endpoint, setEndpoint] = useState ('http://frgarcia.com.br/vpcharter/');
+  const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const navigate = useNavigate()
   const { id } = useParams();
   const [alert, setAlert] = useState (false);

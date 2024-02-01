@@ -28,7 +28,7 @@ function HomeAereo() {
 
                 <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/ Aéreo</div>
                 <div className='contentHome'>
-                  <Link to="/aereo/aeronaves" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><PiAirplaneTilt /><p>Aeronaves</p></div></div></Link>
+                  <Link to="/aereo/frota" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><PiAirplaneTilt /><p>Frota</p></div></div></Link>
                   <Link to="/aereo/saidas" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdOutlineLocalOffer /><p>Saídas</p></div> </div></Link>
 
                   <Link to="/aereo/tarifas" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdAttachMoney /><p>Tarifas</p></div> </div></Link>
