@@ -36,6 +36,23 @@ const Login = () => {
     if (params[1]=="recuperarsenha") { navigate('recuperarsenha'); }
     if (params[1]=="novousuario") { navigate('novousuario'); }
     if (params[1]=="usuarios") { navigate('usuarios'); }
+    if (params[1]=="aereo") { navigate('aereo'); }
+    if (params[1]=="frota") { navigate('aereo/frota'); }
+    if (params[1]=="cadastroaeronave") { navigate('aereo/frota/cadastroaeronave'); }
+    if (params[1]=="editaaeronave") { navigate('aereo/frota/cadastroaeronave'); }
+    if (params[1]=="tarifas") { navigate('aereo/tarifas'); }
+    if (params[1]=="saidas") { navigate('aereo/saidas'); }
+    if (params[1]=="cadastrosaidas") { navigate('aereo/saidas/cadastrosaidas'); }
+    if (params[1]=="admin") { navigate('admin'); }
+    if (params[1]=="agenciacliente") { navigate('admin/agenciacliente'); }
+    if (params[1]=="assentos") { navigate('admin/assentos'); }
+    if (params[1]=="classe") { navigate('admin/classe'); }
+    if (params[1]=="servicobordo") { navigate('admin/servicobordo'); }
+    if (params[1]=="companhias") { navigate('admin/companhias'); }
+    if (params[1]=="baseregrastarifarias") { navigate('admin/baseregrastarifarias'); }
+    if (params[1]=="aeroagencia") { navigate('aeroagencia'); }
+    if (params[1]=="aereoregular") { navigate('aereoregular'); }
+    if (params[1]=="pacotefixo") { navigate('pacotefixo'); }
 }, [])
 
 
@@ -235,7 +252,7 @@ const Login = () => {
             </div>
 
             {/*<img className="logovplogin" src={hero} alt="Viagens Promo" />*/}
-            <div className='book2bLogin' alt="Viagens Promo"> </div>
+            <div className='book2bLogin' alt="book2b"> </div>
 
             <form className='inputFormLogin' >
               <label>Login</label>
@@ -284,7 +301,7 @@ const Login = () => {
               </div>
               */}
 
-            <div className='text-center mt-2'><Link to="/novousuario" relative="path"><small>Não tem cadastro?</small></Link></div>
+            <div className='text-center mt-2'><Link to="/novousuario" relative="path"><small>Quer saber mais sobre a plataforma?</small></Link></div>
 
             </form>
           </div>

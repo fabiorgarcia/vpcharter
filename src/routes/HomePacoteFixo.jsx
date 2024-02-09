@@ -26,7 +26,7 @@ function HomePacoteFixo() {
       <>
 
       <div className={openModal ? 'bg_loading' : 'hide'} >
-        <div className='globalModal localizadorModal'>
+        <div className='globalModal unavailableModal'>
           <AiOutlineClose className='closeModalTrash' onClick={()=>setOpenModal(false)} />
               <h2>Obrigado!</h2>
               <span>Você será avisado quando estiver disponível.</span>

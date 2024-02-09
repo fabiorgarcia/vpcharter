@@ -5,6 +5,6 @@ export default class Globals {
     static userImage = ""
     static userStatus = ""
     static endPoint = "http://frgarcia.com.br/vpcharter/"
-    //static endPoint = "http://52.15.49.249/backend/"
-    
+    //static endPoint = "http://3.229.171.241/backend/"
+    //static endPoint = "/backend/"
 }

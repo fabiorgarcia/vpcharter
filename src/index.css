@@ -10,7 +10,9 @@
   --bright-salmon: #ec343a;
   --travel-blue: #1a1f4a;
   --light-blue: #162260;
+  --big-light-blue: #6fa1d5;
   --light-green: #03A691;
+  --big-light-green: #58ada9;
   color: var(--travel-blue);
 }
 * {
@@ -40,7 +42,7 @@
 
 
 .book2bLogin {
-  background: url(./assets/book2b.svg) no-repeat top ;
+  background: url(./assets/book2b.svg) no-repeat top left ;
   width: 100%;
   max-width: 420px;
   height: 63px;
@@ -176,7 +178,7 @@ header {
 
 .titleAeronave {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   font-size: 1.3rem;
   font-weight: 500;
@@ -184,6 +186,29 @@ header {
 .titleAeronave .imgCia {
   height: 20px;
 }
+.titleAeronave h4 {
+  margin-bottom: 0;
+  line-height:inherit;
+}
+.tabAeronave {
+  gap:3px;
+}
+.tabAeronave .nav-link {
+  color: #000000;
+  font-size: 0.9rem;
+  border: 1px solid #dbdbdb;
+  background-color: rgb(247 247 247);
+}
+
+
+.tabAeronave .nav-link:hover {
+  color: #ffffff;
+  border: 1px solid var(--pink-salmon);
+  background-color: var(--pink-salmon);
+}
+
+
+
 
 .titleReserva {
   gap: 5px;
@@ -279,6 +304,8 @@ header {
 }
 .sidebar a {
   color: #ffffff!important;
+  font-weight: 300;
+  font-size: 0.90rem;
 }
 .masterMenu {
   opacity: 1!important;
@@ -403,6 +430,18 @@ header {
   max-width: 700px;
   margin: 50px auto 0 auto;
   text-align: center;
+}
+
+.btnPeq {
+  padding: 5px 2rem!important;
+  min-height: fit-content;
+  max-width: fit-content;
+  font-size: 0.9rem;
+}
+.divBtn {
+  display: flex;
+  justify-content: right;
+  align-items: center;
 }
 
 .btnHome {
@@ -615,6 +654,10 @@ header {
   height: 20px;
 }
 .tblDefault button {
+  margin-top: 0;
+}
+/*
+.tblDefault button {
   padding: 3px 10px;
   min-height: 0;
   min-width: 95px;
@@ -634,12 +677,13 @@ header {
   font-size: 1.3rem;
   color: var(--bright-salmon)!important;
 }
+*/
 
 
 
 .table_list {
-  max-height: calc(75vh - 130px);
-  overflow-y: auto;
+  /*max-height: calc(75vh - 130px);*/
+  /*overflow-y: auto;*/
   font-size: 0.85rem;
   padding: 0 20px;
 }
@@ -838,6 +882,18 @@ header {
 }
 .localizadorNumber {
   font-size: 3rem;
+}
+
+
+.unavailableModal {
+  background-color: var(--big-light-green);
+  color: #ffffff!important;
+  width: 100%;
+  max-width: 600px;
+}
+.unavailableModal span {
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 
 
@@ -1412,21 +1468,20 @@ input[type=text], input[type=number], input[type=password], input[type=email], i
 [data-title]:hover::before {
   content: attr(data-title);
   position: absolute;
-  bottom: -26px;
+  bottom: -28px;
   display: inline-block;
   padding: 3px 6px;
   border-radius: 5px;
   background: var(--travel-blue);
   color: #fff;
-  font-size: 12px;
-  font-family: sans-serif;
+  font-size: 0.75rem;
   white-space: nowrap;
   z-index: 5;
 }
 [data-title]:hover::after {
   content: '';
   position: absolute;
-  bottom: -3px;
+  bottom: -8px;
   left: 8px;
   display: inline-block;
   color: #fff;
@@ -1681,10 +1736,11 @@ small {
   display: flex;
   position: relative;
   z-index: 1;
+  background: none;
 }
 
 .fileiraUser:hover  .fileiraAssentos {
-  background-color: #eeeeee!important;
+  background-color: #ffffff!important;
 }
 
 
@@ -1722,8 +1778,11 @@ small {
 .fileiraAssentos {
   display: flex;
   justify-content:space-around;
-  background-color: #ffffff;
 } 
+
+.fileiraAssentosSelect {
+  background: rgb(255, 235, 235);
+}
 
 
 
@@ -2274,7 +2333,6 @@ small {
 }
 
 .divideClass {
-  background-color: #ffffff;
   padding: 5px 0;
   font-size: 0.8rem;
   color: gray;
@@ -2288,10 +2346,11 @@ small {
   margin: auto;
 }
 .assentos svg {
-  font-size: 0.7rem;
-  position: absolute;
+  font-size: 1.3rem;
+  margin-top: -3px;
+  /*position: absolute;
   top: 2px;
-  right: 2px;
+  right: 2px;*/
 }
 .modaCorredor {
   font-size: 1.2rem;
@@ -2363,7 +2422,7 @@ small {
 .asaEsq::after {
   content: '';
   width: 30px;
-  height: 48px;
+  height: 61px;
   background-color: #a3b0cf;
   position: absolute;
   top: 6px;
@@ -2379,7 +2438,7 @@ small {
 .asaDir::after {
   content: '';
   width: 30px;
-  height: 48px;
+  height: 61px;
   background-color: #a3b0cf;
   position: absolute;
   top: 6px;
@@ -2390,7 +2449,6 @@ small {
 .saidaEmergenciaAsa {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
   border-left: 2px solid #dddddd;
   border-right: 2px solid #dddddd;
 }
@@ -2421,15 +2479,16 @@ small {
 .exit {
   width: 75px;
   background-color: #ff0000;
-  padding: 4px;
+  padding: 7px 4px;
   text-align: center;
   color: #ffffff;
   font-size: 0.8rem;
+  margin-top: 5px;
+
 }
 .saidaEmergencia {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
   border-left: 2px solid #dddddd;
   border-right: 2px solid #dddddd;
 }
@@ -2471,6 +2530,34 @@ small {
   max-width: 1600px;
 }
 
+.carouselClasse1 {
+  max-width: 100%;
+  margin: 0 auto;
+}
+.carouselClasse2, .carouselClasse3 {
+  display: none;
+}
+
+.divSelectClasses {
+  display: flex;
+  gap: 5px;
+}
+.divSelectClasses button {
+  font-size: 1rem;
+  color: #000000;
+  border: 1px solid #dbdbdb;
+  background-color: rgb(247 247 247);
+}
+.divSelectClasses button:hover {
+  color: #ffffff;
+  border: 1px solid var(--pink-salmon);
+  background-color: var(--pink-salmon);
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #ffffff;
+  background-color: var(--pink-salmon);
+}
+
 .carousel_1 {
   display: block;
   max-width: 1600px;
@@ -2479,6 +2566,14 @@ small {
 .carousel_2, .carousel_3, .carousel_4, .carousel_5 {
   display: none;
 }
+.desk {
+  display: none;
+}
+
+.tabAeronave .nav-item {
+  cursor: pointer;
+}
+
 
 
 
@@ -2496,10 +2591,16 @@ small {
   .carousel_2 {
     display: block;
   }
+  .tabAeronave .nav-link {
+    max-width: 130px; 
+  }
 }
 
 
 @media screen and (max-width: 1515px) {
+  .tabAeronave .nav-link {
+    max-width: 110px; 
+  }
   .dateList {
     max-width: 6ch;
     overflow: hidden;
@@ -2511,10 +2612,10 @@ small {
   .graficTarifa {
     display: none;
   }
-  
 }
 
 @media screen and (max-width: 1400px) {
+
   .tdComplete {
     width: 5%;
   }
@@ -2558,12 +2659,26 @@ small {
     bottom: -10px;
     font-size: 1.3rem;
   }
+  .userMenu{
+    top: 45px;
+  }
+  .tabAeronave .nav-link {
+    max-width: 100%; 
+  }
+  .tabAeronave .nav-item {
+    width: 100%;
+  }
+  .tabAeronave .nav-link.active {
+    border-bottom: 1px solid #dfdcdc;
+    border-radius: 5px;
+  }
 }
 
 
 
 
 @media screen and (max-width: 1024px) {
+
   .tdComplete {
     width: auto;
   }
@@ -2574,8 +2689,12 @@ small {
   .listTarifa {
     /*width: 250px;*/
   }
-  
-
+  .desk {
+    display: flex;
+  }
+  .userMenu{
+    display: none;
+  }
   .itemMenu {
     padding-right: 5px;
   }
@@ -2634,9 +2753,6 @@ small {
     width: 100%;
     padding: 15px 40px;
   }
-  .userMenu{
-    top: 45px;
-  }
   .globalModal {
     width: 90%;
     max-width: 912px;
@@ -2668,6 +2784,10 @@ small {
 }
 
 @media screen and (max-width: 768px) {
+
+  .divBtn {
+    justify-content: left;
+  }
 
   .idaVolta {
     margin-top: 10px;

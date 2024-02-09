@@ -24,14 +24,37 @@ const NovoUsuario = () => {
   const [googleId, setGoogleId] = useState ('');
   const [firstName, setFirstName] = useState ('');
   const [familyName, setFamilyName] = useState ('');
+  const [agencia, setAgencia] = useState ('');
   const [cpf, setCpf] = useState ('');
   const [cookies, setCookie] = useCookies(["vpcharter"]);
   const [loading, setLoading] = useState (false);
   const [envioEmail, setEnvioEmail] = useState (false);
 
 
-
   function validaForm(e) {
+    e.preventDefault();
+    setLoading(true)
+    var now  = new Date;
+    var dia = ("0" + (now.getDate())).slice(-2);
+    var mes = ("0" + (now.getMonth() + 1)).slice(-2);
+    var hora = ("0" + (now.getHours())).slice(-2);
+    var minutos = ("0" + (now.getMinutes())).slice(-2);
+    var segundos = ("0" + (now.getSeconds())).slice(-2);
+    var dataHoje = now.getFullYear()+'-'+mes+'-'+dia+' '+hora+':'+minutos+':'+segundos;
+    var query = "INSERT INTO `vpcharter_leads` (`id`, `nome`, `email`, `agencia`, `date`) VALUES (NULL, '"+name+"', '"+email+"', '"+agencia+"', '"+dataHoje+"'); "
+    var fData = new FormData();
+    fData.append('query', query);
+    axios.post(Globals.endPoint+'query.php', fData)
+    .then(response=> {
+      if (response.data.length > 0) {
+        setLoading(false)
+        setEnvioEmail(true)
+      } 
+    })
+    .catch(error=> alert(error))
+  }
+
+  function validaFormOld(e) {
     e.preventDefault();
     setPasswordError(false)
     settxtAlert('')
@@ -154,29 +177,21 @@ const NovoUsuario = () => {
               {txtAlert}
             </div>
 
-            <img className="logovplogin" src={hero} alt="Viagens Promo" />
+            <div className='book2bLogin' alt="book2b"> </div>
 
             <form className={ envioEmail ? 'hide' : 'inputFormLogin'} onSubmit={(e)=> validaForm(e)}>
+              
               <div>
-                <h2>Faça seu Cadastro</h2>
+                <h2>Saiba mais sobre a plataforma.</h2>
                 <p>Por favor, digite seus dados.</p>
               </div>
               <div>
-                <label>Primerio Nome</label>
+                <label>Nome Completo</label>
                 <input type='text' 
-                  value={firstName} 
-                  onChange={(e) => setFirstName(e.target.value)} 
-                  placeholder='Digite seu primeiro nome' 
+                  value={name} 
+                  onChange={(e) => setName(e.target.value)} 
+                  placeholder='Digite seu nome completo' 
                   required
-                  onKeyDown={handleKeyDown}
-                ></input>
-
-                <label>Sobrenome</label>
-                <input type='text' 
-                  value={familyName} 
-                  onChange={(e) => setFamilyName(e.target.value)} 
-                  placeholder='Digite seu sobrenome' 
-                  onKeyDown={handleKeyDown}
                 ></input>
 
                 <label>E-mail</label>
@@ -185,42 +200,34 @@ const NovoUsuario = () => {
                   onChange={(e) => setEmail(e.target.value)} 
                   placeholder='Digite seu e-mail' 
                   required
-                  onKeyDown={handleKeyDown}
                 ></input>
 
-                <label>CPF</label>
-
-                <ReactInputMask
-                 mask="999.999.999-99" 
-                 id="f_cpf" 
-                 className='defaultField' 
-                 value={cpf} 
-                 onChange={(e)=>setCpf(e.target.value)} 
-                 onBlur={(e)=>validaCpf(e.target.value)}  
-                 onKeyDown={handleKeyDown}  
-                 required 
-                  />
-
-
-                <label>Senha</label>
-                <input type='password' 
-                  value={password} 
-                  onChange={(e) => setPassword(e.target.value)} 
-                  placeholder='Digite a senha' 
-                  required
-                  onKeyDown={handleKeyDown}
+                <label>Agência de Turismo</label>
+                <input type='text' 
+                  value={agencia} 
+                  onChange={(e) => setAgencia(e.target.value)} 
+                  placeholder='Digite o nome da Agência de Turismo' 
                 ></input>
+
+
 
                 <button type='submit' ><span className={loading ? 'hide' : ''}>Enviar</span><span className={loading ? 'loader' : 'hide'}></span></button>
               </div>
             </form>
 
 
-            <div className={ envioEmail ? 'mt-5 mb-5' : 'hide'} >
-              <h2>E-mail Enviado!</h2>
+            <div className={ envioEmail ? 'mt-5 mb-5 ' : 'hide'} >
+              <h2>Obrigado!</h2>
               <p></p>
-              <p>Em instantes você receberá o link de recuperação no e-mail <b>{email}</b>.</p>
-              <p>Caso não encontre na caixa de entrada, por favor verifique na caixa de span.</p>
+              <p>Entraremos em contato em breve.</p>
+              <div className="row ">
+                <div className="col-4"></div>
+                <div className="col-4">
+                  <Link to="/" relative="path"><button type='button' className="btnPeq mt-0" ><span >Voltar</span></button></Link>
+                </div>
+                <div className="col-4"></div>
+              </div>
+              
             </div>
 
 

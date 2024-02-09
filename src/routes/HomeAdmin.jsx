@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { AiOutlineFlag } from "react-icons/ai";
+import { TbReportMoney } from "react-icons/tb";
 
 
 
@@ -30,29 +31,34 @@ function HomeAdmin() {
                 <div className='breadCrumb'><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />Admin</div>
 
                 <div className='contentHome'>
-                  <Link to="/admin/usuarios" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><PiUsers /><p>Usuários</p></div></div></Link>
+                  <Link to="/admin/usuarios" relative="path"><div className={Globals.userStatus >= '99' ? 'btnHome' : 'hide'}><div className='icoHome'><PiUsers /><p>Usuários</p></div></div></Link>
                 </div>
                 <div className='contentHome'>
-                  <Link to="/admin/agenciacliente" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><IoStorefrontOutline /><p>Agências / Clientes</p></div></div></Link>
+                  <Link to="/admin/agenciacliente" relative="path"><div className={Globals.userStatus >= '9' ? 'btnHome' : 'hide'}><div className='icoHome'><IoStorefrontOutline /><p>Agências / Clientes</p></div></div></Link>
                 </div>
                 <div className='contentHome'>
-                  <Link to="/admin/aeroportos" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdOutlineConnectingAirports /><p>Aeroportos</p></div></div></Link>
+                  <Link to="/admin/aeroportos" relative="path"><div className={Globals.userStatus >= '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdOutlineConnectingAirports /><p>Aeroportos</p></div></div></Link>
                 </div>
                 <div className='contentHome'>
-                  <Link to="/admin/assentos" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdOutlineAirlineSeatReclineNormal /><p>Caract. Assentos</p></div></div></Link>
+                  <Link to="/admin/assentos" relative="path"><div className={Globals.userStatus >= '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdOutlineAirlineSeatReclineNormal /><p>Caract. Assentos</p></div></div></Link>
                 </div>
                 <div className='contentHome'>
-                  <Link to="/admin/classe" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdOutlineHotelClass /><p>Caract. Classes</p></div></div></Link>
+                  <Link to="/admin/classe" relative="path"><div className={Globals.userStatus >= '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdOutlineHotelClass /><p>Caract. Classes</p></div></div></Link>
                 </div>
                 <div className='contentHome'>
-                  <Link to="/admin/fabricante" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><PiBuildingsBold /><p>Fabricantes</p></div></div></Link>
+                  <Link to="/admin/fabricante" relative="path"><div className={Globals.userStatus >= '9' ? 'btnHome' : 'hide'}><div className='icoHome'><PiBuildingsBold /><p>Fabricantes</p></div></div></Link>
                 </div>
                 <div className='contentHome'>
-                  <Link to="/admin/servicobordo" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdOutlineEmojiFoodBeverage /><p>Serviço de Bordo</p></div></div></Link>
+                  <Link to="/admin/servicobordo" relative="path"><div className={Globals.userStatus >= '9' ? 'btnHome' : 'hide'}><div className='icoHome'><MdOutlineEmojiFoodBeverage /><p>Serviço de Bordo</p></div></div></Link>
                 </div>
                 <div className='contentHome'>
-                  <Link to="/admin/companhias" relative="path"><div className={Globals.userStatus == '9' ? 'btnHome' : 'hide'}><div className='icoHome'><AiOutlineFlag /><p>Companhias</p></div></div></Link>
+                  <Link to="/admin/companhias" relative="path"><div className={Globals.userStatus >= '9' ? 'btnHome' : 'hide'}><div className='icoHome'><AiOutlineFlag /><p>Companhias</p></div></div></Link>
                 </div>
+                {/*
+                <div className='contentHome'>
+                  <Link to="/admin/baseregrastarifarias" relative="path"><div className={Globals.userStatus >= '99' ? 'btnHome' : 'hide'}><div className='icoHome'><TbReportMoney /><p>Base Regras Tarifárias</p></div></div></Link>
+                </div>
+                */}
             </div>
       </div>
 

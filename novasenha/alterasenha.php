@@ -655,7 +655,7 @@ button:hover {
     justify-content: center;
 }
 .bg_01 {
-    background: url(http://52.15.49.249/assets/bg01-a595066c.jpg);
+    background: url(https://app.book2b.com.br/assets/bg01-a595066c.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -743,7 +743,7 @@ button:hover {
 
   
     <div id="root"><div class="App"><div id="login"><div class="col01"><div class="bg_01"></div></div><div class="col02"><div class="formLogin"><div class="hide" role="alert"><h4 class="hide"></h4></div>
-	<img class="logovplogin" src="http://52.15.49.249/assets/logo-vp-b37aaa98.png" alt="Viagens Promo"><div class="">
+	<img class="logovplogin" src="https://app.book2b.com.br/assets/book2b-0aebe2fb.svg" alt="book2b">
 
 
       <div>
@@ -780,7 +780,7 @@ button:hover {
                 if (json_encode($result)) {
                     echo '<p>&nbsp;</p>
                     <h2>Senha alterada com sucesso!</h2>
-                    <p><a href="http://52.15.49.249/">Por favor, faça login novamente.</a></p>';
+                    <p><a href="https://app.book2b.com.br/">Por favor, faça login novamente.</a></p>';
                 } else {
                     echo '<p>&nbsp;</p>
                     <h2>Erro na alteração dos dados!</h2>';

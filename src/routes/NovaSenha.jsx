@@ -3,6 +3,7 @@ import hero from "../assets/logo-vp.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Globals from '../components/Globals'
 
 
 const NovaSenha = () => {
@@ -39,7 +40,7 @@ const NovaSenha = () => {
           setTimeout(()=> setTypeAlert(''),5000);
         }
       })
-      .catch(error=> alert(error))
+      .catch(error=> console.log(error))
     }
 
   }, [])
@@ -105,7 +106,7 @@ const NovaSenha = () => {
               {txtError}
             </div>
 
-            <img className="logovplogin" src={hero} alt="Viagens Promo" />
+            <div className='book2bLogin' alt="book2b"> </div>
 
             <div className={ idUser ? '' : 'hide'}>
 

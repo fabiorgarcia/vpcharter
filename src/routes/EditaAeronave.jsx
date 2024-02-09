@@ -178,7 +178,6 @@ function EditaAeronave() {
     setTimeout(function() {      
       
       var query = "UPDATE `vpcharter_frota` SET `fabricante` = '"+fabricante+"', `nomeAeronave` = '"+aeronave+"', `companhia` = '"+companhia+"', `fabricacao` = '"+fabricacao+"', `ultimaRevisao` = '"+ultimaRevisao+"', `aeroporto` = '"+aeroporto+"', `angarPrincipal` = '"+angarPrincipal+"', `registro` = '"+registro+"' WHERE `vpcharter_frota`.`id` = '"+id+"';";
-      
       var fData = new FormData();
       fData.append('query', query);
       axios.post(endpoint+'query.php', fData)
@@ -345,7 +344,7 @@ function EditaAeronave() {
                 <div className='col'>
                   <form onSubmit={(e)=> validaForm(e)}>
                     <div className='row'>
-                      <div className='col-3'>
+                      <div className='col-4'>
                         <label>Fabricante/Modelo</label>
                         <select name="select" value={fabricante} onChange={(e) => changeFabricante(e.target.value)} >
                           <option disabled></option>
@@ -356,11 +355,8 @@ function EditaAeronave() {
                           ))}
                         </select>
                       </div>
-                      <div className='col-3'>
-                        <label>Nome da Aeronave</label>
-                        <input type='text' value={aeronave} onChange={(e) => setAeronave(e.target.value)} required />
-                      </div>
-                      <div className='col-3'>
+
+                      <div className='col-5'>
                         <label>Companhia Aérea</label>
                         <select name="select" value={companhia} onChange={(e) => seCompanhia(e.target.value)} >
                           {companhiaData.map((data, index) => (
@@ -368,34 +364,7 @@ function EditaAeronave() {
                           ))}
                         </select>
                       </div>
-                      <div className='col-3'>
-                        <label>Fabricação</label>
-                        <input type='date' value={fabricacao} onChange={(e) => setFabricacao(e.target.value)} required />
-                      </div>
-                      <div className='col-3'>
-                        <label>Última Revisão</label>
-                        <input type='date' value={ultimaRevisao} onChange={(e) => setUltimaRevisao(e.target.value)} required />
-                      </div>
-                      <div className='col-3'>
-                        <label>Aeroporto</label>
-                        <select name="select" value={aeroporto} onChange={(e) => setAeroporto(e.target.value)} >
-                          {aeroportoData.map((data, index) => (
-                            <option key={index} value={data.iata}>{data.uf} • {data.iata} - {data.nome} - {data.cidade}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className='col-3'>
-                        <label>Angar Principal</label>
-                        <input type='text' value={angarPrincipal} onChange={(e) => setAngarPrincipal(e.target.value)} required />
-                      </div>
-                      <div className='col-3'>
-                        <label>Registro</label>
-                        <input type='text' value={registro} onChange={(e) => setRegistro(e.target.value)} required />
-                      </div>
-                    </div>
 
-                    <div className='row'>
-                      <div className='col'></div>
                       <div className='col-3'>
                           <button type='submit' ><span className={loadingBtn ? 'hide' : ''}><PiCaretRightBold /> Avançar</span><span className={loadingBtn ? 'loader' : 'hide'}></span></button>
                       </div>

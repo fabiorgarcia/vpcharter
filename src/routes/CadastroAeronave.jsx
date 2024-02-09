@@ -28,15 +28,11 @@ function CadastroAeronave() {
   const [openModal, setOpenModal] = useState (false);
   const [fabricante, setFabricante] = useState ('');
   const [fabricanteData, setFabricanteData] = useState ([]);
-  const [tipo, setTipo] = useState ('');
-  const [modelo, setModelo] = useState ('');
   const [aeronave, setAeronave] = useState (''); 
   const [companhia, seCompanhia] = useState (''); 
   const [companhiaData, seCompanhiaData] = useState ([]); 
-  const [fabricacao, setFabricacao] = useState (''); 
-  const [ultimaRevisao, setUltimaRevisao] = useState (''); 
+
   const [aeroporto, setAeroporto] = useState ('');
-  const [aeroportoData, setAeroportoData] = useState ([]); 
   const [angarPrincipal, setAngarPrincipal] = useState ('');
   const [registro, setRegistro] = useState (''); 
   const [fabricanteModelo, setFabricanteModelo] = useState ('');
@@ -56,25 +52,6 @@ function CadastroAeronave() {
     .then(response=> {
       if (response.data.length > 0) {
         seCompanhiaData(response.data)
-        seCompanhia(response.data[0]['id'])
-      } else {
-        setTypeAlert('alert-danger')
-        settitleAlert('Registro não encontrado!')
-        setTimeout(()=> setTypeAlert(''),5000);
-      }
-    })
-    .catch(error=> alert(error))
-
-
-    var query = "SELECT * FROM `vpcharter_aeroportos` order by `uf` ";
-    var fData = new FormData();
-    fData.append('query', query);
-    axios.post(endpoint+'query.php', fData)
-    .then(response=> {
-      if (response.data.length > 0) {
-        setAeroportoData(response.data)
-        setAeroporto(response.data[0]['iata'])
-        setLoading(false);
       } else {
         setTypeAlert('alert-danger')
         settitleAlert('Registro não encontrado!')
@@ -91,7 +68,6 @@ function CadastroAeronave() {
     .then(response=> {
       if (response.data.length > 0) {
         setFabricanteData(response.data)
-        setFabricante(response.data[0]['id'])
         setLoading(false);
       } else {
         setTypeAlert('alert-danger')
@@ -109,17 +85,17 @@ function CadastroAeronave() {
     e.preventDefault();
     
     setTimeout(function() {      
-      var query = "INSERT INTO `vpcharter_frota` (`id`, `fabricante`, `nomeAeronave`, `companhia`, `fabricacao`, `ultimaRevisao`, `aeroporto`, `angarPrincipal`, `registro`, `primeiraClasse`, `classeExecutiva`, `classeEconomica`) VALUES (NULL, '"+fabricante+"', '"+aeronave+"', '"+companhia+"', '"+fabricacao+"', '"+ultimaRevisao+"', '"+aeroporto+"', '"+angarPrincipal+"', '"+registro+"', NULL, NULL, NULL);";
+      var query = "INSERT INTO `vpcharter_frota` (`id`, `fabricante`, `companhia` ) VALUES (NULL, '"+fabricante+"', '"+companhia+"' );";
       var fData = new FormData();
       fData.append('query', query);
       axios.post(endpoint+'query.php', fData)
       .then(response=> {
         if (response.data.length > 0) {
           setTypeAlert('alert-success')
-          setTxtAlert('Dados Alterados com sucesso')
+          setTxtAlert('Cadastro com sucesso')
 
 
-          var query = "SELECT * FROM `vpcharter_frota` WHERE `fabricante` = '"+fabricante+"' AND `nomeAeronave` = '"+aeronave+"' AND `companhia` = '"+companhia+"' AND `fabricacao` = '"+fabricacao+"' AND `ultimaRevisao` = '"+ultimaRevisao+"' AND `aeroporto` = '"+aeroporto+"' AND `angarPrincipal` = '"+angarPrincipal+"' AND `registro` = '"+registro+"'  ";
+          var query = "SELECT * FROM `vpcharter_frota` WHERE `fabricante` = '"+fabricante+"' AND `companhia` = '"+companhia+"'  ";
           var fData = new FormData();
           fData.append('query', query);
           axios.post(endpoint+'query.php', fData)
@@ -127,7 +103,7 @@ function CadastroAeronave() {
             if (response.data.length > 0) {
               setFabricanteData(response.data)
               var newID = response.data[0]['id'];
-              setTimeout(()=> navigate('/mapaassentos/'+newID ),1000);
+              setTimeout(()=> navigate('/aereo/frota/mapaassentos/'+newID ),1000);
               setLoading(false);
             } else {
               setTypeAlert('alert-danger')
@@ -185,7 +161,7 @@ function CadastroAeronave() {
   return (
     <>
 
-<div className={openModal ? 'bg_loading' : 'hide'} >
+    <div className={openModal ? 'bg_loading' : 'hide'} >
       <div className='globalModal'>
         <GrClose className='closeModal' onClick={()=>setOpenModal(false)} />
         <h5>Cadastro Fabricante/Modelo</h5>
@@ -249,57 +225,30 @@ function CadastroAeronave() {
                 <div className='col'>
                   <form onSubmit={(e)=> validaForm(e)}>
                     <div className='row'>
-                      <div className='col-3'>
+                      <div className='col-4'>
                       <label>Fabricante/Modelo</label>
-                        <select name="select" value={fabricante} onChange={(e) => changeFabricante(e.target.value)} >
+                        <select name="select" value={fabricante} onChange={(e) => changeFabricante(e.target.value)} required>
+                          {/*
                           <option disabled></option>
                           <option value="new">❯ Cadastrar/Editar</option>
                           <option disabled>━━━━━━━━━━━━━━</option>
+                          */}
+                          <option value=''> </option>
                           {fabricanteData.map((data, index) => (
                             <option key={index} value={data.id}>{data.aeronave}</option>
                           ))}
                         </select>
                       </div>
-                      <div className='col-3'>
-                        <label>Nome da Aeronave</label>
-                        <input type='text' value={aeronave} onChange={(e) => setAeronave(e.target.value)} required />
-                      </div>
-                      <div className='col-3'>
+
+                      <div className='col-5'>
                         <label>Companhia Aérea</label>
-                        <select name="select" value={companhia} onChange={(e) => seCompanhia(e.target.value)} >
+                        <select name="select" value={companhia} onChange={(e) => seCompanhia(e.target.value)} required>
+                          <option value=''></option>
                           {companhiaData.map((data, index) => (
                             <option key={index} value={data.id}>{data.nome}</option>
                           ))}
                         </select>
                       </div>
-                      <div className='col-3'>
-                        <label>Fabricação</label>
-                        <input type='date' value={fabricacao} onChange={(e) => setFabricacao(e.target.value)} required />
-                      </div>
-                      <div className='col-3'>
-                        <label>Última Revisão</label>
-                        <input type='date' value={ultimaRevisao} onChange={(e) => setUltimaRevisao(e.target.value)} required />
-                      </div>
-                      <div className='col-3'>
-                        <label>Aeroporto</label>
-                        <select name="select" value={aeroporto} onChange={(e) => setAeroporto(e.target.value)} >
-                          {aeroportoData.map((data, index) => (
-                            <option key={index} value={data.iata}>{data.uf} • {data.iata} - {data.nome} - {data.cidade}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className='col-3'>
-                        <label>Angar Principal</label>
-                        <input type='text' value={angarPrincipal} onChange={(e) => setAngarPrincipal(e.target.value)} required />
-                      </div>
-                      <div className='col-3'>
-                        <label>Registro</label>
-                        <input type='text' value={registro} onChange={(e) => setRegistro(e.target.value)} required />
-                      </div>
-                    </div>
-
-                    <div className='row'>
-                      <div className='col'></div>
                       <div className='col-3'>
                           <button type='submit' ><span className={loading ? 'hide' : ''}><PiCaretRightBold /> Avançar</span><span className={loading ? 'loader' : 'hide'}></span></button>
                       </div>

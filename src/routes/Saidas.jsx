@@ -570,14 +570,14 @@ function Saidas() {
 
                     {dataBase.map((data, index) => (
 
-                      <div key={index} className='row listDiv' onClick={() => editasaidas(data.id_fretamento)}>
+                      <div key={index} className='row listDiv'>
 
-                        <div className='col-4'>
+                        <div className='col-4' onClick={()=>editasaidas(data.id_fretamento)}>
                           <h5>{origemDestino(data.r1origem)} - {origemDestino(data.r2origem)}</h5>
                           {formatDate(data.data_frete)} a {formatDate(data.date_volta)}
                         </div>
 
-                        <div className='col firstCol'>
+                        <div className='col firstCol' onClick={()=>editasaidas(data.id_fretamento)}>
                           <div className='idaVolta'>
                             <PiAirplane className='airplaneIda' /> Ida: {formatDate(data.data_frete)}
                           </div>
@@ -598,7 +598,7 @@ function Saidas() {
                             </div>
                           </div>
                         </div>
-                        <div className='col'>
+                        <div className='col' onClick={()=>editasaidas(data.id_fretamento)}>
                           <div className='idaVolta'>
                             <PiAirplane className='airplaneVolta' /> Volta: {formatDate(data.date_volta)}
                           </div>
@@ -620,6 +620,10 @@ function Saidas() {
                             </div>
                           </div>
 
+                        </div>
+
+                        <div className='col-2 divBtn'>
+                          <Link to={"/aereo/tarifas/cadastrotarifa/"+data.id_fretamento}><button className='btnPeq'>Tarifas</button></Link>
                         </div>
 
 

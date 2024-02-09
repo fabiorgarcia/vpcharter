@@ -1,5 +1,6 @@
 import React from 'react'
 import Sidebar from '../components/Sidebar'
+import { BiSolidChevronRight } from "react-icons/bi";
 import Header from '../components/Header';
 import { BsCheckLg  } from "react-icons/bs";
 import Globals from '../components/Globals'
@@ -11,14 +12,14 @@ import LoadingAnimation from "../components/LoadingAnimation";
 import IntlCurrencyInput from "react-intl-currency-input"
 import { MdOutlineHome, MdOutlineModeEdit } from "react-icons/md";
 import { FaTools, FaPlus } from "react-icons/fa";
-import { BiDollarCircle, BiSolidChevronRight } from "react-icons/bi";
+import { BiDollarCircle } from "react-icons/bi";
 import { VscEdit } from "react-icons/vsc";
 
 
 
 
 
-function CadastroTarifa() {
+function BaseRegrasTarifarias() {
 
   const [endpoint, setEndpoint] = useState (Globals.endPoint);
   const navigate = useNavigate()
@@ -78,6 +79,37 @@ function CadastroTarifa() {
   const [changeCateg, setChangeCateg] = useState ('');
   const [changeValor, setChangeValor] = useState (0);
   const [alertValor, setAlertValor] = useState (false);
+
+  const [nomeBase, setNomeBase] = useState ('');
+  const [taxaEmbarque, setTaxaEmbarque] = useState (120);
+  const [markup, setMarkup] = useState ('');
+
+  const [pcCustoAdt, setPcCustoAdt] = useState ('');
+  const [pcCustoChd, setPcCustoChd] = useState ('');
+  const [pcCustoInf, setPcCustoInf] = useState ('');
+  const [prCustoAdt, setPrCustoAdt] = useState ('');
+  const [prCustoChd, setPrCustoChd] = useState ('');
+  const [prCustoInf, setPrCustoInf] = useState ('');
+  const [exCustoAdt, setExCustoAdt] = useState ('');
+  const [exCustoChd, setExCustoChd] = useState ('');
+  const [exCustoInf, setExCustoInf] = useState ('');
+  const [ecCustoAdt, setEcCustoAdt] = useState ('');
+  const [ecCustoChd, setEcCustoChd] = useState ('');
+  const [ecCustoInf, setEcCustoInf] = useState ('');
+
+
+  const [pcVendaAdt, setPcVendaAdt] = useState ('');
+  const [pcVendaChd, setPcVendaChd] = useState ('');
+  const [pcVendaInf, setPcVendaInf] = useState ('');
+  const [prVendaAdt, setPrVendaAdt] = useState ('');
+  const [prVendaChd, setPrVendaChd] = useState ('');
+  const [prVendaInf, setPrVendaInf] = useState ('');
+  const [exVendaAdt, setExVendaAdt] = useState ('');
+  const [exVendaChd, setExVendaChd] = useState ('');
+  const [exVendaInf, setExVendaInf] = useState ('');
+  const [ecVendaAdt, setEcVendaAdt] = useState ('');
+  const [ecVendaChd, setEcVendaChd] = useState ('');
+  const [ecVendaInf, setEcVendaInf] = useState ('');
 
 
 
@@ -630,293 +662,121 @@ function CadastroTarifa() {
       <div className='content'>
 
         
-        <div className='breadCrumb'><Link to="/home" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' />  Home</Link>&nbsp;/&nbsp;<Link to="/aereo" relative="path">Aéreo</Link>&nbsp;/&nbsp;<Link to="/aereo/tarifas" relative="path">Tarifas</Link>&nbsp;/&nbsp;Cadastro de Tarifas</div>
+        <div className='breadCrumb'><Link to="/admin" relative="path"><MdOutlineHome className='icoBread' /><BiSolidChevronRight className='caretRight' /> Admin</Link>&nbsp;/&nbsp;Base Regras Tarifárias</div>
 
-          <div className="lineButtons">
-            <div className="">
-              <h1>Cadastro de Tarifa</h1>
+        <div className="lineButtons">
+          <div className="">
+            <h1>Base Regras Tarifárias</h1>
+          </div>
+        </div>
+
+        <div className='contentAll'>
+          <div className='row '>
+            <div className='col-7'>
+              <label className='mt-1'>Nome</label>
+              <input type='text' placeholder='Nome da Base Regras Tarifárias' value={nomeBase} onChange={(e)=>setNomeBase(e.target.value)}></input>
+             </div>
+
+            <div className='col-3 '>
+              <label className='mt-1'>Taxa de Embarque</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={taxaEmbarque} onChange={(e)=>setTaxaEmbarque(e.target.value)} />
+             </div>
+             <div className='col-2'>
+              <label className='mt-1'>Markup %</label>
+              <input type='number' placeholder='%' value={markup} onChange={(e)=>setMarkup(e.target.value)}></input>
+             </div>
+          </div>
+        </div>
+
+
+        <div className='contentAll mt-4'>
+
+          <div className='col-12'>
+            <h4><FaTools className='icoTools' /> Custo Operacional</h4>
+          </div>
+
+          <div className='row border-bottom pb-2'>
+            <div className='col-3 classAlignMiddle'>
+              <div className='classAlignMiddle'>Primeira Classe</div>
+            </div>
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo ADT</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={pcCustoAdt} onChange={(e)=>setPcCustoAdt(e.target.value)} />
+            </div>
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo CHD</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={pcCustoChd} onChange={(e)=>setPcCustoChd(e.target.value)} />
+            </div>
+
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo INF</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={pcCustoInf} onChange={(e)=>setPcCustoInf(e.target.value)} />
             </div>
           </div>
 
-          <div className='contentAll'>
-            {dataBase.map((data, index) => (
-              <div key={index} className='row tblRotas'>
-                
-                <div className='col-2'>
-                  <label>Rota</label>
-                  <div className='divDisablepq'><strong>{rota}</strong></div>
-                </div>
-                <div className='col-2'>
-                  <label>Número do Voo</label>
-                  <div className='divDisablepq'>{data.voo}</div>
-                </div>
-                <div className='col-2'>
-                  <label>Companhia</label>
-                  <div className='divDisablepq'><img className={data.logo ? 'imgCia' : 'hide'} src={data.logo} /> {data.logo ? '' : data.nome}</div>
-                </div>
-                <div className='col-2'>
-                  <label>Aeronave</label>
-                  <div className='divDisablepq'>{data.nomeAeronave}</div>
-                </div>
-                <div className='col-2'>
-                  <label>Modelo</label>
-                  <div className='divDisablepq'>{data.aeronave}</div>
-                </div>
-                <div className='col-2'>
-                  <label>Duração</label>
-                  <div className='divDisablepq'>{formatTime(data.duracao)}</div>
-                </div>
-                
+          <div className='row border-bottom pb-2 mt-3'>
+            <div className='col-3 classAlignMiddle'>
+              <div className='classAlignMiddle'>Premium</div>
+            </div>
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo ADT</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={prCustoAdt} onChange={(e)=>setPrCustoAdt(e.target.value)} />
+            </div>
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo CHD</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={prCustoChd} onChange={(e)=>setPrCustoChd(e.target.value)} />
+            </div>
 
-                <div className='col-4'>
-                  <label>Origem</label>
-                  <div className='divDisablepq'>{selectAeroporto(data.origem)}</div>
-                </div>
-                <div className='col-2'>
-                  <label>Horário de Saída</label>
-                  <div className='divDisablepq'>{formatTime(data.saida)}</div>
-                </div>
-                
-                <div className='col-4'>
-                  <label>Destino</label>
-                  <div className='divDisablepq'>{selectAeroporto(data.destino)}</div>
-                </div>
-                <div className='col-2'>
-                  <label>Horário de Chegada</label>
-                  <div className='divDisablepq'>{formatTime(data.chegada)}</div>
-                </div>
-                
-
-              </div>
-            ))}
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo INF</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={prCustoInf} onChange={(e)=>setPrCustoInf(e.target.value)} />
+            </div>
           </div>
 
-
-          <div className='contentAll mt-4'>
-
-            <div className='col-12'>
-              <h4><FaTools className='icoTools' /> Custo Operacional</h4>
+          <div className='row border-bottom pb-2 mt-3'>
+            <div className='col-3 classAlignMiddle'>
+              <div className='classAlignMiddle'>Executiva</div>
+            </div>
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo ADT</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={exCustoAdt} onChange={(e)=>setExCustoAdt(e.target.value)} />
+            </div>
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo CHD</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={exCustoChd} onChange={(e)=>setExCustoChd(e.target.value)} />
             </div>
 
-            <div className='row border-bottom pb-2'>
-              <div className='col-3 classAlignMiddle'>
-                <div className='classAlignMiddle'>Primeira Classe</div>
-              </div>
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo ADT</label>
-                <h5 onClick={()=>alteraValor('Primeira Classe', 'Custo Operacional', 'ADT', custo_primeiraClasse.length > 0 ?custo_primeiraClasse[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_primeiraClasse.length > 0 ?custo_primeiraClasse[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_primeiraClasse.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index} >
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList' >{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo CHD</label>
-                <h5 onClick={()=>alteraValor('Primeira Classe', 'Custo Operacional', 'CHD', custo_primeiraclasse_chd.length > 0 ?custo_primeiraclasse_chd[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_primeiraclasse_chd.length > 0 ?custo_primeiraclasse_chd[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_primeiraclasse_chd.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo INF</label>
-                <h5 onClick={()=>alteraValor('Primeira Classe', 'Custo Operacional', 'INF', custo_primeiraclasse_inf.length > 0 ?custo_primeiraclasse_inf[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_primeiraclasse_inf.length > 0 ?custo_primeiraclasse_inf[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_primeiraclasse_inf.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo INF</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={exCustoInf} onChange={(e)=>setExCustoInf(e.target.value)} />
             </div>
-
-            <div className='row border-bottom pb-2 mt-3'>
-              <div className='col-3 classAlignMiddle'>
-                <div className='classAlignMiddle'>Premium</div>
-              </div>
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo ADT</label>
-                <h5 onClick={()=>alteraValor('Premium', 'Custo Operacional', 'ADT', custo_premium.length > 0 ?custo_premium[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_premium.length > 0 ?custo_premium[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_premium.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo CHD</label>
-                <h5 onClick={()=>alteraValor('Premium', 'Custo Operacional', 'CHD', custo_premium_chd.length > 0 ?custo_premium_chd[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_premium_chd.length > 0 ?custo_premium_chd[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_premium_chd.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo INF</label>
-                <h5 onClick={()=>alteraValor('Premium', 'Custo Operacional', 'INF', custo_premium_inf.length > 0 ?custo_premium_inf[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_premium_inf.length > 0 ?custo_premium_inf[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_premium_inf.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className='row border-bottom pb-2 mt-3'>
-              <div className='col-3 classAlignMiddle'>
-                <div className='classAlignMiddle'>Executiva</div>
-              </div>
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo ADT</label>
-                <h5 onClick={()=>alteraValor('Executiva', 'Custo Operacional', 'ADT', custo_executiva.length > 0 ?custo_executiva[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_executiva.length > 0 ?custo_executiva[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_executiva.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo CHD</label>
-                <h5 onClick={()=>alteraValor('Executiva', 'Custo Operacional', 'CHD', custo_executiva_chd.length > 0 ?custo_executiva_chd[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_executiva_chd.length > 0 ?custo_executiva_chd[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_executiva_chd.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo INF</label>
-                <h5 onClick={()=>alteraValor('Executiva', 'Custo Operacional', 'INF', custo_executiva_inf.length > 0 ?custo_executiva_inf[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_executiva_inf.length > 0 ?custo_executiva_inf[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_executiva_inf.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className='row border-bottom  mt-3'>
-              <div className='col-3 classAlignMiddle'>
-                <div className='classAlignMiddle'>Econômica</div>
-              </div>
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo ADT</label>
-                <h5 onClick={()=>alteraValor('Econômica', 'Custo Operacional', 'ADT', custo_economica.length > 0 ?custo_economica[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_economica.length > 0 ?custo_economica[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_economica.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo CHD</label>
-                <h5 onClick={()=>alteraValor('Econômica', 'Custo Operacional', 'CHD', custo_economica_chd.length > 0 ?custo_economica_chd[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_economica_chd.length > 0 ?custo_economica_chd[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_economica_chd.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className='col-3 colTarifa'>
-                <label className='mt-1'>Custo INF</label>
-                <h5 onClick={()=>alteraValor('Econômica', 'Custo Operacional', 'INF', custo_economica_inf.length > 0 ?custo_economica_inf[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(custo_economica_inf.length > 0 ?custo_economica_inf[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {custo_economica_inf.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
           </div>
 
+          <div className='row border-bottom  mt-3'>
+            <div className='col-3 classAlignMiddle'>
+              <div className='classAlignMiddle'>Econômica</div>
+            </div>
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo ADT</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={ecCustoAdt} onChange={(e)=>setEcCustoAdt(e.target.value)} />
+            </div>
+            <div className='col-3 colTarifa'>
+              <label className='mt-1'>Custo CHD</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={ecCustoChd} onChange={(e)=>setEcCustoChd(e.target.value)} />
+            </div>
+
+            <div className='col-3 colTarifa pb-3'>
+              <label className='mt-1'>Custo INF</label>
+              <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={ecCustoInf} onChange={(e)=>setEcCustoInf(e.target.value)} />
+            </div>
+          </div>
+
+        </div>
 
 
+        <div className='contentAll mt-4'>
 
-
-          <div className='contentAll mt-4'>
+          <form onSubmit={(e)=> validaForm(e)}>
 
             <div className='row'>
               <h4><BiDollarCircle /> Valor de Venda</h4>
@@ -928,50 +788,16 @@ function CadastroTarifa() {
               </div>
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>ADT</label>
-                <h5 onClick={()=>alteraValor('Primeira Classe', 'Valor de Venda', 'ADT', primeiraClasse.length > 0 ?primeiraClasse[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(primeiraClasse.length > 0 ?primeiraClasse[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {primeiraClasse.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={pcVendaAdt} onChange={(e)=>setPcVendaAdt(e.target.value)} />
               </div>
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>CHD</label>
-                <h5 onClick={()=>alteraValor('Primeira Classe', 'Valor de Venda', 'CHD', primeiraclasse_chd.length > 0 ?primeiraclasse_chd[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(primeiraclasse_chd.length > 0 ?primeiraclasse_chd[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {primeiraclasse_chd.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={pcVendaChd} onChange={(e)=>setPcVendaChd(e.target.value)} />
               </div>
 
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>INF</label>
-                <h5 onClick={()=>alteraValor('Primeira Classe', 'Valor de Venda', 'INF', primeiraclasse_inf.length > 0 ?primeiraclasse_inf[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(primeiraclasse_inf.length > 0 ?primeiraclasse_inf[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {primeiraclasse_inf.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={pcVendaInf} onChange={(e)=>setPcVendaInf(e.target.value)} />
               </div>
             </div>
 
@@ -981,50 +807,16 @@ function CadastroTarifa() {
               </div>
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>ADT</label>
-                <h5 onClick={()=>alteraValor('Premium', 'Valor de Venda', 'ADT', premium.length > 0 ?premium[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(premium.length > 0 ?premium[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {premium.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={prVendaAdt} onChange={(e)=>setPrVendaAdt(e.target.value)} />
               </div>
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>CHD</label>
-                <h5 onClick={()=>alteraValor('Premium', 'Valor de Venda', 'CHD', premium_chd.length > 0 ?premium_chd[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(premium_chd.length > 0 ?premium_chd[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {premium_chd.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={prVendaChd} onChange={(e)=>setPrVendaChd(e.target.value)} />
               </div>
 
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>INF</label>
-                <h5 onClick={()=>alteraValor('Premium', 'Valor de Venda', 'INF', premium_inf.length > 0 ?premium_inf[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(premium_inf.length > 0 ?premium_inf[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {premium_inf.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={prVendaInf} onChange={(e)=>setPrVendaInf(e.target.value)} />
               </div>
             </div>
 
@@ -1034,50 +826,16 @@ function CadastroTarifa() {
               </div>
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>ADT</label>
-                <h5 onClick={()=>alteraValor('Executiva', 'Valor de Venda', 'ADT', executiva.length > 0 ?executiva[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(executiva.length > 0 ?executiva[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {executiva.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={exVendaAdt} onChange={(e)=>setExVendaAdt(e.target.value)} />
               </div>
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>CHD</label>
-                <h5 onClick={()=>alteraValor('Executiva', 'Valor de Venda', 'CHD', executiva_chd.length > 0 ?executiva_chd[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(executiva_chd.length > 0 ?executiva_chd[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {executiva_chd.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={exVendaChd} onChange={(e)=>setExVendaChd(e.target.value)} />
               </div>
 
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>INF</label>
-                <h5 onClick={()=>alteraValor('Executiva', 'Valor de Venda', 'INF', executiva_inf.length > 0 ?executiva_inf[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(executiva_inf.length > 0 ?executiva_inf[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {executiva_inf.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={exVendaInf} onChange={(e)=>setExVendaInf(e.target.value)} />
               </div>
             </div>
 
@@ -1087,54 +845,31 @@ function CadastroTarifa() {
               </div>
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>ADT</label>
-                <h5 onClick={()=>alteraValor('Econômica', 'Valor de Venda', 'ADT', economica.length > 0 ?economica[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(economica.length > 0 ?economica[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {economica.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={ecVendaAdt} onChange={(e)=>setEcVendaAdt(e.target.value)} />
               </div>
               <div className='col-3 colTarifa'>
                 <label className='mt-1'>CHD</label>
-                <h5 onClick={()=>alteraValor('Econômica', 'Valor de Venda', 'CHD', economica_chd.length > 0 ?economica_chd[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(economica_chd.length > 0 ?economica_chd[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {economica_chd.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={ecVendaChd} onChange={(e)=>setEcVendaChd(e.target.value)} />
               </div>
 
-              <div className='col-3 colTarifa'>
+              <div className='col-3 colTarifa pb-3'>
                 <label className='mt-1'>INF</label>
-                <h5 onClick={()=>alteraValor('Econômica', 'Valor de Venda', 'INF', economica_inf.length > 0 ?economica_inf[0].valor:0)} className='lkAddValor'>
-                  {formatCurrency(economica_inf.length > 0 ?economica_inf[0].valor:0)} <div className='btnAddValor' title='Alterar Valor'>✎</div>
-                </h5> 
-                <div className='listTarifa'>
-                  {economica_inf.map((data, index) => (
-                    <div className='lineTarifa lineTarifaIten' key={index}>
-                      <div data-title={'por: ' + data.firstName + ' ' + data.familyName}>
-                        ⚬ <span className='dateList'>{formatDateTime(data.date)}</span><div className='graficTarifa' style={{minWidth: (data.valor/150)}}></div>{formatCurrency(data.valor)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <IntlCurrencyInput currency="BRL" id='changeValor' config={currencyConfig} className="currency" value={ecVendaInf} onChange={(e)=>setEcVendaInf(e.target.value)} />
               </div>
             </div>
 
-          </div>
+            <div className='row'>
+              <div className='col'></div>
+              <div className='col-3'>
+                <button type='submit'>
+                  <span>Salvar</span>
+                </button>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
 
 
       </div>
@@ -1144,4 +879,4 @@ function CadastroTarifa() {
   )
 }
   
-export default CadastroTarifa
+export default BaseRegrasTarifarias

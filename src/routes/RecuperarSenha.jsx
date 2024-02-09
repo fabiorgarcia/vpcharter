@@ -100,7 +100,7 @@ const RecuperarSenha = () => {
               {txtError}
             </div>
 
-            <img className="logovplogin" src={hero} alt="Viagens Promo" />
+            <div className='book2bLogin' alt="book2b"> </div>
 
             <form className={ envioEmail ? 'hide' : 'inputFormLogin'} onSubmit={(e)=> validaForm(e)}>
               <div className="mt-5 mb-5">

@@ -11,10 +11,10 @@ ini_set('memory_limit', '-1');
 header("Set-Cookie: cross-site-cookie=whatever; SameSite=None; Secure");
 
 
-$link   = mysqli_connect("mysql01.frgarcia.hospedagemdesites.ws", "frgarcia", "maestro31", "frgarcia");
+$link   = mysqli_connect('vp-cluster-database.cluster-ctckmuig6gwh.us-east-1.rds.amazonaws.com', 'admin-app', ';rv%PCPS5)r$T06q', 'book2b-prod');
 $email 	= $_POST['email'];
+echo 'email:'.$email;
 $rows   = array();
-
 
 $query = "SELECT * FROM `vpcharter_users` WHERE `email`  = '".$email."';";
 $result = mysqli_query($link, $query);
@@ -24,13 +24,13 @@ while ($line = mysqli_fetch_array($result)){
 }
 
 if (!$rows[0]) {
-	print json_encode("Naão encontrado.");
+	print json_encode("Não encontrado.");
 	
 } else {
 
-	$nomeremetente     = 'Viagens Promo';
-	$emailsender       = 'contato@frgarcia.com.br';
-    $emailremetente    = 'contato@frgarcia.com.br';
+	$nomeremetente     = 'book2b';
+	$emailsender       = 'contato@book2b.com.br';
+    $emailremetente    = 'contato@book2b.com.br';
 	//$emaildestinatario = 'fabiorgarcia@gmail.com';
     $emaildestinatario = $email;
 	$comcopia          = '';
@@ -42,7 +42,7 @@ if (!$rows[0]) {
 
     <p>Olá, '.$nomeUsuario.'.</p>
     <p>Recebemos uma solicitação para redefinir sua senha.  Por favor, clique no link abaixo.</p>
-    <p><a href="http://52.15.49.249/novasenha/?i='.$idUsuario.'" style="font-size: 1.2rem;" target="_blank" > Alterar senha</a></p>
+    <p><a href="https://app.book2b.com.br/novasenha/?i='.$idUsuario.'" style="font-size: 1.2rem;" target="_blank" > Alterar senha</a></p>
     
     <hr>
     <p style="font-size: 0.8rem; color: #838282;">VIAGENS PROMO TURISMO S.S. LTDA CNPJ: 05.008.876/0001-06<br>Rua Ministro Jesuíno Cardoso, 633 - Sala 41, Vila Nova Conceição, São Paulo - SP, Brasil<br>
@@ -71,7 +71,6 @@ if (!$rows[0]) {
         $headers .= "Return-Path: " . $emailsender . $quebra_linha; // Se "não for Postfix"
         mail($emaildestinatario, $assunto, $mensagemHTML, $headers );
     } 
-    echo "0";
 
 }
 

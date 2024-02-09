@@ -120,12 +120,6 @@ function EditaSaidas() {
 
   useEffect(() => {
     setLoading(true);
-
-    //carregaPagina()
-    //setRota(id)
-
-
-
     var query = "SELECT vpcharter_fretamento.primeiraclasse_frete, vpcharter_fretamento.premium_frete, vpcharter_fretamento.executiva_frete, vpcharter_fretamento.economica_frete, vpcharter_fretamento.id as id_fretamento, vpcharter_fretamento.data_frete, c1.nome as r1cia, c1.logo as r1logo, r1.voo as r1voo, r1.origem as r1origem, r1.saida as r1saida, r1.destino as r1destino, r1.chegada as r1chegada, vpcharter_fretamento.rota_ida, vpcharter_fretamento.rota_volta, vpcharter_fretamento.date_volta, c2.nome as r2cia, c2.logo as r2logo, r2.voo as r2voo, r2.origem as r2origem, r2.saida as r2saida, r2.destino as r2destino, r2.chegada as r2chegada, vpcharter_fretamento.contratante, vpcharter_fretamento.cancelamento,  vpcharter_contratante.razaosocial FROM `vpcharter_fretamento` INNER JOIN `vpcharter_contratante` ON vpcharter_fretamento.contratante = vpcharter_contratante.id INNER JOIN `vpcharter_rotas` r1 ON r1.id = vpcharter_fretamento.rota_ida INNER JOIN `vpcharter_frota` f1 ON f1.id = r1.aeronave INNER JOIN `vpcharter_companhia` c1 ON c1.id = f1.companhia INNER JOIN `vpcharter_rotas` r2 ON r2.id = vpcharter_fretamento.rota_volta INNER JOIN `vpcharter_frota` f2 ON f2.id = r2.aeronave INNER JOIN `vpcharter_companhia` c2 ON c2.id = f2.companhia WHERE vpcharter_fretamento.id = '"+id+"' LIMIT 1 ";
     var fData = new FormData();
     fData.append('query', query);
@@ -140,7 +134,6 @@ function EditaSaidas() {
         setExecutivaNorma(response.data[0]['executiva_frete'])
         setEconomicaNorma(response.data[0]['economica_frete'])
         setDataIda(response.data[0]['data_frete'])
-
         setIda(response.data[0]['rota_ida'])
         setIdRotaIda(response.data[0]['rota_ida']);
         setVooIda(response.data[0]['r1voo']);
@@ -150,8 +143,6 @@ function EditaSaidas() {
         setHoraSaidaIda(response.data[0]['r1saida'])
         setIataDestinoIda(response.data[0]['r1destino']);
         setHoraChegadaIda(response.data[0]['r1chegada']);
-
-
         setVolta(response.data[0]['rota_volta'])
         setIdRotaVolta(response.data[0]['rota_volta']);
         setVooVolta(response.data[0]['r2voo']);
@@ -165,10 +156,7 @@ function EditaSaidas() {
 
         /*
         setDataFretamento(response.data[0]['data_frete'])
-        
-        
         setValorMulta(parseFloat(response.data[0]['multa']))
-        
         setDataIda(response.data[0]['data_frete'])
         setDataVolta(response.data[0]['date_volta'])
         setIdRotaIda(response.data[0]['rota_ida'])
@@ -451,7 +439,7 @@ function EditaSaidas() {
         setTxtAlert(' ')
         setLoading(false);
         setTimeout(()=> setAlert(false),5000);
-        setTimeout(()=> navigate('/aereo/saidas/'),5500);
+        setTimeout(()=> navigate('/aereo/tarifas/cadastrotarifa/'+id),5000);
       } 
     })
     .catch(error=> console.log(error))
@@ -475,13 +463,7 @@ function EditaSaidas() {
     }
   }
 
-  function changeContratante (e) {
-    if (e == "new") {
-      navigate('/admin/agenciacliente/');
-    } else {
-      setContratante(e)
-    }
-  }
+
 
   function calculaMedia (cl1, cl2, cl3, cl4, qt) {
     var tt = 0;
@@ -997,18 +979,7 @@ function EditaSaidas() {
 
               <div className='row'>
 
-                <div className='col-6'>
-                  <label>Contratante</label>
-                  <select name="select" value={contratante} onChange={(e) => changeContratante(e.target.value)} required >
-                    <option disabled></option>
-                    <option value="new">- Cadastrar/Editar ✎</option>
-                    <option disabled>━━━━━━━━━━━━━━</option>
-                    {contratanteData.map((data, index) => (
-                      <option key={index} value={data.id}>{data.razaosocial}</option>
-                    ))}
-                    <option disabled> </option>
-                  </select>
-                </div>
+
 
                 <div className='col-6'>
                   <label>Cancelamento Gratuito até</label>

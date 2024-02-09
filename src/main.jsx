@@ -39,6 +39,7 @@ import Companhias from './routes/Companhias.jsx';
 import HomeAereoAgencia from './routes/HomeAereoAgencia.jsx';
 import HomeAereoRegular from './routes/HomeAereoRegular.jsx';
 import HomePacoteFixo from './routes/HomePacoteFixo.jsx';
+import BaseRegrasTarifarias from './routes/BaseRegrasTarifarias.jsx';
 
 
 const router = createBrowserRouter([
@@ -182,6 +183,10 @@ const router = createBrowserRouter([
       {
         path: '/pacotefixo',
         element: <HomePacoteFixo />,
+      },
+      {
+        path: '/admin/baseregrastarifarias',
+        element: <BaseRegrasTarifarias />,
       }
 
     ]

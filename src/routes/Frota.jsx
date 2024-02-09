@@ -190,29 +190,23 @@ function Frota() {
                     <thead>
                       <tr>
                         <th scope="col">Aeronave</th>
-                        <th scope="col">Nome</th>
                         <th scope="col">Companhia</th>
-                        <th scope="col">Fabricação</th>
-                        <th scope="col">Última Revisão</th>
-                        <th scope="col">Angar Principal</th>
-                        <th scope="col">Registo</th>
-                        <th scope="col" className='text-center'>Assentos</th>
-                        <th scope="col" className='text-center'>Rotas</th>
-                        <th scope="col"></th>
+                        <th scope="col" ></th>
+                        <th scope="col" width="30%"></th>
+                        <th scope="col" width="12%"></th>
+                        <th scope="col" width="12%"></th>
+                        <th scope="col" width="5%"></th>
                       </tr>
                     </thead>
                     <tbody>
                     {dataBase.map((data, index) => (
                       <tr key={index}>
                         <td onClick={() => editaaeronave(data.id)}>{data.aeronave}</td>
-                        <td onClick={() => editaaeronave(data.id)}>{data.nomeAeronave}</td>
                         <td onClick={() => editaaeronave(data.id)}><img className={data.logo ? 'imgCia' : 'hide'} src={data.logo} /> {data.logo ? '' : data.nome}</td>
-                        <td onClick={() => editaaeronave(data.id)}>{formatMesAno(data.fabricacao)}</td>
-                        <td onClick={() => editaaeronave(data.id)}>{formatDate(data.ultimaRevisao)}</td>
-                        <td onClick={() => editaaeronave(data.id)}>{data.angarPrincipal}</td>
-                        <td onClick={() => editaaeronave(data.id)}>{data.registro}</td>
-                        <td className='text-center'><Link to={"/aereo/frota/mapaassentos/"+data.id}><button>Assentos</button></Link></td>
-                        <td className='text-center'><Link to={"/aereo/frota/rotas/"+data.id}><button><span className={data.origem ? '' : 'hide'}>Rotas</span><span className={data.origem ? 'hide' : ''}>• • •</span></button></Link></td>
+                        <td onClick={() => editaaeronave(data.id)}></td>
+                        <td onClick={() => editaaeronave(data.id)}></td>
+                        <td><Link to={"/aereo/frota/mapaassentos/"+data.id}><button className='btnPeq'>Assentos</button></Link></td>
+                        <td><Link to={"/aereo/frota/rotas/"+data.id}><button className='btnPeq'>Rotas</button></Link></td>
                         <td onClick={() => editaaeronave(data.id)}><div className='btnAddValor' title='Alterar Valor'>✎</div></td>
                       </tr>
                     ))}

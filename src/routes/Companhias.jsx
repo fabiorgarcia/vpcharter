@@ -42,7 +42,12 @@ function Companhias() {
   const [buscaFiltro, setBuscaFiltro] = useState ('');
   const [newData, setNewData] = useState (true);;
   const [masterTitle, setMasterTitle] = useState ('Companhias');
-  
+  const [nomenPC, setNomenPC] = useState ('');
+  const [nomenPR, setNomenPR] = useState ('');
+  const [nomenEX, setNomenEX] = useState ('');
+  const [nomenEC, setNomenEC] = useState ('');
+
+
 
 
   useEffect(() => {
@@ -70,6 +75,10 @@ function Companhias() {
     setTipo('')
     setNome('')
     setLogo('')
+    setNomenPC('')
+    setNomenPR('')
+    setNomenEX('')
+    setNomenEC('')
     setTimeout(()=> setLoading(false),1000);
   }
 
@@ -79,7 +88,7 @@ function Companhias() {
 
     setTimeout(function() {
       if (!newData) {
-        var query = "UPDATE `vpcharter_companhia` SET `cod` = '"+cod.toUpperCase().trim()+"', `iata` = '"+iata.toUpperCase().trim()+"', `icao` = '"+icao.toUpperCase().trim()+"', `nome` = '"+nome.trim()+"', `tipo` = '"+tipo.trim()+"', `logo` = '"+logo+"' WHERE `vpcharter_companhia`.`iata` = '"+iata.trim()+"';";
+        var query = "UPDATE `vpcharter_companhia` SET `cod` = '"+cod.toUpperCase().trim()+"', `iata` = '"+iata.toUpperCase().trim()+"', `icao` = '"+icao.toUpperCase().trim()+"', `nome` = '"+nome.trim()+"', `tipo` = '"+tipo.trim()+"', `logo` = '"+logo+"', `nomen_pc` = '"+nomenPC+"', `nomen_pr` = '"+nomenPR+"', `nomen_ex` = '"+nomenEX+"', `nomen_ec` = '"+nomenEC+"' WHERE `vpcharter_companhia`.`iata` = '"+iata.trim()+"';";
         var fData = new FormData();
         fData.append('query', query);
         axios.post(endpoint+'query.php', fData)
@@ -117,7 +126,7 @@ function Companhias() {
             setTxtAlert('Por favor, verifique os dados.')
             setTimeout(()=> setTypeAlert(''),5000);
           } else {
-            var query = "INSERT INTO `vpcharter_companhia` (`cod`, `iata`, `icao`, `nome`, `tipo`, `logo`) VALUES ('"+cod+"', '"+iata+"', '"+icao+"', '"+nome+"', '"+tipo+"', '"+logo+"') ";
+            var query = "INSERT INTO `vpcharter_companhia` (`cod`, `iata`, `icao`, `nome`, `tipo`, `logo`, `nomen_pc`, `nomen_pr`, `nomen_ex`, `nomen_ec`) VALUES ('"+cod+"', '"+iata+"', '"+icao+"', '"+nome+"', '"+tipo+"', '"+logo+"', '"+nomenPC+"', '"+nomenPR+"', '"+nomenEX+"', '"+nomenEC+"') ";
             var fData = new FormData();
             fData.append('query', query);
             axios.post(endpoint+'query.php', fData)
@@ -153,7 +162,7 @@ function Companhias() {
   }
 
 
-  function editaData(cod, iata, icao, tipo, nome, logo) {
+  function editaData(cod, iata, icao, tipo, nome, nomenPC, nomenPR, nomenEX, nomenEC, logo) {
     setLoading(true)
     limpaForm()
     setNewData(false)
@@ -162,6 +171,10 @@ function Companhias() {
     setIcao(icao)
     setTipo(tipo)
     setNome(nome)
+    setNomenPC(nomenPC)
+    setNomenPR(nomenPR)
+    setNomenEX(nomenEX)
+    setNomenEC(nomenEC)
     setLogo(logo)
     setTimeout(()=> setLoading(false),1000);
   }
@@ -274,6 +287,28 @@ function Companhias() {
                         <label>URL Logo</label>
                         <input type='text' placeholder='http://www.' value={logo} onChange={(e) => setLogo(e.target.value)} required />
                       </div>
+
+                      <div className='col-12'>
+                        <label><b>Nomenclatura das Categorias</b></label>
+                      </div>
+
+                      <div className='col-3'>
+                        <label>Primeira Classe</label>
+                        <input type='text' value={nomenPC} onChange={(e) => setNomenPC(e.target.value)} required />
+                      </div>
+                      <div className='col-3'>
+                        <label>Premium</label>
+                        <input type='text' value={nomenPR} onChange={(e) => setNomenPR(e.target.value)} required />
+                      </div>
+                      <div className='col-3'>
+                        <label>Executiva</label>
+                        <input type='text' value={nomenEX} onChange={(e) => setNomenEX(e.target.value)} required />
+                      </div>
+                      <div className='col-3'>
+                        <label>Econômica</label>
+                        <input type='text' value={nomenEC} onChange={(e) => setNomenEC(e.target.value)} required />
+                      </div>
+
                     </div>
 
                     <div className='row'>
@@ -330,19 +365,22 @@ function Companhias() {
                         <th scope="col">ICAO</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Nome</th>
-                        <th scope="col">Logo</th>
+                        <th scope="col" colSpan='4'>Nomenclatura das Categorias</th>
                         <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
                     {listData.map((data, index) => (
-                      <tr key={index} onClick={() => editaData(data.cod, data.iata, data.icao, data.tipo, data.nome, data.logo)} className={iata == data.iata?'trSelect':''}>
+                      <tr key={index} onClick={() => editaData(data.cod, data.iata, data.icao, data.tipo, data.nome, data.nomen_pc, data.nomen_pr, data.nomen_ex, data.nomen_ec, data.logo)} className={iata == data.iata?'trSelect':''}>
                         <td>{data.cod}</td>
                         <td>{data.iata}</td>
                         <td>{data.icao}</td>
                         <td>{data.tipo}</td>
                         <td>{data.nome}</td>
-                        <td>{data.logo}</td>
+                        <td>{data.nomen_pc}</td>
+                        <td>{data.nomen_pr}</td>
+                        <td>{data.nomen_ex}</td>
+                        <td>{data.nomen_ec}</td>
                         <td><BiSolidEdit /></td>
                       </tr>
                     ))}

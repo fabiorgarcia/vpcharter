@@ -15,7 +15,7 @@ import { LuArrowDownUp} from "react-icons/lu";
 import { TfiLayoutWidthDefault } from "react-icons/tfi";
 import { RxSpaceBetweenVertically } from "react-icons/rx";
 import { FiStar } from "react-icons/fi";
-import { MdOutlineHome } from "react-icons/md"
+import { MdOutlineHome, MdOutlineStar } from "react-icons/md"
 import { GiPlaneWing } from "react-icons/gi"
 import { SiSitepoint } from "react-icons/si"
 
@@ -52,7 +52,7 @@ function MapaAssentos() {
   const [updateIdAssento, setUpdateIdAssento] = useState ('');
   const [updateAssentoClasse, setUpdateAssentoClasse] = useState ('');
   const [updateTipoAssento, setUpdateTipoAssento] = useState ('');
-  const [selectClass, setSelectClass] = useState ('primeiraClasse');
+  const [selectClass, setSelectClass] = useState ('');
   const [totalFileiras, setTotalFileiras] = useState (''); 
   const [totalColunas, setTotalColunas] = useState (''); 
   const [primeiraClasseFileiras, setprimeiraClasseFileiras] = useState ([]); 
@@ -96,7 +96,10 @@ function MapaAssentos() {
 
   const [selectCorredor, setSelectCorredor] = useState (''); 
   const [selectFileira, setSelectFileira] = useState (''); 
-  
+  const [nomenPC, setNomenPC] = useState ('');
+  const [nomenPR, setNomenPR] = useState ('');
+  const [nomenEX, setNomenEX] = useState ('');
+  const [nomenEC, setNomenEC] = useState ('');
   
 
   useEffect(() => {
@@ -121,6 +124,10 @@ function MapaAssentos() {
         setAeronave(response.data[0]['nomeAeronave'])
         seCompanhia(response.data[0]['nome'])
         setLogo(response.data[0]['logo'])
+        setNomenPC(response.data[0]['nomen_pc'])
+        setNomenPR(response.data[0]['nomen_pr'])
+        setNomenEX(response.data[0]['nomen_ex'])
+        setNomenEC(response.data[0]['nomen_ec'])
       } else {
         setTypeAlert('alert-danger')
         settitleAlert('Registro não encontrado!')
@@ -433,6 +440,7 @@ function MapaAssentos() {
 
   function changeAssento(col, fil, classe) {
 
+    /*
     setUpdateTipoAssento('padrao')
     setUpdateIdAssento('')
     var assento = col+fil;
@@ -470,6 +478,8 @@ function MapaAssentos() {
     setOpenModal3(true)
     setUpdateAssento(assento)
     setUpdateAssentoClasse(classe)
+    */
+
   }
 
   function updateNewTipoAssento () {
@@ -1103,7 +1113,59 @@ function MapaAssentos() {
   }
 
 
+  function checkAssentoEspecial(x, y) {
 
+    var totalPC = parseInt(primeiraClasseFileiras.length);
+    var totalPR = parseInt(premiumFileiras.length);
+    var totalEX = parseInt(executivaFileiras.length);
+
+
+    if (x == 'primeiraClasse') {      
+      for (var i = 0; i < saidaEmergPrimC.length; ++i) {
+        if (saidaEmergPrimC[i]['fileira'] == y-1) { return true }
+      }
+      return false
+    }
+
+    if (x == 'premium') {     
+      var ultimo = '';
+      if (saidaEmergPrimC.length >0 ) {
+        var emergPC = parseInt(saidaEmergPrimC[saidaEmergPrimC.length-1]['fileira']);
+        emergPC = emergPC + 1;
+        if (totalPC == emergPC) { ultimo = emergPC; }
+        if (ultimo == y) { return true }
+      }
+      for (var i = 0; i < saidaEmergPremium.length; ++i) {
+        if (saidaEmergPremium[i]['fileira'] == y-1) { return true }
+      }
+      return false
+    }
+
+    if (x == 'executiva') {  
+      if (saidaEmergPremium.length >0 ) {
+        var emergPR = parseInt(saidaEmergPremium[saidaEmergPremium.length-1]['fileira']);
+        emergPR = emergPR+ 1;
+        if (emergPR == y) { return true }
+      }    
+      for (var i = 0; i < saidaEmergExecutiva.length; ++i) {
+        if (saidaEmergExecutiva[i]['fileira'] == y-1) { return true }
+      }
+      return false
+    }
+
+    if (x == 'economica') {   
+      if (saidaEmergExecutiva.length >0 ) {
+        var emergEX = parseInt(saidaEmergExecutiva[saidaEmergExecutiva.length-1]['fileira']);
+        emergEX = emergEX+ 1;
+        if (emergEX == y) { return true }
+      }    
+      for (var i = 0; i < saidaEmergEconomica.length; ++i) {
+        if (saidaEmergEconomica[i]['fileira'] == y-1) { return true }
+      }
+      return false
+    }
+    
+  }
 
 
 
@@ -1200,19 +1262,36 @@ function MapaAssentos() {
           <div className='contentAll'>
               <div className='row'>
 
-                <div className='col-5 interCol'>
-                    <div className='row'>
+                <div className={selectClass?'col-5 interCol':'hide'}>
+                    <div className='row  mt-4'>
                       
-                      <div className='col-12 titleAeronave mt-3'>
-                      <img className={logo ? 'imgCia' : 'hide'} src={logo} /> {logo ? '' : aeronave} ● <span className='aeroName'>{aeronave}</span>
+                      <div className='col-12 titleAeronave'>
+                        <img className={logo ? 'imgCia' : 'hide'} src={logo} /> {logo ? '' : aeronave} <h4>{fabricante}</h4>
                       </div>
-                      <div className='col-12 mt-1'>
-                        <h3>{fabricante}</h3>
+
+                      <div className='col-12 mt-3 '>
+
+                        <ul className="nav nav-pills nav-justified tabAeronave">
+                          <li className="nav-item" onClick={()=>changeSelectClass('primeiraClasse')}>
+                            <span className={selectClass=='primeiraClasse'?"nav-link active":"nav-link"} aria-current={selectClass=='primeiraClasse'?"page":''} >{nomenPC}</span>
+                          </li>
+                          <li className="nav-item" onClick={()=>changeSelectClass('premium')}>
+                            <span className={selectClass=='premium'?"nav-link active":"nav-link"} aria-current={selectClass=='premium'?"page":''} >{nomenPR}</span>
+                          </li>
+                          <li className="nav-item" onClick={()=>changeSelectClass('executiva')}>
+                            <span className={selectClass=='executiva'?"nav-link active":"nav-link"} aria-current={selectClass=='executiva'?"page":''} >{nomenEX}</span>
+                          </li>
+                          <li className="nav-item" onClick={()=>changeSelectClass('economica')}>
+                          <span className={selectClass=='economica'?"nav-link active":"nav-link"} aria-current={selectClass=='economica'?"page":''} >{nomenEC}</span>
+                          </li>
+                        </ul>
+
                       </div>
 
                       <div className='col-12'>
+                        {/*
                         <label>Categoria</label>
-                        
+                        <h4>{selectClass}</h4>
                         <select name="select" value={selectClass} onChange={(e)=>changeSelectClass(e.target.value)}>
                           <option ></option>
                           <option value="primeiraClasse">Primeira Classe</option>
@@ -1220,6 +1299,7 @@ function MapaAssentos() {
                           <option value="executiva">Executiva</option>
                           <option value="economica">Econômica</option>
                         </select>
+                        */}
                       </div>
 
                       <div className={selectClass?'lineConfig mt-5':'hide'}>
@@ -1417,6 +1497,7 @@ function MapaAssentos() {
                         ))}
                       </div>
                     </div>
+                    {/*
                     <div className='row mt-4'>
                       <div className='col-4'>
                         <label>Distância (cm)</label>
@@ -1431,6 +1512,7 @@ function MapaAssentos() {
                         <input type='number' min="0" max="90" value={angulo} onChange={(e)=>setAngulo(e.target.value)}></input>
                       </div>
                     </div>
+                    */}
 
                     <div className='row mt-4'>
                       <div className='col-12'>
@@ -1446,8 +1528,48 @@ function MapaAssentos() {
 
                 </div>
 
+                <div className={!selectClass?'col-5 interCol p-5':'hide'}>
+                      
+                  <div className='col-12 titleAeronave'>
+                    <img className={logo ? 'imgCia' : 'hide'} src={logo} /> {logo ? '' : aeronave} <h4>{fabricante}</h4>
+                  </div>
+
+                  <div className='mt-5 mb-0'><h5><b>Por favor, selecione a Categoria.</b></h5></div>
+
+                  {/*
+                  <div className='divSelectClasses mt-0'>
+                    <button onClick={()=>changeSelectClass('primeiraClasse')}>{nomenPC}</button>
+                    <button onClick={()=>changeSelectClass('premium')}>{nomenPR}</button>
+                    <button onClick={()=>changeSelectClass('executiva')}>{nomenEX}</button>
+                    <button onClick={()=>changeSelectClass('economica')}>{nomenEC}</button>
+                  </div>
+                  */}
+
+
+                  <div className='col-12 mt-3 '>
+
+                    <ul className="nav nav-pills nav-justified tabAeronave">
+                      <li className="nav-item" onClick={()=>changeSelectClass('primeiraClasse')}>
+                        <span className="nav-link btnIni" aria-current={selectClass=='primeiraClasse'?"page":''} >{nomenPC}</span>
+                      </li>
+                      <li className="nav-item" onClick={()=>changeSelectClass('premium')}>
+                        <span className="nav-link btnIni" aria-current={selectClass=='premium'?"page":''} >{nomenPR}</span>
+                      </li>
+                      <li className="nav-item" onClick={()=>changeSelectClass('executiva')}>
+                        <span className="nav-link btnIni" aria-current={selectClass=='executiva'?"page":''} >{nomenEX}</span>
+                      </li>
+                      <li className="nav-item" onClick={()=>changeSelectClass('economica')}>
+                      <span className="nav-link btnIni" aria-current={selectClass=='economica'?"page":''} >{nomenEC}</span>
+                      </li>
+                    </ul>
+
+                  </div>
+
+                </div>
+
 
                 <div className='col-7'>
+
                   <table className='mapaAssentos'>
                     <thead>
                       <tr>
@@ -1471,30 +1593,23 @@ function MapaAssentos() {
                       {/*Primeira Classe ----------------------------- */}
                       <tr>
                         <td className='tdBordaDir'></td>
-                        <td colSpan={totalizadorColunas()} className='tdBordaDir'><div className="divideClass">{totalprimeiraClasseFileiras > 1 ? 'Primeira Classe':''}</div></td>
+                        <td colSpan={totalizadorColunas()} className='tdBordaDir'><div className={selectClass=='primeiraClasse'?"divideClass fileiraAssentosSelect":"divideClass"}>{totalprimeiraClasseFileiras > 1 ? nomenPC:''}</div></td>
                       </tr>
 
                       {primeiraClasseFileiras.map((line, id) => (
-                        <tr key={id} className={id=="0"?'':'fileiraUser'}>
-                          <td scope="col" className={line.tipo == 'asa' ?'tdBordaDirAsa':'tdBordaDir'}>
+                        <tr key={id} className={id=="0"?'': 'fileiraUser'}>
+                          <td scope="col" className={line.tipo == 'asa' ?'asaEsq':'tdBordaDir'}>
                             <div className={id=="0"?'hide':'fileiraNumber'}>
                               <button className='btnAssentosEdit' onClick={()=>changeFileira(line.fileira, line.tipo, line.id)}>{line.fileira}</button>  
                             </div>
                           </td>
-                          <td className={line.tipo == 'asa' ?'tdBordaDirAsa':'tdBordaDir'}>
-                            <div className={line.tipo == 'emergencia' ?'hide':'fileiraAssentos'}>
-
+                          <td className={line.tipo == 'asa' ?'asaDir':'tdBordaDir'}>
+                            <div className={line.tipo == 'emergencia' ?'hide': selectClass=='primeiraClasse'?'fileiraAssentos fileiraAssentosSelect':'fileiraAssentos'}>
                               {primeiraClasseColunas.map((colun, index) => (
                                 <div key={index} className='d-flex'>
                                   <div className='assentos'>
                                     <div className={id == "0" ? 'hide' : 'primeiraClasse'} onClick={()=>changeAssento(colun.coluna, line.fileira, 'primeiraClasse')}>
-                                      <span>
-                                        {mapaAssentos.map((mpAssentos, mp) => (
-                                          <span key={mp}>
-                                            <FiStar className={mpAssentos.categoria == 'primeiraClasse' && mpAssentos.assento == colun.coluna+line.fileira  ? '' : 'hide'} title="Características" />
-                                          </span>
-                                        ))}
-                                      </span>
+                                      <div data-title="Assento de Emergência"><MdOutlineStar  className={checkAssentoEspecial('primeiraClasse', line.fileira)?'starEspecial':'hide'} /></div>
                                     </div>
                                     <button className={line.fileira == "0" ? 'btnAssentosPC' : 'hide'} ><span >{colun.coluna}</span></button>
                                   </div>
@@ -1503,7 +1618,7 @@ function MapaAssentos() {
                               ))}
 
                             </div>
-                            <div className={checkSaidaEmerg(line.fileira, 'primeiraClasse')?line.tipo=='asa'?'saidaEmergenciaAsa':'saidaEmergencia':'hide'}>
+                            <div className={checkSaidaEmerg(line.fileira, 'primeiraClasse')?line.tipo=='asa'?selectClass=='primeiraClasse'?'saidaEmergenciaAsa fileiraAssentosSelect':'saidaEmergenciaAsa': selectClass=='primeiraClasse'?'saidaEmergencia fileiraAssentosSelect':'saidaEmergencia':'hide'}>
                                 <div className='exit'>EXIT</div><div className='exit'>EXIT</div>
                             </div>
                           </td>
@@ -1515,9 +1630,8 @@ function MapaAssentos() {
                       {/*Premium ----------------------------- */}
                       <tr className={totalprimeiraClasseFileiras?'':'hide'}>
                         <td className='tdBordaDir'></td>
-                        <td colSpan={totalizadorColunas()} className='tdBordaDir'><div className="divideClass">{totalPremiumFileiras > 1 ? 'Premium':''}</div></td>
+                        <td colSpan={totalizadorColunas()} className='tdBordaDir'><div className={selectClass=='premium'?"divideClass fileiraAssentosSelect":"divideClass"}>{totalPremiumFileiras > 1 ? nomenPR:''}</div></td>
                       </tr>
-
                       {premiumFileiras.map((line, id) => (
                         <tr key={id} className={id=="0"?'':'fileiraUser'}>
                           <td scope="col" className={line.tipo == 'asa' ?'asaEsq':'tdBordaDir'}>
@@ -1526,111 +1640,95 @@ function MapaAssentos() {
                             </div>
                           </td>
                           <td className={line.tipo == 'asa' ?'asaDir':'tdBordaDir'}>
-                            <div className='fileiraAssentos'>
+                            <div className={line.tipo == 'emergencia' ?'hide': selectClass=='premium'?'fileiraAssentos fileiraAssentosSelect':'fileiraAssentos'}>
                               {premiumColunas.map((colun, index) => (
                                 <div key={index} className='d-flex'>
                                   <div className='assentos'>
                                     <div className={id == "0"?'hide':'premium'} onClick={()=>changeAssento(colun.coluna, contFileiraPremium(line.fileira), 'premium')}>
                                       <span className={colun.tipo == 'corredor'?'hide':''}>
-                                      {mapaAssentos.map((mpAssentos, mp) => (
-                                        <span key={mp}>
-                                          <FiStar className={mpAssentos.categoria == 'premium' && mpAssentos.assento == colun.coluna+contFileiraPremium(line.fileira)  ? '' : 'hide'} title="Assento preferencial na frente" />
-                                        </span>
-                                      ))}
+                                      <div data-title="Assento de Emergência"><MdOutlineStar  className={checkAssentoEspecial('premium', contFileiraPremium(line.fileira))?'starEspecial':'hide'} /></div>
                                       </span>
                                     </div>
                                     <button className={id == "0" ? 'btnAssentos' : 'hide'}>{colun.coluna}</button>
                                   </div>
                                   <div className={checkCorredor(colun.coluna, 'premium')?'assentos':'hide'} ><div className='premiumCorredor'></div></div>
-
                                 </div>
                               ))}
                             </div>
-                            <div className={checkSaidaEmerg(contFileiraPremium(line.fileira), 'premium')? line.tipo=='asa'?'saidaEmergenciaAsa':'saidaEmergencia':'hide'}>
-                                <div className='exit'>EXIT</div><div className='exit'>EXIT</div>
-                            </div>
-
-                          </td>
-                        </tr>
-                      ))}
-
-                      <tr className={totalPremiumFileiras?'':'hide'}>
-                        <td className='tdBordaDir'></td>
-                        <td colSpan={totalizadorColunas()} className='tdBordaDir'><div className="divideClass">{totalExecutivaFileiras > 1 ? 'Executiva':''}</div></td>
-                      </tr>
-
-
-                      {executivaFileiras.map((line, id) => (
-                        <tr key={id} className={id=="0"?'':'fileiraUser'}>
-                          <td scope="col" className={line.tipo == 'asa' ?'tdBordaDirAsa':'tdBordaDir'}>
-                            <div className={id=="0"?'hide':'fileiraNumber'}>
-                              <button className='btnAssentosEdit' onClick={()=>changeFileira(contFileiraExecutiva(line.fileira), line.tipo, line.id)}>{contFileiraExecutiva(line.fileira)}</button>
-                            </div>
-                          </td>
-                          <td className={line.tipo == 'asa' ?'tdBordaDirAsa':'tdBordaDir'}>
-                            <div className={line.tipo == 'emergencia' ?'hide':'fileiraAssentos'}>
-                              {executivaColunas.map((colun, index) => (
-                                <div key={index} className='d-flex'>
-                                  <div className='assentos'>
-                                    <div className={id == "0"?'hide':'executiva'} onClick={()=>changeAssento(colun.coluna, contFileiraExecutiva(line.fileira), 'executiva')}>
-                                      <span className={colun.tipo == 'corredor'?'hide':''}>
-                                      {mapaAssentos.map((mpAssentos, mp) => (
-                                        <span key={mp}>
-                                          <FiStar className={mpAssentos.categoria == 'executiva' && mpAssentos.assento == colun.coluna+contFileiraExecutiva(line.fileira)  ? '' : 'hide'} title="Assento preferencial na frente" />
-                                        </span>
-                                      ))}
-                                      </span>
-                                    </div>
-                                    <button className={id == "0" ? 'btnAssentos' : 'hide'}>{colun.coluna}</button>
-                                  </div>
-
-                                  <div className={checkCorredor(colun.coluna, 'executiva')?'assentos':'hide'} ><div className='executivaCorredor'></div></div>
-
-                                </div>
-                              ))}
-                            </div>
-                            <div className={checkSaidaEmerg(contFileiraExecutiva(line.fileira), 'executiva')?line.tipo=='asa'?'saidaEmergenciaAsa':'saidaEmergencia':'hide'}>
+                            <div className={checkSaidaEmerg(contFileiraPremium(line.fileira), 'premium')? line.tipo=='asa'? selectClass=='premium'?'saidaEmergenciaAsa fileiraAssentosSelect':'saidaEmergenciaAsa': selectClass=='premium'?'saidaEmergencia fileiraAssentosSelect':'saidaEmergencia':'hide'}>
                               <div className='exit'>EXIT</div><div className='exit'>EXIT</div>
                             </div>
                           </td>
                         </tr>
                       ))}
 
+
+                      {/*Executiva ----------------------------- */}
+                      <tr className={totalPremiumFileiras?'':'hide'}>
+                        <td className='tdBordaDir'></td>
+                        <td colSpan={totalizadorColunas()} className='tdBordaDir'><div className={selectClass=='executiva'?"divideClass fileiraAssentosSelect":"divideClass"}>{totalExecutivaFileiras > 1 ? nomenEX:''}</div></td>
+                      </tr>
+                      {executivaFileiras.map((line, id) => (
+                        <tr key={id} className={id=="0"?'':'fileiraUser'}>
+                          <td scope="col" className={line.tipo == 'asa' ?'asaEsq':'tdBordaDir'}>
+                            <div className={id=="0"?'hide':'fileiraNumber'}>
+                              <button className='btnAssentosEdit' onClick={()=>changeFileira(contFileiraExecutiva(line.fileira), line.tipo, line.id)}>{contFileiraExecutiva(line.fileira)}</button>
+                            </div>
+                          </td>
+                          <td className={line.tipo == 'asa' ?'asaDir':'tdBordaDir'}>
+                            <div className={line.tipo == 'emergencia' ?'hide': selectClass=='executiva'?'fileiraAssentos fileiraAssentosSelect':'fileiraAssentos'}>
+                              {executivaColunas.map((colun, index) => (
+                                <div key={index} className='d-flex'>
+                                  <div className='assentos'>
+                                    <div className={id == "0"?'hide':'executiva'} onClick={()=>changeAssento(colun.coluna, contFileiraExecutiva(line.fileira), 'executiva')}>
+                                      <span className={colun.tipo == 'corredor'?'hide':''}>
+                                      <div data-title="Assento de Emergência"><MdOutlineStar  className={checkAssentoEspecial('executiva', contFileiraExecutiva(line.fileira))?'starEspecial':'hide'} /></div>
+                                      </span>
+                                    </div>
+                                    <button className={id == "0" ? 'btnAssentos' : 'hide'}>{colun.coluna}</button>
+                                  </div>
+                                  <div className={checkCorredor(colun.coluna, 'executiva')?'assentos':'hide'} ><div className='executivaCorredor'></div></div>
+                                </div>
+                              ))}
+                            </div>
+                            <div className={checkSaidaEmerg(contFileiraExecutiva(line.fileira), 'executiva')? line.tipo=='asa'? selectClass=='executiva'?'saidaEmergenciaAsa fileiraAssentosSelect':'saidaEmergenciaAsa': selectClass=='premium'?'saidaEmergencia fileiraAssentosSelect':'saidaEmergencia':'hide'}>
+                              <div className='exit'>EXIT</div><div className='exit'>EXIT</div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+
+
+
+                      {/*Econômica ----------------------------- */}
                       <tr className={totalExecutivaFileiras?'':'hide'}>
                         <td className='tdBordaDir'></td>
-                        <td colSpan={totalizadorColunas()} className='tdBordaDir'><div className="divideClass">{totalEconomicaFileiras > 1 ? 'Economica':''}</div></td>
+                        <td colSpan={totalizadorColunas()} className='tdBordaDir'><div className={selectClass=='economica'?"divideClass fileiraAssentosSelect":"divideClass"}>{totalEconomicaFileiras > 1 ? nomenEC:''}</div></td>
                       </tr>
-
                       {economicaFileiras.map((line, id) => (
                         <tr key={id} className={id=="0"?'':'fileiraUser'}>
-                          <td scope="col" className={line.tipo == 'asa' ?'tdBordaDirAsa':'tdBordaDir'}>
+                          <td scope="col" className={line.tipo == 'asa' ?'asaEsq':'tdBordaDir'}>
                             <div className={id=="0"?'hide':'fileiraNumber'}>
                               <button className='btnAssentosEdit' onClick={()=>changeFileira(contFileiraEconomica(line.fileira), line.tipo, line.id)}>{contFileiraEconomica(line.fileira)}</button>
                             </div>
                           </td>
-                          <td className={line.tipo == 'asa' ?'tdBordaDirAsa':'tdBordaDir'}>
-                            <div className={line.tipo == 'emergencia' ?'hide':'fileiraAssentos'}>
+                          <td className={line.tipo == 'asa' ?'asaDir':'tdBordaDir'}>
+                            <div className={line.tipo == 'emergencia' ?'hide': selectClass=='economica'?'fileiraAssentos fileiraAssentosSelect':'fileiraAssentos'}>
                               {economicaColunas.map((colun, index) => (
                                 <div key={index} className='d-flex'>
                                   <div className='assentos'>
                                     <div className={id == "0"?'hide':'economica'} onClick={()=>changeAssento(colun.coluna, contFileiraEconomica(line.fileira), 'economica')}>
                                       <span className={colun.tipo == 'corredor'?'hide':''}>
-                                        {mapaAssentos.map((mpAssentos, mp) => (
-                                          <span key={mp}>
-                                            <FiStar className={mpAssentos.categoria == 'economica' && mpAssentos.assento == colun.coluna+contFileiraEconomica(line.fileira) ? '' : 'hide'} title="Assento preferencial na frente" />
-                                          </span>
-                                        ))}
+                                      <div data-title="Assento de Emergência"><MdOutlineStar  className={checkAssentoEspecial('economica', contFileiraEconomica(line.fileira))?'starEspecial':'hide'} /></div>
                                       </span>
                                     </div>
                                     <button className={id == "0" ? 'btnAssentos' : 'hide'}>{colun.coluna}</button>
                                   </div>
-
                                   <div className={checkCorredor(colun.coluna, 'economica')?'assentos':'hide'} ><div className='economicaCorredor'></div></div>
-
                                 </div>
                               ))}
                             </div>
-                            <div className={checkSaidaEmerg(contFileiraEconomica(line.fileira), 'economica')? line.tipo=='asa'?'saidaEmergenciaAsa':'saidaEmergencia' :'hide'}>
+                            <div className={checkSaidaEmerg(contFileiraEconomica(line.fileira), 'economica')? line.tipo=='asa'? selectClass=='economica'?'saidaEmergenciaAsa fileiraAssentosSelect':'saidaEmergenciaAsa': selectClass=='premium'?'saidaEmergencia fileiraAssentosSelect':'saidaEmergencia':'hide'}>
                               <div className='exit'>EXIT</div><div className='exit'>EXIT</div>
                             </div>
                           </td>
